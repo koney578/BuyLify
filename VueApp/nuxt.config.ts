@@ -3,6 +3,6 @@ export default defineNuxtConfig({
   devtools: { enabled: true },
   modules: [
       '@unocss/nuxt',
-      'vuetify-nuxt-module',
+      '@nuxt/ui',
   ],
 })
