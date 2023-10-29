@@ -5,5 +5,6 @@ export default defineNuxtConfig({
     modules: [
         '@unocss/nuxt',
         '@nuxt/ui',
+        '@tailwindcss/forms',
     ],
 })
