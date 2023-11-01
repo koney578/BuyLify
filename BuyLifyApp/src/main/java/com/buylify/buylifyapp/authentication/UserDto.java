@@ -1,36 +1,34 @@
 package com.buylify.buylifyapp.authentication;
 
 import jakarta.persistence.Column;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 public class UserDto {
 
+    @NotBlank
     @Size(min = 8, max = 30)
-    @Column(nullable = false, unique = true)
-    private String userName;
+    private String username;
 
+    @NotBlank
     private String password;
-    private String matchingPassword;
 
-    @NotNull
+    @NotBlank
     @Size(max = 30)
     private String name;
 
-    @NotNull
+    @NotBlank
     private String surname;
 
-    @NotNull
+    @NotBlank
     private String phoneNumber;
 
-    @NotNull
-    @Email
-    private String eMail;
+    @NotBlank
+    private String email;
+
 }
