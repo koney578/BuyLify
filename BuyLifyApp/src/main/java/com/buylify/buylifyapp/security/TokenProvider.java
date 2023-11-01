@@ -18,11 +18,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class TokenProvider {
 
-    @Value("${jwt.secret}")
+    @Value("${jwt.secret.key}")
     private String secretKey;
 
-    @Value("${jwt.exp.minutes}")
-    private Long expMinutes;
+    @Value("${jwt.exp}")
+    private Long exp;
 
     public String generate(Authentication authentication) {
         SecurityUser user = (SecurityUser) authentication.getPrincipal();
@@ -32,7 +32,7 @@ public class TokenProvider {
         return Jwts.builder()
                 .signWith(Keys.hmacShaKeyFor(signingKey), SignatureAlgorithm.HS512)
                 .setIssuedAt(Date.from(ZonedDateTime.now().toInstant()))
-                .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(expMinutes).toInstant()))
+                .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(exp).toInstant()))
                 .setSubject(user.getUsername())
                 .compact();
     }
