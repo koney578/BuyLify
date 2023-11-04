@@ -1,5 +1,24 @@
 <script setup lang="ts">
 
+const user = reactive({
+  email: '',
+  password: '',
+})
+
+const login = async () => {
+
+  if (!user.email || !user.password) {
+    console.error('Wszystkie pola są wymagane')
+    return
+  }
+
+  const router = useRouter()
+  const data = await $fetch('http://localhost:8080/api/register', {
+    method: 'POST',
+    body: user
+  }).catch(err => console.error(err.data))
+  await router.push('/')
+}
 </script>
 
 <template>
@@ -11,12 +30,12 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <form @submit.prevent="login" class="space-y-6" action="#" method="POST">
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Adres email</label>
           <div class="mt-2">
             <input id="email" name="email" type="email" autocomplete="email" required=""
-                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
+                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
 
@@ -24,12 +43,12 @@
           <div class="flex items-center justify-between">
             <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Hasło</label>
             <div class="text-sm">
-              <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Zapomniałeś hasła?</a>
+              <a href="/resetPassword" class="font-semibold text-indigo-600 hover:text-indigo-500">Zapomniałeś hasła?</a>
             </div>
           </div>
           <div class="mt-2">
             <input id="password" name="password" type="password" autocomplete="current-password" required=""
-                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
+                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
 
@@ -44,7 +63,7 @@
       <p class="mt-10 text-center text-sm text-gray-500">
         Nie masz konta?
         {{ ' ' }}
-        <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zarejestruj się</a>
+        <a href="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zarejestruj się</a>
       </p>
     </div>
   </div>
