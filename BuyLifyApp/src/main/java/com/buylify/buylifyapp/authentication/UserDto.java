@@ -18,14 +18,14 @@ public class UserDto {
     @NotBlank
     private String password;
 
-    @NotBlank
+//    @NotBlank
     @Size(max = 30)
     private String name;
 
-    @NotBlank
+//    @NotBlank
     private String surname;
 
-    @NotBlank
+//    @NotBlank
     private String phoneNumber;
 
     @NotBlank
