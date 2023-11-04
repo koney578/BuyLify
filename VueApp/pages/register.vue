@@ -1,5 +1,47 @@
 <script setup lang="ts">
 
+const username = ref('')
+const email = ref('')
+const password = ref('')
+const password2 = ref('')
+
+const register = async () => {
+
+  if (!username.value || !email.value || !password.value || !password2.value) {
+    console.error('Wszystkie pola są wymagane')
+    return
+  }
+
+  if (password.value !== password2.value) {
+    console.error('Hasło i powtórzone hasło nie są takie same')
+    return
+  }
+  const router = useRouter()
+  const url = 'http://localhost:8080/api/register'
+  const response = await useFetch(url, {
+    method: 'POST',
+    body: JSON.stringify({
+      username: username.value,
+      email: email.value,
+      password: password.value,
+      password2: password2.value
+    }),
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    onRequestError({ request, options, error }) {
+      console.log(error)
+    },
+    onResponse({ request, response, options }) {
+      console.log(response)
+      router.push('/login')
+    },
+  })
+
+
+
+
+}
 </script>
 
 <template>
@@ -12,11 +54,11 @@
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <form @submit.prevent="register" class="space-y-6" action="" method="POST">
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Nazwa użytkownika</label>
           <div class="mt-2">
-            <input id="email" name="email" type="email" autocomplete="email" required=""
+            <input v-model="username" id="username" name="username" type="text" autocomplete="" required=""
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
           </div>
         </div>
@@ -24,7 +66,7 @@
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Adres email</label>
           <div class="mt-2">
-            <input id="email" name="email" type="email" autocomplete="email" required=""
+            <input v-model="email" id="email" name="email" type="email" autocomplete="email" required=""
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
           </div>
         </div>
@@ -35,7 +77,7 @@
 
           </div>
           <div class="mt-2">
-            <input id="password" name="password" type="password" autocomplete="current-password" required=""
+            <input v-model="password" id="password" name="password" type="password" autocomplete="new-password" required=""
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
           </div>
         </div>
@@ -46,7 +88,7 @@
 
           </div>
           <div class="mt-2">
-            <input id="password" name="password" type="password" autocomplete="current-password" required=""
+            <input v-model="password2" id="password2" name="password2" type="password" autocomplete="new-password" required=""
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
           </div>
         </div>
