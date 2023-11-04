@@ -1,10 +1,7 @@
 package com.buylify.buylifyapp.authentication;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,7 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "app_user")
+@Table(name = "users")
 public class User {
 
     @Id
@@ -24,28 +21,28 @@ public class User {
     @Column(nullable = false)
     private Long id;
 
-    @Size(min = 8, max = 30)
     @Column(nullable = false, unique = true)
-    private String userName;
+    @Size(min = 8, max = 30)
+    @NotBlank
+    private String username;
 
+    @NotBlank
     private String password;
 
-    @NotNull
     @Size(max = 30)
+//    @NotNull
     private String name;
 
-    @NotNull
+//    @NotNull
     private String surname;
 
-    @NotNull
+//    @NotNull
     private String phoneNumber;
 
-    @NotNull
-    @Email
-    private String eMail;
+    @NotBlank
+    private String email;
 
     @CreationTimestamp
-    @NotNull
     private LocalDateTime registrationDate;
 
     @NotNull
