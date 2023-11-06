@@ -1,46 +1,29 @@
 <script setup lang="ts">
 
-const username = ref('')
-const email = ref('')
-const password = ref('')
-const password2 = ref('')
+const user = reactive({
+  username: '',
+  email: '',
+  password: '',
+  password2: ''
+})
 
 const register = async () => {
 
-  if (!username.value || !email.value || !password.value || !password2.value) {
+  if (!user.username || !user.email || !user.password || !user.password2) {
     console.error('Wszystkie pola są wymagane')
     return
   }
 
-  if (password.value !== password2.value) {
+  if (user.password !== user.password2) {
     console.error('Hasło i powtórzone hasło nie są takie same')
     return
   }
   const router = useRouter()
-  const url = 'http://localhost:8080/api/register'
-  const response = await useFetch(url, {
+  const data = await $fetch('http://localhost:8080/api/register', {
     method: 'POST',
-    body: JSON.stringify({
-      username: username.value,
-      email: email.value,
-      password: password.value,
-      password2: password2.value
-    }),
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    onRequestError({ request, options, error }) {
-      console.log(error)
-    },
-    onResponse({ request, response, options }) {
-      console.log(response)
-      router.push('/login')
-    },
-  })
-
-
-
-
+    body: user
+  }).catch(err => console.error(err.data))
+  await router.push('/login')
 }
 </script>
 
@@ -56,18 +39,18 @@ const register = async () => {
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form @submit.prevent="register" class="space-y-6" action="" method="POST">
         <div>
-          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Nazwa użytkownika</label>
+          <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Nazwa użytkownika</label>
           <div class="mt-2">
-            <input v-model="username" id="username" name="username" type="text" autocomplete="" required=""
-                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
+            <input v-model="user.username" id="username" name="username" type="text" autocomplete="" required=""
+                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
 
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Adres email</label>
           <div class="mt-2">
-            <input v-model="email" id="email" name="email" type="email" autocomplete="email" required=""
-                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
+            <input v-model="user.email" id="email" name="email" type="email" autocomplete="email" required=""
+                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
 
@@ -77,19 +60,19 @@ const register = async () => {
 
           </div>
           <div class="mt-2">
-            <input v-model="password" id="password" name="password" type="password" autocomplete="new-password" required=""
-                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
+            <input v-model="user.password" id="password" name="password" type="password" autocomplete="new-password" required=""
+                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
 
         <div>
           <div class="flex items-center justify-between">
-            <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Powtórz Hasło</label>
+            <label for="password2" class="block text-sm font-medium leading-6 text-gray-900">Powtórz Hasło</label>
 
           </div>
           <div class="mt-2">
-            <input v-model="password2" id="password2" name="password2" type="password" autocomplete="new-password" required=""
-                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
+            <input v-model="user.password2" id="password2" name="password2" type="password" autocomplete="new-password" required=""
+                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
 
@@ -104,7 +87,7 @@ const register = async () => {
       <p class="mt-10 text-center text-sm text-gray-500">
         Posiadasz konto?
         {{ ' ' }}
-        <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zaloguj się</a>
+        <a href="/login" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zaloguj się</a>
       </p>
     </div>
   </div>
