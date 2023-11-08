@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.18",
-    "@nuxt/ui": "^2.9.0",
-    "vue-property-decorator": "^9.1.2"
+    "@nuxt/ui": "^2.9.0"
   }
 }
