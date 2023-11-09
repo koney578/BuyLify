@@ -19,7 +19,7 @@
     </div>
     <div class="w-1/2 mt-5rem">
       <!--      <p class="color-black">prawa</p>-->
-        <img src="../images/i-just-wanna-shop.png"  alt="I just wanna Shop" class="color-fuchsia min-w-[420px] w-full max-w-3/4 h-auto"/>
+        <img src="../images/i-just-wanna-shop.png"  alt="I just wanna Shop" class="color-fuchsia min-w-[420px] w-full max-w-3/4 h-auto animate-zoom-in-down"/>
     </div>
 
   </div>
