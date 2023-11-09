@@ -4,9 +4,12 @@
 
 <template>
   <body class="bg-gray-200 min-h-screen">
-  <header class="bg-white p-3 shadow-2xl">
+  <header class="bg-white p-1 shadow-2xl">
     <nav class="items-center flex">
-      <p class="color-black text-3rem font-semibold italic">BuyLify</p>
+              <img src="../images/logo.png" alt="logo" class="color-fuchsia max-w-1/15 h-auto"/>
+<!--      <p class="color-black text-3rem font-semibold italic">-->
+<!--        BuyLify-->
+<!--      </p>-->
       <div class="flex w-full">
         <ul class="flex ml-2rem w-1/2">
           <li class="color-black p-4 ml-1rem mr-1rem text-2rem"><a href="/">Strona Główna</a></li>
