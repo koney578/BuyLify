@@ -12,19 +12,19 @@ const login = async () => {
   }
 
   const router = useRouter()
-  const data = await $fetch('http://localhost:8080/api/login', {
-    method: 'POST',
-    body: user
-  }).catch(err => console.error(err.data))
+
+  const auth = useAuthStore()
+  await auth.login(user.username, user.password)
+    .catch(err => console.error(err.data))
+
   await router.push('/')
-  console.log(data.token)
 }
 </script>
 
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+      <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png"
            alt="Your Company"/>
       <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Zaloguj się</h2>
     </div>
