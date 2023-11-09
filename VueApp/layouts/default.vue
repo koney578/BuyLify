@@ -11,7 +11,7 @@
         <ul class="flex ml-2rem w-1/2">
           <li class="color-black p-4 ml-1rem mr-1rem text-2rem"><a href="/">Strona Główna</a></li>
           <li class="color-black p-4 ml-1rem mr-1rem text-2rem"><a href="/profile">Ustawienia konta</a></li>
-          <li class="color-black p-4 ml-1rem mr-1rem text-2rem">bla bla</li>
+          <li class="color-black p-4 ml-1rem mr-1rem text-2rem"><a href="/announcement">Ogloszenie</a></li>
         </ul>
         <ul class="flex w-1/2 justify-end">
           <li class="color-black p-4 ml-1rem mr-1rem text-2rem"><a href="/login">Zaloguj się</a></li>
