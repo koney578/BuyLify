@@ -43,7 +43,7 @@ const login = async () => {
           <div class="flex items-center justify-between">
             <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Hasło</label>
             <div class="text-sm">
-              <a href="/resetPassword" class="font-semibold text-indigo-600 hover:text-indigo-500">Zapomniałeś hasła?</a>
+              <NuxtLink to="/resetPassword" class="font-semibold text-indigo-600 hover:text-indigo-500">Zapomniałeś hasła?</NuxtLink>
             </div>
           </div>
           <div class="mt-2">
@@ -63,7 +63,7 @@ const login = async () => {
       <p class="mt-10 text-center text-sm text-gray-500">
         Nie masz konta?
         {{ ' ' }}
-        <a href="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zarejestruj się</a>
+        <NuxtLink to="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zarejestruj się</NuxtLink>
       </p>
     </div>
   </div>

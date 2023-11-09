@@ -16,7 +16,8 @@ public class UserService {
     public void registerUser(UserDto userDto){
 
         if (userRepository.existsByUsername(userDto.getUsername())) {
-            // exception
+            // exceptio
+
         }
 
         User user = userMapper.userDtoToUser(userDto);

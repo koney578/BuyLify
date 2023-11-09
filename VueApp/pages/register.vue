@@ -88,7 +88,7 @@ const register = async () => {
       <p class="mt-10 text-center text-sm text-gray-500">
         Posiadasz konto?
         {{ ' ' }}
-        <a href="/login" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zaloguj się</a>
+        <NuxtLink to="/login" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zaloguj się</NuxtLink>
       </p>
     </div>
   </div>

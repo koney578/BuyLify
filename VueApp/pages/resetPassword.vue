@@ -47,12 +47,12 @@ const resetPassword = async () => {
       <p class="mt-10 text-center text-sm text-gray-500">
         Przypomniałeś sobie hasło?
         {{ ' ' }}
-        <a href="/login" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zaloguj się</a>
+        <NuxtLink to="/login" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zaloguj się</NuxtLink>
       </p>
       <p class="mt-10 text-center text-sm text-gray-500">
         Nie masz Konta?
         {{ ' ' }}
-        <a href="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Załóż konto</a>
+        <NuxtLink to="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Załóż konto</NuxtLink>
       </p>
     </div>
   </div>
