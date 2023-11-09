@@ -1,25 +1,59 @@
 <script setup lang="ts">
+const auth = useAuthStore()
 
+const mobileMenuOpen = ref(false)
 </script>
 
 <template>
   <body class="bg-gray-200 min-h-screen">
   <header class="bg-white p-1 shadow-2xl">
     <nav class="items-center flex">
-              <img src="../images/logo.png" alt="logo" class="color-fuchsia max-w-1/15 h-auto"/>
-<!--      <p class="color-black text-3rem font-semibold italic">-->
-<!--        BuyLify-->
-<!--      </p>-->
-      <div class="flex w-full">
-        <ul class="flex ml-2rem w-1/2">
-          <li class="color-black p-4 ml-1rem mr-1rem text-2rem"><a href="/">Strona Główna</a></li>
-          <li class="color-black p-4 ml-1rem mr-1rem text-2rem"><a href="/profile">Ustawienia konta</a></li>
-          <li class="color-black p-4 ml-1rem mr-1rem text-2rem"><a href="/announcement">Ogloszenie</a></li>
-        </ul>
-        <ul class="flex w-1/2 justify-end">
-          <li class="color-black p-4 ml-1rem mr-1rem text-2rem"><a href="/login">Zaloguj się</a></li>
-          <li class="color-black p-4 ml-1rem mr-1rem text-2rem"><a href="/register">Załóż Konto</a></li>
-        </ul>
+      <ul class="hidden md:flex items-center w-full">
+        <li class="color-black p-4 ml-1rem mr-1rem text-2rem">
+          <NuxtLink to="/">
+            <img src="../images/logo.png" alt="logo" class="color-fuchsia w-16"/>
+          </NuxtLink>
+        </li>
+
+        <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/">Strona Główna</NuxtLink></li>
+        <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/profile">Ustawienia konta</NuxtLink></li>
+        <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto"><NuxtLink to="/announcement">Ogloszenie</NuxtLink></li>
+
+        <template v-if="!auth.isLoggedIn">
+          <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/login">Zaloguj się</NuxtLink></li>
+          <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/register">Załóż Konto</NuxtLink></li>
+        </template>
+
+        <li v-else @click="auth.logout()" class="color-black p-4 ml-1rem mr-1rem text-lg">
+          <a>Wyloguj się</a>
+        </li>
+      </ul>
+      <div class="flex items-center md:hidden w-full px-4">
+        <NuxtLink to="/">
+          <img src="../images/logo.png" alt="logo" class="color-fuchsia w-16"/>
+        </NuxtLink>
+
+        <div @click="mobileMenuOpen = !mobileMenuOpen" class="relative ml-auto">
+          <div class="text-black">
+            menu
+          </div>
+
+          <ul v-if="mobileMenuOpen" class="fixed inset-0 top-19 bg-gray-100">
+            <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-primary"><NuxtLink to="/">Strona Główna</NuxtLink></li>
+            <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/profile">Ustawienia konta</NuxtLink></li>
+            <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto"><NuxtLink to="/announcement">Ogloszenie</NuxtLink></li>
+
+            <template v-if="!auth.isLoggedIn">
+              <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/login">Zaloguj się</NuxtLink></li>
+              <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/register">Załóż Konto</NuxtLink></li>
+            </template>
+
+            <li v-else @click="auth.logout()" class="color-black p-4 ml-1rem mr-1rem text-lg">
+              <a>Wyloguj się</a>
+            </li>
+          </ul>
+        </div>
+
       </div>
 
     </nav>

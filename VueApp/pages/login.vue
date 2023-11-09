@@ -12,12 +12,12 @@ const login = async () => {
   }
 
   const router = useRouter()
-  const data = await $fetch('http://localhost:8080/api/login', {
-    method: 'POST',
-    body: user
-  }).catch(err => console.error(err.data))
+
+  const auth = useAuthStore()
+  await auth.login(user.username, user.password)
+    .catch(err => console.error(err.data))
+
   await router.push('/')
-  console.log(data.token)
 }
 </script>
 
