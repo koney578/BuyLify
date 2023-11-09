@@ -19,11 +19,12 @@ const register = async () => {
     return
   }
   const router = useRouter()
-  const data = await $fetch('http://localhost:8080/api/register', {
-    method: 'POST',
-    body: user
-  }).catch(err => console.error(err.data))
-  await router.push('/login')
+  const auth = useAuthStore()
+
+  await auth.register(user.username, user.password, user.email)
+      .catch(err => console.error(err.data))
+
+  await router.push('/')
 }
 </script>
 

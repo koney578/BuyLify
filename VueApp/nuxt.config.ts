@@ -6,5 +6,13 @@ export default defineNuxtConfig({
         '@unocss/nuxt',
         '@nuxt/ui',
         '@tailwindcss/forms',
+        '@pinia/nuxt'
     ],
+
+    pinia: {
+        autoImports: [
+            'defineStore',
+            'acceptHMRUpdate'
+        ]
+    },
 })
