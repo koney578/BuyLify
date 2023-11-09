@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import IcBaselineDensityMedium from "~/icons/IcBaselineDensityMedium.vue";
+
 const auth = useAuthStore()
 
 const mobileMenuOpen = ref(false)
@@ -35,7 +37,7 @@ const mobileMenuOpen = ref(false)
 
         <div @click="mobileMenuOpen = !mobileMenuOpen" class="relative ml-auto">
           <div class="text-black">
-            menu
+            <IcBaselineDensityMedium />
           </div>
 
           <ul v-if="mobileMenuOpen" class="fixed inset-0 top-19 bg-gray-100">
