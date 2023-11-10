@@ -17,16 +17,16 @@ const mobileMenuOpen = ref(false)
           </NuxtLink>
         </li>
 
-        <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/">Strona Główna</NuxtLink></li>
-        <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/profile">Ustawienia konta</NuxtLink></li>
-        <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto"><NuxtLink to="/announcement">Ogloszenie</NuxtLink></li>
+        <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500"><NuxtLink to="/">Strona Główna</NuxtLink></li>
+        <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500"><NuxtLink to="/profile">Ustawienia konta</NuxtLink></li>
+        <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500"><NuxtLink to="/announcement">Ogloszenie</NuxtLink></li>
 
         <template v-if="!auth.isLoggedIn">
-          <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/login">Zaloguj się</NuxtLink></li>
-          <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/register">Załóż Konto</NuxtLink></li>
+          <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500"><NuxtLink to="/login">Zaloguj się</NuxtLink></li>
+          <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500"><NuxtLink to="/register">Załóż Konto</NuxtLink></li>
         </template>
 
-        <li v-else @click="auth.logout()" class="color-black p-4 ml-1rem mr-1rem text-lg">
+        <li v-else @click="auth.logout()" class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
           <a>Wyloguj się</a>
         </li>
       </ul>
@@ -41,13 +41,13 @@ const mobileMenuOpen = ref(false)
           </div>
 
           <ul v-if="mobileMenuOpen" class="fixed inset-0 top-19 bg-gray-100">
-            <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-primary"><NuxtLink to="/">Strona Główna</NuxtLink></li>
-            <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/profile">Ustawienia konta</NuxtLink></li>
-            <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto"><NuxtLink to="/announcement">Ogloszenie</NuxtLink></li>
+            <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500"><NuxtLink to="/">Strona Główna</NuxtLink></li>
+            <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500"><NuxtLink to="/profile">Ustawienia konta</NuxtLink></li>
+            <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500 mr-auto"><NuxtLink to="/announcement">Ogloszenie</NuxtLink></li>
 
             <template v-if="!auth.isLoggedIn">
-              <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/login">Zaloguj się</NuxtLink></li>
-              <li class="color-black p-4 ml-1rem mr-1rem text-lg"><NuxtLink to="/register">Załóż Konto</NuxtLink></li>
+              <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500"><NuxtLink to="/login">Zaloguj się</NuxtLink></li>
+              <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500"><NuxtLink to="/register">Załóż Konto</NuxtLink></li>
             </template>
 
             <li v-else @click="auth.logout()" class="color-black p-4 ml-1rem mr-1rem text-lg">
@@ -63,7 +63,7 @@ const mobileMenuOpen = ref(false)
   <section class="min-h-screen flex flex-col">
     <nuxt-page/>
   </section>
-  <footer class="bg-amber-200 p-2rem">
+  <footer class="bg-gray-50 p-2rem">
     <p class="color-black">bla bla bla</p>
     <p class="color-black">bla bla bla</p>
     <p class="color-black">bla bla bla</p>
