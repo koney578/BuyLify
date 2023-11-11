@@ -60,7 +60,7 @@ const mobileMenuOpen = ref(false)
             <IcBaselineDensityMedium/>
           </div>
 
-          <ul v-if="mobileMenuOpen" class="fixed inset-0 top-19 bg-gray-100">
+          <ul v-if="mobileMenuOpen" class="fixed inset-0 top-19 bg-gray-200">
             <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
               <NuxtLink to="/">Strona Główna</NuxtLink>
             </li>
@@ -99,7 +99,7 @@ const mobileMenuOpen = ref(false)
   <section class="min-h-screen flex flex-col">
     <nuxt-page/>
   </section>
-  <footer class="bg-gray-50 p-2rem">
+  <footer class="bg-gray-50 p-2rem shadow-2xl">
     <p class="color-black">bla bla bla</p>
     <p class="color-black">bla bla bla</p>
     <p class="color-black">bla bla bla</p>
