@@ -1,18 +1,21 @@
 package com.buylify.buylifyapp.product;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import com.buylify.buylifyapp.category.Category;
+
+import java.time.LocalDateTime;
 
 public class ProductDto {
-    @NotBlank
+
     private String name;
-    @NotBlank
+
     private float price;
-    @NotBlank
-    @Size(min = 20, max = 500)
+
     private String description;
-    @NotBlank
+
     private Category category;
+
+    private LocalDateTime createdDate;
+
 //    do zmiany
 //    private byte[] photo;
 
