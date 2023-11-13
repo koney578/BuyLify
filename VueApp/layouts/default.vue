@@ -10,7 +10,7 @@ const mobileMenuOpen = ref(false)
 
 <template>
   <body class="bg-gray-200 min-h-screen">
-  <header class="bg-white p-1 shadow-2xl">
+  <header class="bg-white p-1 shadow-2xl relative z-[1000]">
     <nav class="items-center flex">
       <ul class="hidden md:flex items-center w-full">
         <li class="color-black p-4 ml-1rem mr-1rem text-2rem">
