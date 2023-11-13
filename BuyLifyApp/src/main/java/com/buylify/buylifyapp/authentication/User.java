@@ -30,13 +30,13 @@ public class User {
     private String password;
 
     @Size(max = 30)
-    @NotNull
+//    @NotNull
     private String name;
 
-    @NotNull
+//    @NotNull
     private String surname;
 
-    @NotNull
+//    @NotNull
     private String phoneNumber;
 
     @NotBlank

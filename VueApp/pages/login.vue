@@ -1,22 +1,40 @@
 <script setup lang="ts">
 
+const user = reactive({
+  username: '',
+  password: '',
+})
+
+const login = async () => {
+  if (!user.username || !user.password) {
+    console.error('Wszystkie pola są wymagane')
+    return
+  }
+
+  const router = useRouter()
+
+  const auth = useAuthStore()
+  await auth.login(user.username, user.password)
+      .catch(err => console.error(err.data))
+
+  await router.push('/')
+}
 </script>
 
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-10 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-           alt="Your Company"/>
-      <h2 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Zaloguj się</h2>
+      <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png" alt="BuyLify"/>
+      <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Zaloguj się</h1>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form class="space-y-6" action="#" method="POST">
+      <form @submit.prevent="login" class="space-y-6" action="#" method="POST">
         <div>
-          <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Adres email</label>
+          <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Nazwa użytkownika</label>
           <div class="mt-2">
-            <input id="email" name="email" type="email" autocomplete="email" required=""
-                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
+            <input v-model="user.username" id="username" name="username" type="text" autocomplete="username" required=""
+                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
 
@@ -24,12 +42,15 @@
           <div class="flex items-center justify-between">
             <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Hasło</label>
             <div class="text-sm">
-              <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Zapomniałeś hasła?</a>
+              <NuxtLink to="/resetPassword" class="font-semibold text-indigo-600 hover:text-indigo-500">
+                Zapomniałeś hasła?
+              </NuxtLink>
             </div>
           </div>
           <div class="mt-2">
-            <input id="password" name="password" type="password" autocomplete="current-password" required=""
-                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
+            <input v-model="user.password" id="password" name="password" type="password" autocomplete="current-password"
+                   required=""
+                   class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
 
@@ -44,7 +65,9 @@
       <p class="mt-10 text-center text-sm text-gray-500">
         Nie masz konta?
         {{ ' ' }}
-        <a href="#" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zarejestruj się</a>
+        <NuxtLink
+            to="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zarejestruj się
+        </NuxtLink>
       </p>
     </div>
   </div>

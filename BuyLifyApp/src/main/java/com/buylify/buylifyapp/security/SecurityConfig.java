@@ -29,7 +29,7 @@ public class SecurityConfig {
         return http
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorizeHttpRequest -> authorizeHttpRequest
-                        .requestMatchers("/register", "/login").permitAll()
+                        .requestMatchers("/", "/api/register", "/api/login").permitAll()
                         .anyRequest().authenticated())
                 .addFilterBefore(tokenAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .userDetailsService(jpaUserDetailsService)
