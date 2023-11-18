@@ -1,57 +1,53 @@
 <script setup lang="ts">
 
 import {PhotoIcon} from "@heroicons/vue/24/solid";
+import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from '@headlessui/vue'
+import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
+import {useAuthStore} from "~/stores/auth";
 
-//
-import { ref } from 'vue'
-import { Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions } from '@headlessui/vue'
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
+const auth = useAuthStore()
+const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
+  headers: {Authorization: 'Bearer ' + auth.token}
+});
 
-const categories = [
-  {
-    id: 1,
-    name: 'Kategoria 1',
-  },
-  {
-    id: 2,
-    name: 'Kategoria 2',
-  },
-  {
-    id: 3,
-    name: 'Kategoria 3',
-  },
-  {
-    id: 4,
-    name: 'Kategoria 4',
-  },
-  {
-    id: 5,
-    name: 'Kategoria 5',
-  },
-]
+interface Category {
+  id: number,
+  name: string,
+}
 
-const selected = ref(categories[3])
+const noCategory: Category = {
+  id: -1,
+  name: 'Brak kategorii',
+}
 
+const selected = ref<Category>(categories.value?.[0] ?? noCategory)
 
 const post = reactive({
-  postName: '',
+  name: '',
   price: '',
   description: '',
-  selectedCategory: selected,
-  photos: ''
+  categoryId: selected.value.id,
+  photos: '',
 })
 
+
+watch(selected, (newValue) => {
+  post.categoryId = newValue.id;
+});
+
 const addPost = async () => {
-  if (!post.postName || !post.price || !post.description) {
+  if (!post.name || !post.price || !post.description) {
     console.error('Wszystkie pola są wymagane')
     return
   }
 
   const router = useRouter()
-  const data = await $fetch('http://localhost:8080/api/add-post', {
+  const data = await $fetch('http://localhost:8080/api/products', {
     method: 'POST',
-    body: post
+    body: post,
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
+  console.log(post)
 
   await router.push('/')
 }
@@ -71,7 +67,7 @@ const addPost = async () => {
             Wpisz nazwę ogłoszenia
           </label>
           <div class="mt-2">
-            <input v-model="post.postName" id="post-name" name="post-name" type="text" autocomplete="post-name"
+            <input v-model="post.name" id="post-name" name="post-name" type="text" autocomplete="post-name"
                    required=""
                    placeholder="Nazwa Twojego ogłoszenia"
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
@@ -81,22 +77,31 @@ const addPost = async () => {
 
         <Listbox as="div" v-model="selected">
           <ListboxLabel class="block text-sm font-medium leading-6 text-gray-900">Kategoria</ListboxLabel>
-          <div class="mt-2">
-            <ListboxButton class="w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+          <div class="relative mt-2">
+            <ListboxButton
+                class=" relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
               <span class="flex items-center">
                 <span class="block truncate">{{ selected.name }}</span>
               </span>
+              <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true"/>
+              </span>
             </ListboxButton>
 
-            <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100" leave-to-class="opacity-0">
-              <ListboxOptions class="z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                <ListboxOption as="template" v-for="category in categories" :key="category.id" :value="category" v-slot="{ active, selected }">
+            <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100"
+                        leave-to-class="opacity-0">
+              <ListboxOptions
+                  class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                <option disabled value="">Wybierz kategorię</option>
+                <ListboxOption as="template" v-for="category in categories" :value="category" :key="category.id"
+                               v-slot="{ active, selected }">
                   <li :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-3 pr-9']">
                     <div class="flex items-center">
                       <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{ category.name }}</span>
                     </div>
-                    <span v-if="selected" :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
-                      <CheckIcon class="h-5 w-5" aria-hidden="true" />
+                    <span v-if="selected"
+                          :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
+                      <CheckIcon class="h-5 w-5" aria-hidden="true"/>
                     </span>
                   </li>
                 </ListboxOption>
@@ -112,10 +117,13 @@ const addPost = async () => {
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <span class="text-gray-500 sm:text-sm">$</span>
             </div>
-            <input v-model="post.price" type="text" name="price" id="price" class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white" placeholder="0.00" />
+            <input v-model="post.price" type="text" name="price" id="price"
+                   class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
+                   placeholder="0.00"/>
             <div class="absolute inset-y-0 right-0 flex items-center">
               <label for="currency" class="sr-only">waluta</label>
-              <select id="currency" name="currency" class="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
+              <select id="currency" name="currency"
+                      class="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
                 <option>PLN</option>
                 <option>USD</option>
                 <option>EUR</option>
@@ -130,10 +138,11 @@ const addPost = async () => {
             <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Opis</label>
           </div>
           <div class="mt-2">
-            <textarea v-model="post.description" id="description" name="description" type="text" autocomplete="description"
-                   required=""
-                   placeholder="Dodaj opis Twojego ogłoszenia"
-                   class="h-[auto] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+            <textarea v-model="post.description" id="description" name="description" type="text"
+                      autocomplete="description"
+                      required=""
+                      placeholder="Dodaj opis Twojego ogłoszenia"
+                      class="h-[auto] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
 
