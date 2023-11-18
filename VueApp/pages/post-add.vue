@@ -11,36 +11,43 @@ const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api
 });
 
 interface Category {
-  name: string
-  id: number
+  id: number,
+  name: string,
 }
 
 const noCategory: Category = {
-  name: 'Brak kategorii',
   id: -1,
+  name: 'Brak kategorii',
 }
 
 const selected = ref<Category>(categories.value?.[0] ?? noCategory)
 
 const post = reactive({
-  postName: '',
+  name: '',
   price: '',
   description: '',
-  selectedCategory: selected,
-  photos: ''
+  categoryId: selected.value.id,
+  photos: '',
 })
 
+
+watch(selected, (newValue) => {
+  post.categoryId = newValue.id;
+});
+
 const addPost = async () => {
-  if (!post.postName || !post.price || !post.description) {
+  if (!post.name || !post.price || !post.description) {
     console.error('Wszystkie pola są wymagane')
     return
   }
 
   const router = useRouter()
-  const data = await $fetch('http://localhost:8080/api/add-post', {
+  const data = await $fetch('http://localhost:8080/api/products', {
     method: 'POST',
-    body: post
+    body: post,
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
+  console.log(post)
 
   await router.push('/')
 }
@@ -60,7 +67,7 @@ const addPost = async () => {
             Wpisz nazwę ogłoszenia
           </label>
           <div class="mt-2">
-            <input v-model="post.postName" id="post-name" name="post-name" type="text" autocomplete="post-name"
+            <input v-model="post.name" id="post-name" name="post-name" type="text" autocomplete="post-name"
                    required=""
                    placeholder="Nazwa Twojego ogłoszenia"
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
@@ -85,13 +92,12 @@ const addPost = async () => {
                         leave-to-class="opacity-0">
               <ListboxOptions
                   class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                <ListboxOption as="template" v-for="category in categories" :value="category.name" :key="category.id"
+                <option disabled value="">Wybierz kategorię</option>
+                <ListboxOption as="template" v-for="category in categories" :value="category" :key="category.id"
                                v-slot="{ active, selected }">
                   <li :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-3 pr-9']">
                     <div class="flex items-center">
-                      <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{
-                          category.name
-                        }}</span>
+                      <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{ category.name }}</span>
                     </div>
                     <span v-if="selected"
                           :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
