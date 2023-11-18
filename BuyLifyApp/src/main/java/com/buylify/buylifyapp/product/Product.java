@@ -3,6 +3,7 @@ package com.buylify.buylifyapp.product;
 import com.buylify.buylifyapp.category.Category;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -26,16 +27,16 @@ public class Product {
     @NotBlank
     private String name;
 
-    @NotBlank
+    @NotNull
     private float price;
 
-    @NotBlank
+    @NotNull
     private int count;
 
     @NotBlank
     private String description;
 
-    @NotBlank
+    @NotNull
     private int priority;
 
     @CreationTimestamp
