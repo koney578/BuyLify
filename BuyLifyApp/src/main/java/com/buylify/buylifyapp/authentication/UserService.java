@@ -23,6 +23,7 @@ public class UserService {
         User user = userMapper.userDtoToUser(userDto);
         user.setPassword(passwordEncoder.encode(userDto.getPassword()));
         user.setActive(true);
+        user.setIdUserType(1L);
 
         User savedUser = userRepository.save(user);
     }

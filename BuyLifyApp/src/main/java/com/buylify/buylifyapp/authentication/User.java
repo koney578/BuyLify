@@ -1,10 +1,11 @@
 package com.buylify.buylifyapp.authentication;
-
+import com.buylify.buylifyapp.models.UserType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.Value;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
@@ -18,11 +19,10 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_sequence")
     @SequenceGenerator(name = "user_sequence", sequenceName = "user_sequence", allocationSize = 1)
-    @Column(nullable = false)
     private Long id;
 
-    @Column(nullable = false, unique = true)
-    @Size(min = 8, max = 30)
+    @Column(unique = true)
+    @Size(min = 5, max = 40)
     @NotBlank
     private String username;
 
@@ -30,16 +30,17 @@ public class User {
     private String password;
 
     @Size(max = 30)
-//    @NotNull
     private String name;
 
-//    @NotNull
+    @Size(max = 30)
     private String surname;
 
-//    @NotNull
+    @Size(min = 9, max = 9)
     private String phoneNumber;
 
     @NotBlank
+    @Size(max = 60)
+    @Column(unique = true)
     private String email;
 
     @CreationTimestamp
@@ -47,4 +48,12 @@ public class User {
 
     @NotNull
     private boolean isActive;
+
+    @JoinColumn(name = "id_user_type", insertable = false, updatable = false)
+    @ManyToOne(targetEntity = UserType.class, fetch = FetchType.EAGER)
+    private UserType userType;
+
+    @NotNull
+    @Column(name = "id_user_type")
+    private Long idUserType;
 }
