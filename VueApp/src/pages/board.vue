@@ -3,30 +3,54 @@
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import {CheckIcon} from "@heroicons/vue/20/solid";
 
-const categories = [
-  {
-    id: 1,
-    name: 'Kategoria 1',
-  },
-  {
-    id: 2,
-    name: 'Kategoria 2',
-  },
-  {
-    id: 3,
-    name: 'Kategoria 3',
-  },
-  {
-    id: 4,
-    name: 'Kategoria 4',
-  },
-  {
-    id: 5,
-    name: 'Kategoria 5',
-  },
-]
+import {useAuthStore} from "~/stores/auth";
 
-const selected = ref(categories[3])
+const auth = useAuthStore()
+const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
+  headers: {Authorization: 'Bearer ' + auth.token}
+});
+
+interface Category {
+  id: number,
+  name: string,
+}
+
+const noCategory: Category = {
+  id: -1,
+  name: 'Brak kategorii',
+}
+
+const selected = ref<Category>(categories.value?.[0] ?? noCategory)
+
+const post = reactive({
+  name: '',
+  price: '',
+  description: '',
+  categoryId: selected.value.id,
+  photos: '',
+})
+
+
+watch(selected, (newValue) => {
+  post.categoryId = newValue.id;
+});
+
+const addPost = async () => {
+  if (!post.name || !post.price || !post.description) {
+    console.error('Wszystkie pola są wymagane')
+    return
+  }
+
+  const router = useRouter()
+  const data = await $fetch('http://localhost:8080/api/products', {
+    method: 'POST',
+    body: post,
+    headers: {Authorization: 'Bearer ' + auth.token}
+  }).catch(err => console.error(err.data))
+  console.log(post)
+
+  await router.push('/')
+}
 </script>
 
 <template>
