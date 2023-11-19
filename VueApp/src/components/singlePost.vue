@@ -1,0 +1,59 @@
+<script setup lang="ts">
+
+import {useAuthStore} from "~/stores/auth";
+import {ListboxOption} from "@headlessui/vue";
+
+interface Category {
+  id: number,
+  name: string,
+}
+
+interface Product {
+  id: number,
+  name: string,
+  price: number,
+  description: string,
+  category: Category,
+  createdDate: Date,
+}
+
+const props = defineProps<Product>()
+
+const formatDateTime = (dateTimeString: Date) => {
+  const options: Intl.DateTimeFormatOptions = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit'
+  };
+  const dateTime = new Date(dateTimeString);
+  return dateTime.toLocaleString('pl-PL', options);
+};
+
+</script>
+
+<template>
+<!--  v-for="category in categories" :key="category.id" :value="category"-->
+
+  <div class="mt-2rem">
+    <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl">
+      <div class="w-full">
+        <img
+            src="https://krita-artists.org/uploads/default/original/3X/f/3/f35a3a762b8661b3c7fd98e3e3cb29e513b845f5.jpeg"
+            alt="Główne zdjęcie"
+            class=" h-auto w-1/2"
+        />
+      </div>
+      <div class="w-full">
+        <div class="grid justify-items-center">
+          <p class="text-2xl">{{ props.name }}</p>
+        </div>
+        <div class="flex mt-2rem justify-between">
+          <p class="text-xl italic mr-1rem">{{ props.price }} zł</p>
+          <p>Data dodania: {{ formatDateTime(props.createdDate) }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
