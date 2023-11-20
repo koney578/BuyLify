@@ -13,8 +13,10 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final ProductMapper mapper;
 
-    public void addProduct(CreateProductDto dto) {
+    public void addProduct(CreateProductDto dto, Long userId) {
         Product product = mapper.toEntity(dto);
+        product.setActive(true);
+        product.setIdUser(userId);
         productRepository.save(product);
     }
 

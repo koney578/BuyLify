@@ -19,6 +19,10 @@ public class SecurityUser implements UserDetails {
         return null;
     }
 
+    public Long getId(){
+        return user.getId();
+    }
+
     @Override
     public String getPassword() {
         return user.getPassword();
@@ -48,4 +52,5 @@ public class SecurityUser implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
