@@ -4,7 +4,6 @@ import com.buylify.buylifyapp.authentication.User;
 import com.buylify.buylifyapp.category.Category;
 import com.buylify.buylifyapp.models.Discount;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
@@ -43,11 +42,11 @@ public class Product {
     @NotNull
     private int priority;
 
-    @NotNull
+    @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @NotNull
+    @Column(nullable = false)
     @UpdateTimestamp
     private LocalDateTime modifiedAt;
 

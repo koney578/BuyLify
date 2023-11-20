@@ -27,7 +27,7 @@ public class Bid {
     @Column(scale = 2)
     private float price;
 
-    @NotNull
+    @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 

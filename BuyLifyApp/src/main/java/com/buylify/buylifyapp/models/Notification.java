@@ -3,7 +3,6 @@ package com.buylify.buylifyapp.models;
 import com.buylify.buylifyapp.authentication.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -29,7 +28,7 @@ public class Notification {
     @NotNull
     private boolean isChecked;
 
-    @NotNull
+    @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;
 

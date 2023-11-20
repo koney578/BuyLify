@@ -61,7 +61,7 @@ public class Order {
     @Column(scale = 2)
     private float totalValue;
 
-    @NotNull
+    @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime createAt;
 

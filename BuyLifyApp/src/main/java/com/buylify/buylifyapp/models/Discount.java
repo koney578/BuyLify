@@ -1,14 +1,11 @@
 package com.buylify.buylifyapp.models;
 
-import com.buylify.buylifyapp.authentication.User;
-import com.buylify.buylifyapp.product.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 
@@ -27,11 +24,11 @@ public class Discount {
     @NotNull
     private float discountPercent;
 
-    @NotNull
+    @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime startAt;
 
-    @NotNull
+    @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime endAt;
 }
