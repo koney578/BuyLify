@@ -10,6 +10,8 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ProductDto {
 
+    private Long Id;
+
     private String name;
 
     private float price;
