@@ -34,6 +34,7 @@ public class TokenProvider {
                 .setIssuedAt(Date.from(ZonedDateTime.now().toInstant()))
                 .setExpiration(Date.from(ZonedDateTime.now().plusMinutes(exp).toInstant()))
                 .setSubject(user.getUsername())
+                .claim("id_user", user.getId())
                 .compact();
     }
 

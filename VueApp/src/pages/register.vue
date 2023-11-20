@@ -24,6 +24,7 @@ const register = async () => {
   await auth.register(user.username, user.password, user.email)
       .catch(err => console.error(err.data))
 
+
   await router.push('/')
 }
 </script>

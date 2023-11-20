@@ -5,7 +5,6 @@ import jakarta.validation.constraints.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.Value;
 import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
@@ -23,10 +22,10 @@ public class User {
 
     @Column(unique = true)
     @Size(min = 5, max = 40)
-    @NotBlank
+    @NotNull
     private String username;
 
-    @NotBlank
+    @NotNull
     private String password;
 
     @Size(max = 30)
@@ -38,11 +37,12 @@ public class User {
     @Size(min = 9, max = 9)
     private String phoneNumber;
 
-    @NotBlank
+    @NotNull
     @Size(max = 60)
     @Column(unique = true)
     private String email;
 
+    @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime registrationDate;
 

@@ -1,9 +1,13 @@
 package com.buylify.buylifyapp.product;
 
 import com.buylify.buylifyapp.category.Category;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
+@Data
+@NoArgsConstructor
 public class ProductDto {
 
     private String name;
@@ -14,7 +18,7 @@ public class ProductDto {
 
     private Category category;
 
-    private LocalDateTime createdDate;
+    private LocalDateTime createdAt;
 
 //    do zmiany
 //    private byte[] photo;

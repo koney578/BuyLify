@@ -1,6 +1,9 @@
 package com.buylify.buylifyapp.product;
 
+import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,8 +16,9 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping
-    public void addProduct(@RequestBody CreateProductDto dto) {
-        productService.addProduct(dto);
+    public void addProduct(@RequestBody CreateProductDto dto, Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        productService.addProduct(dto, userId);
     }
 
     @GetMapping
