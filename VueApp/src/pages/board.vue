@@ -45,7 +45,7 @@ interface Product {
   price: number,
   description: string,
   category: Category,
-  createdDate: Date,
+  createdAt: Date,
 }
 
 const filterPosts = async () => {
@@ -149,7 +149,7 @@ const filterPosts = async () => {
       <single-post v-for="product in products"
                    :key="product.id"
                    :category="product.category"
-                   :created-date="product.createdDate"
+                   :created-date="product.createdAt"
                    :description="product.description"
                    :id="product.id"
                    :name="product.name"
