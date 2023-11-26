@@ -34,7 +34,6 @@ const formatDateTime = (dateTimeString: Date) => {
 </script>
 
 <template>
-<!--  v-for="category in categories" :key="category.id" :value="category"-->
 
   <div class="mt-2rem">
     <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl">
