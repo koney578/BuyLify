@@ -1,6 +1,7 @@
 package com.buylify.buylifyapp.models;
 
 import com.buylify.buylifyapp.authentication.User;
+import com.buylify.buylifyapp.notificationType.NotificationType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
