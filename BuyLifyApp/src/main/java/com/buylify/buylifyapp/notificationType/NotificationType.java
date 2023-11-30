@@ -1,4 +1,4 @@
-package com.buylify.buylifyapp.models;
+package com.buylify.buylifyapp.notificationType;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
