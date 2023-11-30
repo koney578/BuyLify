@@ -11,7 +11,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "followed_prducts")
+@Table(name = "followed_products")
 public class FollowedProduct {
 
     @Id
