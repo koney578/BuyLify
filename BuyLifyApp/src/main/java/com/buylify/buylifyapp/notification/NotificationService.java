@@ -1,7 +1,5 @@
 package com.buylify.buylifyapp.notification;
 
-import com.buylify.buylifyapp.address.Address;
-import com.buylify.buylifyapp.address.AddressRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
