@@ -1,5 +1,4 @@
-package com.buylify.buylifyapp.models;
-
+package com.buylify.buylifyapp.opinion;
 
 import com.buylify.buylifyapp.authentication.User;
 import jakarta.persistence.*;

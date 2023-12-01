@@ -34,6 +34,9 @@ public class CreateProductDto {
     @UpdateTimestamp
     private LocalDateTime modifiedAt;
 
+    @NotNull
+    private int count;
+
 //    do zmiany
 //    private byte[] photo;
 }
