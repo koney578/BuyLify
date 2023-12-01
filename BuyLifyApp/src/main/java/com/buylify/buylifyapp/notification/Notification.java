@@ -1,4 +1,4 @@
-package com.buylify.buylifyapp.models;
+package com.buylify.buylifyapp.notification;
 
 import com.buylify.buylifyapp.authentication.User;
 import com.buylify.buylifyapp.notificationType.NotificationType;
@@ -48,7 +48,4 @@ public class Notification {
     @NotNull
     @Column(name = "id_notification_type")
     private Long idType;
-
-
-
 }
