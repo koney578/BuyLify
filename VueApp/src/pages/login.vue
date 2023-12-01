@@ -5,9 +5,38 @@ const user = reactive({
   password: '',
 })
 
+let passwordError = ""
+
+function validatePassword() {
+  if (user.password !== "") {
+    if (user.password.length < 8) {
+      passwordError = "Hasło musi mieć co najmniej 8 znaków.";
+      return false;
+    } else if (!/[A-Z]/.test(user.password)) {
+      passwordError = "Hasło musi zawierać co najmniej jedną dużą literę.";
+      return false;
+    } else if (!/\d/.test(user.password)) {
+      passwordError = "Hasło musi zawierać co najmniej jedną cyfrę.";
+      return false;
+    } else {
+      passwordError = "";
+      return true;
+    }
+  }
+}
+
+watch(user, () => {
+  validatePassword()
+});
+
 const login = async () => {
   if (!user.username || !user.password) {
     console.error('Wszystkie pola są wymagane')
+    return
+  }
+
+  if (!validatePassword()) {
+    console.error(passwordError)
     return
   }
 
@@ -49,6 +78,9 @@ const login = async () => {
             </div>
           </div>
           <div class="mt-2">
+            <div v-if="passwordError" class="font-semibold text-rose-600">
+              {{ passwordError }}
+            </div>
             <input v-model="user.password" id="password" name="password" type="password" autocomplete="current-password"
                    required=""
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
