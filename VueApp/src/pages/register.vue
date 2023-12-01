@@ -73,7 +73,7 @@ function validateUsername() {
       return true;
     }
   } else {
-    usernameError = ""
+    usernameError = "";
   }
 }
 
@@ -92,7 +92,7 @@ const register = async () => {
     return
   }
 
-  if (validatePasswordMatch()) {
+  if (!validatePasswordMatch()) {
     console.error(passwordMatchError)
     return
   }
