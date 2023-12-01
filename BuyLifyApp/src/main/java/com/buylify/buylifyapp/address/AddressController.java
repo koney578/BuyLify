@@ -1,9 +1,7 @@
 package com.buylify.buylifyapp.address;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,8 +12,18 @@ public class AddressController {
 
     private final AddressService addressService;
 
+    @PostMapping
+    public void setAddress(@RequestBody CreateAddressDto dto) {
+        addressService.addAddress(dto);
+    }
+
     @GetMapping
-    public List<Address> getAllAddresses() {
+    public List<AddressDto> getAllAddresses() {
         return addressService.getAllAddresses();
+    }
+
+    @GetMapping("/{id}")
+    public AddressDto getAddressById(@PathVariable("id") Long id) {
+        return addressService.getAddressById(id);
     }
 }
