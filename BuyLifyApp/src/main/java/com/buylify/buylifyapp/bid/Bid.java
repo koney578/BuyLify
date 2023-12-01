@@ -1,4 +1,4 @@
-package com.buylify.buylifyapp.models;
+package com.buylify.buylifyapp.bid;
 
 import com.buylify.buylifyapp.authentication.User;
 import com.buylify.buylifyapp.product.Product;
@@ -7,17 +7,30 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "followed_products")
-public class FollowedProduct {
+@Table(name = "bids")
+public class Bid {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "followed_product_sequence")
-    @SequenceGenerator(name = "followed_product_sequence", sequenceName = "followed_product_sequence", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "bid_sequence")
+    @SequenceGenerator(name = "bid_sequence", sequenceName = "bid_sequence", allocationSize = 1)
     private Long id;
+
+    @NotNull
+    @Column(scale = 2)
+    private float price;
+
+    @Column(nullable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
 
     @JoinColumn(name = "id_product", insertable = false, updatable = false)
     @ManyToOne(targetEntity = Product.class, fetch = FetchType.EAGER)
@@ -26,6 +39,7 @@ public class FollowedProduct {
     @NotNull
     @Column(name = "id_product")
     private Long idProduct;
+
 
     @JoinColumn(name = "id_user", insertable = false, updatable = false)
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
