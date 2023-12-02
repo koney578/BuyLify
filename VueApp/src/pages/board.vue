@@ -47,7 +47,6 @@ interface Product {
   description: string,
   category: Category,
   createdAt: Date,
-  isOpen: Boolean,
 }
 
 const defaultProduct = {
@@ -58,7 +57,6 @@ const defaultProduct = {
   description: "",
   category: noCategory,
   createdAt: new Date(),
-  isOpen: false,
 }
 
 const isProductDetailsOpen = ref(false)
@@ -67,13 +65,11 @@ const selectedProduct: Ref<Product> = ref<Product>(defaultProduct)
 
 const showProductDetails = (product: Product) => {
   selectedProduct.value = product
-  selectedProduct.value.isOpen = true
   isProductDetailsOpen.value = true
 }
 
 const closeProductDetails = () => {
   isProductDetailsOpen.value = false
-  selectedProduct.value.isOpen = true
 }
 
 
@@ -193,6 +189,7 @@ const filterPosts = async () => {
                         :description="selectedProduct.description"
                         :created-at="selectedProduct.createdAt"
                         :is-open="selectedProduct.isOpen"
+                        :closeModal="closeProductDetails"
       />
     </div>
   </div>
