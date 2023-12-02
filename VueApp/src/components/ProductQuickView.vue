@@ -25,6 +25,7 @@ interface Product {
   category: Category,
   createdAt: Date,
   closeModal: Function,
+  photo: any,
 }
 
 const props = defineProps<Product>()
@@ -51,7 +52,7 @@ const props = defineProps<Product>()
 
                 <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
                   <div class="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
-                    <img src="https://krita-artists.org/uploads/default/original/3X/f/3/f35a3a762b8661b3c7fd98e3e3cb29e513b845f5.jpeg" alt="" class="object-cover object-center" />
+                    <img :src="props.photo" alt="" class="object-cover object-center" />
                   </div>
                   <div class="sm:col-span-8 lg:col-span-7">
                     <h2 class="text-2xl font-bold text-gray-900 sm:pr-12">{{ props.name }}</h2>
