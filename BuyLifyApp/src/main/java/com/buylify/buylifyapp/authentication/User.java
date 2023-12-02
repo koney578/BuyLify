@@ -1,5 +1,5 @@
 package com.buylify.buylifyapp.authentication;
-import com.buylify.buylifyapp.models.UserType;
+import com.buylify.buylifyapp.userType.UserType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.Getter;
