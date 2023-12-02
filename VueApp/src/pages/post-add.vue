@@ -134,15 +134,22 @@ const addProduct = async () => {
   }
 
   const router = useRouter()
+  const blob = new Blob([JSON.stringify(product)], {type: 'application/json'})
+  const formData = new FormData();
+  formData.append('post', blob);
+  formData.append('file', product.photos);
   const data = await $fetch('http://localhost:8080/api/products', {
     method: 'POST',
-    body: product,
+    body: formData,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
-  console.log(product)
 
   await router.push('/board')
 }
+
+const handleFileChange = (event: any) => {
+  product.photos = event.target.files[0];
+};
 </script>
 
 <template>
@@ -272,7 +279,9 @@ const addProduct = async () => {
                   <label for="photos"
                          class="cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                     <span>Wybierz plik</span>
-                    <input v-on:change="product.photos" id="photos" name="photos" type="file" class="sr-only"/>
+<!--                    <input v-on:change="post.photos" id="photos" name="photos" type="file" class="sr-only"/>-->
+                    <input v-on:change="handleFileChange" id="photos" name="photos" type="file" class="sr-only"/>
+
                   </label>
                   <p class="pl-1">lub przenieś</p>
                 </div>
