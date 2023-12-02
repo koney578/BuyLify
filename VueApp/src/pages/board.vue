@@ -5,6 +5,7 @@ import {CheckIcon} from "@heroicons/vue/20/solid";
 
 import {useAuthStore} from "~/stores/auth";
 import SinglePost from "~/components/singlePost.vue";
+import ProductQuickView from "~/components/ProductQuickView.vue";
 
 const auth = useAuthStore()
 const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
@@ -37,17 +38,46 @@ watch(selected, (newValue) => {
 const {data: products} = await useFetch<Product[]>('http://localhost:8080/api/products', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
-console.log(products)
 
 interface Product {
   id: number,
   name: string,
   price: number,
+  count: number,
   description: string,
   photo: string,
   category: Category,
   createdAt: Date,
+  isOpen: Boolean,
 }
+
+const defaultProduct = {
+  id: 0,
+  name: "",
+  price: 0,
+  count: 0,
+  description: "",
+  category: noCategory,
+  createdAt: new Date(),
+  isOpen: false,
+}
+
+const isProductDetailsOpen = ref(false)
+const selectedProduct: Ref<Product> = ref<Product>(defaultProduct)
+
+
+const showProductDetails = (product: Product) => {
+  selectedProduct.value = product
+  selectedProduct.value.isOpen = true
+  isProductDetailsOpen.value = true
+}
+
+const closeProductDetails = () => {
+  isProductDetailsOpen.value = false
+  selectedProduct.value.isOpen = true
+}
+
+
 
 const filterPosts = async () => {
   const router = useRouter()
@@ -56,8 +86,6 @@ const filterPosts = async () => {
     body: searchRestriction,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
-
-
 
 
   await router.push('/')
@@ -149,12 +177,25 @@ const filterPosts = async () => {
       <single-post v-for="product in products"
                    :key="product.id"
                    :category="product.category"
-                   :created-date="product.createdAt"
+                   :created-at="product.createdAt"
                    :description="product.description"
                    :photo="product.photo"
                    :id="product.id"
                    :name="product.name"
                    :price="product.price"
+                   :count="product.count"
+                   @click="showProductDetails(product)"
+      />
+      <ProductQuickView v-if="isProductDetailsOpen"
+                        @close="closeProductDetails"
+                        :id="selectedProduct.id"
+                        :name="selectedProduct.name"
+                        :price="selectedProduct.price"
+                        :count="selectedProduct.count"
+                        :category="selectedProduct.category"
+                        :description="selectedProduct.description"
+                        :created-at="selectedProduct.createdAt"
+                        :is-open="selectedProduct.isOpen"
       />
     </div>
   </div>
