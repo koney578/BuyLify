@@ -45,6 +45,7 @@ interface Product {
   price: number,
   count: number,
   description: string,
+  photo: string,
   category: Category,
   createdAt: Date,
   isOpen: Boolean,
@@ -85,6 +86,7 @@ const filterPosts = async () => {
     body: searchRestriction,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
+
 
   await router.push('/')
 }
@@ -177,6 +179,7 @@ const filterPosts = async () => {
                    :category="product.category"
                    :created-at="product.createdAt"
                    :description="product.description"
+                   :photo="product.photo"
                    :id="product.id"
                    :name="product.name"
                    :price="product.price"
