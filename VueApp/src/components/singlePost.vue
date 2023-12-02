@@ -13,6 +13,7 @@ interface Product {
   name: string,
   price: number,
   description: string,
+  photo: string,
   category: Category,
   createdDate: Date,
 }
@@ -31,6 +32,7 @@ const formatDateTime = (dateTimeString: Date) => {
   return dateTime.toLocaleString('pl-PL', options);
 };
 
+console.log(props.photo)
 </script>
 
 <template>
@@ -39,7 +41,7 @@ const formatDateTime = (dateTimeString: Date) => {
     <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl">
       <div class="w-full">
         <img
-            src="https://krita-artists.org/uploads/default/original/3X/f/3/f35a3a762b8661b3c7fd98e3e3cb29e513b845f5.jpeg"
+            :src="props.photo"
             alt="Główne zdjęcie"
             class=" h-auto w-1/2"
         />

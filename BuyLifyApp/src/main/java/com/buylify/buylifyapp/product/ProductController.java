@@ -1,11 +1,14 @@
 package com.buylify.buylifyapp.product;
 
+import com.buylify.buylifyapp.firebase.FirebaseFileService;
 import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -14,11 +17,15 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService;
+    private final FirebaseFileService firebaseFileService;
 
     @PostMapping
-    public void addProduct(@RequestBody CreateProductDto dto, Authentication authentication) {
+    public void addProduct(@RequestPart("post") CreateProductDto post,
+                           @RequestPart("file") MultipartFile file,
+                           Authentication authentication) throws IOException {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
-        productService.addProduct(dto, userId);
+        String fileName = firebaseFileService.saveTest(file);
+        productService.addProduct(post, fileName, userId);
     }
 
     @GetMapping

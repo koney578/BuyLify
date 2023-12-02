@@ -44,6 +44,7 @@ interface Product {
   name: string,
   price: number,
   description: string,
+  photo: string,
   category: Category,
   createdAt: Date,
 }
@@ -55,7 +56,6 @@ const filterPosts = async () => {
     body: searchRestriction,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
-
 
 
 
@@ -151,6 +151,7 @@ const filterPosts = async () => {
                    :category="product.category"
                    :created-date="product.createdAt"
                    :description="product.description"
+                   :photo="product.photo"
                    :id="product.id"
                    :name="product.name"
                    :price="product.price"
