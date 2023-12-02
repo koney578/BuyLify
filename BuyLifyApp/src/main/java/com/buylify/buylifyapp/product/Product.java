@@ -42,6 +42,8 @@ public class Product {
     @NotNull
     private int priority;
 
+    private String photo;
+
     @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime createdAt;

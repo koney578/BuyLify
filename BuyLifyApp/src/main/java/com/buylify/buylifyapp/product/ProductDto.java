@@ -18,6 +18,8 @@ public class ProductDto {
 
     private String description;
 
+    private String photo;
+
     private Category category;
 
     private LocalDateTime createdAt;
