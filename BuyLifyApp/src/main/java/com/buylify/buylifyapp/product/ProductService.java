@@ -10,11 +10,17 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProductService {
 
+    public static final String IMAGE_PREFIX = "https://firebasestorage.googleapis.com/v0/b/projekt-zespolowy-5362c.appspot.com/o/";
+    public static final String MEDIA_PARAM = "?alt=media&token=";
+
+
     private final ProductRepository productRepository;
     private final ProductMapper mapper;
 
-    public void addProduct(CreateProductDto dto, Long userId) {
-        Product product = mapper.toEntity(dto);
+    public void addProduct(CreateProductDto post, String fileName, Long userId) {
+        Product product = mapper.toEntity(post);
+        String imageUrl = IMAGE_PREFIX + fileName + MEDIA_PARAM + fileName;
+        product.setPhoto(imageUrl);
         product.setActive(true);
         product.setIdUser(userId);
         productRepository.save(product);
