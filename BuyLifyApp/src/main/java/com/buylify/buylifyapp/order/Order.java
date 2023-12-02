@@ -1,16 +1,18 @@
-package com.buylify.buylifyapp.models;
+package com.buylify.buylifyapp.order;
 
+import com.buylify.buylifyapp.address.Address;
 import com.buylify.buylifyapp.authentication.User;
 import com.buylify.buylifyapp.deliveryMethod.DeliveryMethod;
 import com.buylify.buylifyapp.orderStatus.OrderStatus;
 import com.buylify.buylifyapp.paymentMethod.PaymentMethod;
 import com.buylify.buylifyapp.product.Product;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 
 @Entity

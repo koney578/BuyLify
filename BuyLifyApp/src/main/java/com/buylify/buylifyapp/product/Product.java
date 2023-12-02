@@ -2,7 +2,7 @@ package com.buylify.buylifyapp.product;
 
 import com.buylify.buylifyapp.authentication.User;
 import com.buylify.buylifyapp.category.Category;
-import com.buylify.buylifyapp.models.Discount;
+import com.buylify.buylifyapp.discount.Discount;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;

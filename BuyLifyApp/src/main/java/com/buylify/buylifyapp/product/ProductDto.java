@@ -24,6 +24,8 @@ public class ProductDto {
 
     private LocalDateTime createdAt;
 
+    private int count;
+
 //    do zmiany
 //    private byte[] photo;
 

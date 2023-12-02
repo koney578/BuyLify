@@ -3,7 +3,7 @@ interface User {
 }
 
 export const useAuthStore = defineStore('auth', () => {
-    const token = ref('')
+    const token = useLocalStorage('auth: token', '')
 
     const login = async (username: string, password: string) => {
         const data = await $fetch<{ token: string, user: User }>('http://localhost:8080/api/login', {

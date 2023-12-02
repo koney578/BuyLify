@@ -1,4 +1,4 @@
-package com.buylify.buylifyapp.models;
+package com.buylify.buylifyapp.subscription;
 
 import com.buylify.buylifyapp.authentication.User;
 import jakarta.persistence.*;
@@ -37,5 +37,4 @@ public class Subscription {
     @NotNull
     @Column(name = "id_user")
     private Long idUser;
-
 }

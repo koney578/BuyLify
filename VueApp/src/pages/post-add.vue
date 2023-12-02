@@ -22,9 +22,10 @@ const noCategory: Category = {
 
 const selected = ref<Category>(categories.value?.[0] ?? noCategory)
 
-const post = reactive({
+const product = reactive({
   name: '',
   price: '',
+  count: '',
   description: '',
   categoryId: selected.value.id,
   photos: '',
@@ -32,34 +33,123 @@ const post = reactive({
 
 
 watch(selected, (newValue) => {
-  post.categoryId = newValue.id;
+  product.categoryId = newValue.id;
 });
 
-const addPost = async () => {
-  if (!post.name || !post.price || !post.description) {
-    console.error('Wszystkie pola są wymagane')
+let productNameError = "";
+let productPriceError = "";
+let productCountError = "";
+let productDescriptionError = "";
+
+
+function validateProductName() {
+  if (product.name !== "") {
+    if (product.name.length < 3) {
+      productNameError = "Nazwa musi składać się przynajmniej z 3 znaków!";
+      return false;
+    } else {
+      productNameError = "";
+      return true;
+    }
+  } else {
+    productNameError = "";
+  }
+}
+
+const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/;
+
+function validateProductPrice() {
+  if (product.price === "") {
+    productPriceError = "";
+    return false;
+  }
+  else if (!pricePattern.test(product.price)) {
+    productPriceError = "Zły format ceny! Przykład: 21.15";
+    return false;
+  } else {
+    productPriceError = "";
+    return true;
+  }
+}
+
+const countPattern = /^[0-9]+$/;
+
+
+function validateProductCount() {
+  if (product.count === "") {
+    productCountError = "";
+    return false;
+  }
+  else if (!countPattern.test(product.count)) {
+    productCountError = "Nie poprawna wartość!";
+    return false;
+  } else {
+    productCountError = "";
+    return true;
+  }
+}
+
+function validateProductDescription() {
+  if (product.description.length > 500) {
+    productDescriptionError = "Opis musi mieścić się w 500 znakach!";
+    return false;
+  } else {
+    productDescriptionError = "";
+    return true;
+  }
+}
+
+watch(product, () => {
+  validateProductName();
+  validateProductDescription();
+  validateProductCount();
+  validateProductPrice();
+});
+
+
+const addProduct = async () => {
+  if (!product.name || !product.price || !product.description) {
+    console.error('Wszystkie pola są wymagane!')
+    return
+  }
+
+  if (!validateProductName()) {
+    console.error(productNameError)
+    return
+  }
+
+  if (!validateProductPrice) {
+    console.error(productPriceError)
+    return
+  }
+
+  if (!validateProductCount()) {
+    console.error(productCountError)
+    return
+  }
+
+  if (!validateProductDescription()) {
+    console.error(productDescriptionError)
     return
   }
 
   const router = useRouter()
-  const blob = new Blob([JSON.stringify(post)], {type: 'application/json'})
+  const blob = new Blob([JSON.stringify(product)], {type: 'application/json'})
   const formData = new FormData();
   formData.append('post', blob);
-  formData.append('file', post.photos);
-  console.log(formData);
+  formData.append('file', product.photos);
   const data = await $fetch('http://localhost:8080/api/products', {
     method: 'POST',
     body: formData,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
-  console.log(post)
 
-  await router.push('/')
+  await router.push('/board')
 }
 
 const handleFileChange = (event) => {
   const file = event.target.files[0];
-  post.photos = file;
+  product.photos = file;
 };
 </script>
 
@@ -71,13 +161,16 @@ const handleFileChange = (event) => {
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form @submit.prevent="addPost" class="space-y-6" action="#" method="POST">
+      <form @submit.prevent="addProduct" class="space-y-6" action="#" method="POST">
         <div>
           <label for="post-name" class="block text-sm font-medium leading-6 text-gray-900">
             Wpisz nazwę ogłoszenia
           </label>
           <div class="mt-2">
-            <input v-model="post.name" id="post-name" name="post-name" type="text" autocomplete="post-name"
+            <div v-if="productNameError" class="font-semibold text-rose-600">
+              {{ productNameError }}
+            </div>
+            <input v-model="product.name" id="post-name" name="post-name" type="text" autocomplete="post-name"
                    required=""
                    placeholder="Nazwa Twojego ogłoszenia"
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
@@ -122,14 +215,32 @@ const handleFileChange = (event) => {
 
 
         <div>
+          <label for="count" class="block text-sm font-medium leading-6 text-gray-900">Ilość</label>
+          <div v-if="productCountError" class="font-semibold text-rose-600">
+            {{ productCountError }}
+          </div>
+          <div class="mt-2 rounded-md shadow-sm">
+            <input v-model="product.count" type="text" name="count" id="count"
+                   class="block w-full rounded-md border-0 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"
+                   placeholder="0"
+            />
+          </div>
+        </div>
+
+
+        <div>
           <label for="price" class="block text-sm font-medium leading-6 text-gray-900">Cena</label>
+          <div v-if="productPriceError" class="font-semibold text-rose-600 mt-2">
+            {{ productPriceError }}
+          </div>
           <div class="relative mt-2 rounded-md shadow-sm">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
               <span class="text-gray-500 sm:text-sm">$</span>
             </div>
-            <input v-model="post.price" type="text" name="price" id="price"
+            <input v-model="product.price" type="text" name="price" id="price"
                    class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
-                   placeholder="0.00"/>
+                   placeholder="0.00"
+            />
             <div class="absolute inset-y-0 right-0 flex items-center">
               <label for="currency" class="sr-only">waluta</label>
               <select id="currency" name="currency"
@@ -148,7 +259,10 @@ const handleFileChange = (event) => {
             <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Opis</label>
           </div>
           <div class="mt-2">
-            <textarea v-model="post.description" id="description" name="description" type="text"
+            <div v-if="productDescriptionError" class="font-semibold text-rose-600">
+              {{ productDescriptionError }}
+            </div>
+            <textarea v-model="product.description" id="description" name="description" type="text"
                       autocomplete="description"
                       required=""
                       placeholder="Dodaj opis Twojego ogłoszenia"
@@ -167,7 +281,7 @@ const handleFileChange = (event) => {
                          class="cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                     <span>Wybierz plik</span>
 <!--                    <input v-on:change="post.photos" id="photos" name="photos" type="file" class="sr-only"/>-->
-                    <input @change="handleFileChange" id="photos" name="photos" type="file" class="sr-only"/>
+                    <input v-on:change="handleFileChange" id="photos" name="photos" type="file" class="sr-only"/>
 
                   </label>
                   <p class="pl-1">lub przenieś</p>

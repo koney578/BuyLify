@@ -4,10 +4,11 @@ export default defineNuxtConfig({
     ssr: false,
     devtools: {enabled: true},
     modules: [
-        '@unocss/nuxt',
-        '@nuxt/ui',
-        '@tailwindcss/forms',
-        '@pinia/nuxt'
+      '@unocss/nuxt',
+      '@nuxt/ui',
+      '@tailwindcss/forms',
+      '@pinia/nuxt',
+      '@vueuse/nuxt',
     ],
 
     pinia: {
