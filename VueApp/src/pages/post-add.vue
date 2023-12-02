@@ -147,9 +147,8 @@ const addProduct = async () => {
   await router.push('/board')
 }
 
-const handleFileChange = (event) => {
-  const file = event.target.files[0];
-  product.photos = file;
+const handleFileChange = (event: any) => {
+  product.photos = event.target.files[0];
 };
 </script>
 
