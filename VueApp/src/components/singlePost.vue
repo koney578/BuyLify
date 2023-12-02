@@ -12,9 +12,10 @@ interface Product {
   id: number,
   name: string,
   price: number,
+  count: number,
   description: string,
   category: Category,
-  createdDate: Date,
+  createdAt: Date,
 }
 
 const props = defineProps<Product>()
@@ -50,7 +51,7 @@ const formatDateTime = (dateTimeString: Date) => {
         </div>
         <div class="flex mt-2rem justify-between">
           <p class="text-xl italic mr-1rem">{{ props.price }} zł</p>
-          <p>Data dodania: {{ formatDateTime(props.createdDate) }}</p>
+          <p>Data dodania: {{ formatDateTime(props.createdAt) }}</p>
         </div>
       </div>
     </div>
