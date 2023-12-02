@@ -58,6 +58,7 @@ const defaultProduct = {
   description: "",
   category: noCategory,
   createdAt: new Date(),
+  photo: '',
 }
 
 const isProductDetailsOpen = ref(false)
@@ -172,14 +173,14 @@ const filterPosts = async () => {
     <div class="sm:mx-auto sm:w-full sm:max-w-3xl">
       <single-post v-for="product in products"
                    :key="product.id"
-                   :category="product.category"
-                   :created-at="product.createdAt"
-                   :description="product.description"
-                   :photo="product.photo"
                    :id="product.id"
                    :name="product.name"
                    :price="product.price"
                    :count="product.count"
+                   :category="product.category"
+                   :description="product.description"
+                   :photo="product.photo"
+                   :created-at="product.createdAt"
                    @click="showProductDetails(product)"
       />
       <ProductQuickView v-if="isProductDetailsOpen"
@@ -190,6 +191,7 @@ const filterPosts = async () => {
                         :count="selectedProduct.count"
                         :category="selectedProduct.category"
                         :description="selectedProduct.description"
+                        :photo="selectedProduct.photo"
                         :created-at="selectedProduct.createdAt"
                         :is-open="selectedProduct.isOpen"
                         :closeModal="closeProductDetails"
