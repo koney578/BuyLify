@@ -48,7 +48,6 @@ const props = defineProps<Product>()
                   <span class="sr-only">Close</span>
                   <XMarkIcon class="h-6 w-6" aria-hidden="true" />
                 </button>
-<!--                TODO jak klikniesz przycisk to potem nic sie nie otwiera, naprawic; brak animacji zamykania -->
 
                 <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
                   <div class="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
@@ -73,7 +72,7 @@ const props = defineProps<Product>()
                         </div>
 
                         <div class="mt-10">
-                          <div class="flex items-center justify-between">
+                          <div class="items-center justify-between">
                             <h4 class="text-sm font-medium text-gray-900">Opis produktu</h4>
                             <p class="text-2xl text-gray-900">{{ props.description }}</p>
                           </div>
