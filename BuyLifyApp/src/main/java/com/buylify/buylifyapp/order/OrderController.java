@@ -1,9 +1,9 @@
 package com.buylify.buylifyapp.order;
 
+import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -13,6 +13,15 @@ import java.util.List;
 public class OrderController {
 
     private final OrderService orderService;
+
+    @PostMapping
+    public void addOrder(@RequestBody CreateOrderDto body,
+                         Authentication authentication){
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        orderService.addOrder(body,userId);
+
+    }
+
 
     @GetMapping
     public List<Order> getAllOrders() {
