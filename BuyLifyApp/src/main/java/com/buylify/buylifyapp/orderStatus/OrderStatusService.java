@@ -14,4 +14,19 @@ public class OrderStatusService {
     public List<OrderStatus> getAllOrderStatuses() {
         return orderStatusRepository.findAll();
     }
+
+    public void addOrderStatus(OrderStatus orderStatus) {
+        orderStatusRepository.save(orderStatus);
+    }
+
+    public void deleteOrderStatus(Long id) {
+        orderStatusRepository.deleteById(id);
+    }
+
+
+    public void editOrderStatus(Long id, OrderStatus orderStatusToEdit) {
+        OrderStatus orderStatus = orderStatusRepository.findById(id).orElseThrow();
+        orderStatus.setName(orderStatusToEdit.getName());
+        orderStatusRepository.save(orderStatus);
+    }
 }
