@@ -189,14 +189,6 @@ const filterPosts = async () => {
       />
       <ProductQuickView v-if="isProductDetailsOpen"
                         @close="closeProductDetails"
-                        :id="selectedProduct.id"
-                        :name="selectedProduct.name"
-                        :price="selectedProduct.price"
-                        :count="selectedProduct.count"
-                        :category="selectedProduct.category"
-                        :description="selectedProduct.description"
-                        :photo="selectedProduct.photo"
-                        :created-at="selectedProduct.createdAt"
                         :is-open="selectedProduct.isOpen"
                         :closeModal="closeProductDetails"
       />

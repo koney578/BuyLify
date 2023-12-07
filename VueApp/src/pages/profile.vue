@@ -1,3 +1,7 @@
+<script setup>
+import {PhotoIcon, UserCircleIcon} from '@heroicons/vue/24/solid'
+</script>
+
 <template>
   <div class="w-2/3 m-auto mt-2rem">
     <form>
@@ -220,7 +224,3 @@
     </form>
   </div>
 </template>
-
-<script setup>
-import {PhotoIcon, UserCircleIcon} from '@heroicons/vue/24/solid'
-</script>
