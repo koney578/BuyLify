@@ -1,9 +1,8 @@
 package com.buylify.buylifyapp.category;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,5 +16,23 @@ public class CategoryController {
     @GetMapping
     public List<CategoryDto> getAllCategories() {
         return categoryService.getAllCategories();
+    }
+
+    @PreAuthorize("hasAuthority('administrator')")
+    @PostMapping
+    public void addCategory(CategoryDto categoryDto) {
+        categoryService.addCategory(categoryDto);
+    }
+
+    @PreAuthorize("hasAuthority('administrator')")
+    @DeleteMapping("/{id}")
+    public void deleteCategory(@PathVariable("id") Long id) {
+        categoryService.deleteCategory(id);
+    }
+
+    @PreAuthorize("hasAuthority('administrator')")
+    @PutMapping("/{id}")
+    public void editCategory(@PathVariable("id") Long id, CategoryDto categoryDto) {
+        categoryService.editCategory(id, categoryDto);
     }
 }

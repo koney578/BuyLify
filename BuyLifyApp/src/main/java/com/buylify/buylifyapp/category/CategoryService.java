@@ -19,4 +19,18 @@ public class CategoryService {
                 .map(categoryMapper::toDto)
                 .toList();
     }
+
+    public void addCategory(CategoryDto categoryDto) {
+        categoryRepository.save(categoryMapper.toEntity(categoryDto));
+    }
+
+    public void deleteCategory(Long id) {
+        categoryRepository.deleteById(id);
+    }
+
+    public void editCategory(Long id, CategoryDto categoryDto) {
+        Category category = categoryRepository.findById(id).orElseThrow();
+        category.setName(categoryDto.getName());
+        categoryRepository.save(category);
+    }
 }
