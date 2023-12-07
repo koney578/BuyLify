@@ -6,8 +6,10 @@ import {CheckIcon} from "@heroicons/vue/20/solid";
 import {useAuthStore} from "~/stores/auth";
 import SinglePost from "~/components/singlePost.vue";
 import ProductQuickView from "~/components/ProductQuickView.vue";
+import {useProductStore} from "~/stores/product";
 
 const auth = useAuthStore()
+const productStore = useProductStore()
 const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
@@ -67,6 +69,8 @@ const selectedProduct: Ref<Product> = ref<Product>(defaultProduct)
 
 const showProductDetails = (product: Product) => {
   selectedProduct.value = product
+
+  productStore.setProduct(product)
   isProductDetailsOpen.value = true
 }
 
@@ -154,9 +158,9 @@ const filterPosts = async () => {
                                v-slot="{ active, selected }">
                   <li :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-3 pr-9']">
                     <div class="flex items-center">
-                      <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">{{
-                          category.name
-                        }}</span>
+                      <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
+                        {{ category.name }}
+                      </span>
                     </div>
                     <span v-if="selected"
                           :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
