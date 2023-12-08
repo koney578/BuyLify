@@ -21,6 +21,7 @@ public class CategoryService {
     }
 
     public void addCategory(CategoryDto categoryDto) {
+        System.out.println(categoryDto.getName());
         categoryRepository.save(categoryMapper.toEntity(categoryDto));
     }
 

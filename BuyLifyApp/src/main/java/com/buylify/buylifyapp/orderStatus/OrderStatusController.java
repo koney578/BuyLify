@@ -20,7 +20,7 @@ public class OrderStatusController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PostMapping
-    public void addOrderStatus(OrderStatus orderStatus) {
+    public void addOrderStatus(@RequestBody OrderStatus orderStatus) {
         orderStatusService.addOrderStatus(orderStatus);
     }
 
@@ -32,7 +32,7 @@ public class OrderStatusController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PutMapping("/{id}")
-    public void editOrderStatus(@PathVariable("id") Long id, OrderStatus orderStatusToEdit) {
+    public void editOrderStatus(@PathVariable("id") Long id, @RequestBody OrderStatus orderStatusToEdit) {
         orderStatusService.editOrderStatus(id, orderStatusToEdit);
     }
 }
