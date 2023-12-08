@@ -33,19 +33,19 @@ public class Notification {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    @JoinColumn(name = "id_user", insertable = false, updatable = false)
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
 
-    @NotNull
-    @Column(name = "id_user")
-    private Long idUser;
+//    @NotNull
+//    @Column(name = "id_user")
+//    private Long idUser;
 
-    @JoinColumn(name = "id_notification_type", insertable = false, updatable = false)
+    @JoinColumn(name = "id_notification_type", referencedColumnName = "id")
     @ManyToOne(targetEntity = NotificationType.class, fetch = FetchType.EAGER)
     private NotificationType notificationType;
 
-    @NotNull
-    @Column(name = "id_notification_type")
-    private Long idType;
+//    @NotNull
+//    @Column(name = "id_notification_type")
+//    private Long idType;
 }
