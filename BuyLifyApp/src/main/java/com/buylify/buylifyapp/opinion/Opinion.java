@@ -30,19 +30,19 @@ public class Opinion {
     @Size(max = 400)
     private String description;
 
-    @JoinColumn(name = "id_user_sender", insertable = false, updatable = false)
+    @JoinColumn(name = "id_user_sender", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User userSender;
 
-    @NotNull
-    @Column(name = "id_user_sender")
-    private Long idUserSender;
+//    @NotNull
+//    @Column(name = "id_user_sender")
+//    private Long idUserSender;
 
-    @JoinColumn(name = "id_user_receiver", insertable = false, updatable = false)
+    @JoinColumn(name = "id_user_receiver", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User userReceiver;
 
-    @NotNull
-    @Column(name = "id_user_receiver")
-    private Long idUserReceiver;
+//    @NotNull
+//    @Column(name = "id_user_receiver")
+//    private Long idUserReceiver;
 }
