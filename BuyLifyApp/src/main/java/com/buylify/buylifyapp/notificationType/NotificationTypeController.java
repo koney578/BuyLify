@@ -20,7 +20,7 @@ public class NotificationTypeController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PostMapping
-    public void addNotificationType(NotificationType notificationType) {
+    public void addNotificationType(@RequestBody NotificationType notificationType) {
         notificationTypeService.addNotificationType(notificationType);
     }
 
@@ -32,7 +32,7 @@ public class NotificationTypeController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PutMapping("/{id}")
-    public void editNotificationType(@PathVariable("id") Long id, NotificationType notificationTypeToEdit) {
+    public void editNotificationType(@PathVariable("id") Long id, @RequestBody NotificationType notificationTypeToEdit) {
         notificationTypeService.editNotificationType(id, notificationTypeToEdit);
     }
 }
