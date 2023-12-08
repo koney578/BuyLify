@@ -1,5 +1,7 @@
 package com.buylify.buylifyapp.product;
 
+import com.buylify.buylifyapp.category.Category;
+import com.buylify.buylifyapp.category.CategoryRepository;
 import com.buylify.buylifyapp.mappers.ProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -15,12 +17,16 @@ public class ProductService {
 
 
     private final ProductRepository productRepository;
+    private final CategoryRepository categoryRepository;
     private final ProductMapper mapper;
 
     public void addProduct(CreateProductDto post, String fileName, Long userId) {
         Product product = mapper.toEntity(post);
         String imageUrl = IMAGE_PREFIX + fileName + MEDIA_PARAM + fileName;
+
+        Category category = categoryRepository.getReferenceById(post.getCategoryId());
         product.setPhoto(imageUrl);
+        product.setCategory(category);
         product.setActive(true);
         product.setIdUser(userId);
         productRepository.save(product);
