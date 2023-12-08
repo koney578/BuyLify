@@ -20,7 +20,7 @@ public class PaymentMethodController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PostMapping
-    public void addPaymentMethod(PaymentMethod paymentMethod) {
+    public void addPaymentMethod(@RequestBody PaymentMethod paymentMethod) {
         paymentMethodService.addPaymentMethod(paymentMethod);
     }
 
@@ -32,7 +32,7 @@ public class PaymentMethodController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PutMapping("/{id}")
-    public void editPaymentMethod(@PathVariable("id") Long id, PaymentMethod paymentMethodToEdit) {
+    public void editPaymentMethod(@PathVariable("id") Long id, @RequestBody PaymentMethod paymentMethodToEdit) {
         paymentMethodService.editPaymentMethod(id, paymentMethodToEdit);
     }
 }

@@ -2,6 +2,7 @@ package com.buylify.buylifyapp.category;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,7 +21,7 @@ public class CategoryController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PostMapping
-    public void addCategory(CategoryDto categoryDto) {
+    public void addCategory(@RequestBody @Validated CategoryDto categoryDto) {
         categoryService.addCategory(categoryDto);
     }
 
@@ -32,7 +33,7 @@ public class CategoryController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PutMapping("/{id}")
-    public void editCategory(@PathVariable("id") Long id, CategoryDto categoryDto) {
+    public void editCategory(@PathVariable("id") Long id, @RequestBody @Validated CategoryDto categoryDto) {
         categoryService.editCategory(id, categoryDto);
     }
 }
