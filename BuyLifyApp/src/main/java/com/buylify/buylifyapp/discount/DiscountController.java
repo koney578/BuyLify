@@ -20,7 +20,7 @@ public class DiscountController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PostMapping
-    public void addDiscount(Discount discount) {
+    public void addDiscount(@RequestBody Discount discount) {
         discountService.addDiscount(discount);
     }
 
@@ -32,7 +32,7 @@ public class DiscountController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PutMapping("/{id}")
-    public void editDiscount(@PathVariable("id") Long id, Discount discountToEdit) {
+    public void editDiscount(@PathVariable("id") Long id, @RequestBody Discount discountToEdit) {
         discountService.editDiscount(id, discountToEdit);
     }
 }

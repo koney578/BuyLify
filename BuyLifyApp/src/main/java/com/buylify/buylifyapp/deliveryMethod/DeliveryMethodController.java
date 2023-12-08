@@ -20,7 +20,7 @@ public class DeliveryMethodController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PostMapping
-    public void addDeliveryMethod(DeliveryMethod deliveryMethod) {
+    public void addDeliveryMethod(@RequestBody DeliveryMethod deliveryMethod) {
         deliveryMethodService.addDeliveryMethod(deliveryMethod);
     }
 
@@ -32,7 +32,7 @@ public class DeliveryMethodController {
 
     @PreAuthorize("hasAuthority('administrator')")
     @PutMapping("/{id}")
-    public void editDeliveryMethod(@PathVariable("id") Long id, DeliveryMethod deliveryMethodToEdit) {
+    public void editDeliveryMethod(@PathVariable("id") Long id, @RequestBody DeliveryMethod deliveryMethodToEdit) {
         deliveryMethodService.editDeliveryMethod(id, deliveryMethodToEdit);
     }
 }
