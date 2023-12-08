@@ -32,20 +32,20 @@ public class Bid {
     private LocalDateTime createdAt;
 
 
-    @JoinColumn(name = "id_product", insertable = false, updatable = false)
+    @JoinColumn(name = "id_product", referencedColumnName = "id")
     @ManyToOne(targetEntity = Product.class, fetch = FetchType.EAGER)
     private Product product;
 
-    @NotNull
-    @Column(name = "id_product")
-    private Long idProduct;
+//    @NotNull
+//    @Column(name = "id_product")
+//    private Long idProduct;
 
 
-    @JoinColumn(name = "id_user", insertable = false, updatable = false)
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
 
-    @NotNull
-    @Column(name = "id_user")
-    private Long idUser;
+//    @NotNull
+//    @Column(name = "id_user")
+//    private Long idUser;
 }

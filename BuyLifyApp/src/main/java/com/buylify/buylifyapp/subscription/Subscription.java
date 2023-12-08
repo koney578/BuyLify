@@ -30,11 +30,11 @@ public class Subscription {
     @CreationTimestamp
     private LocalDateTime endAt;
 
-    @JoinColumn(name = "id_user", insertable = false, updatable = false)
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
 
-    @NotNull
-    @Column(name = "id_user")
-    private Long idUser;
+//    @NotNull
+//    @Column(name = "id_user")
+//    private Long idUser;
 }

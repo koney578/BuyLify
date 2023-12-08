@@ -59,23 +59,23 @@ public class Product {
 //    @Column(name = "category_id")
 //    private Long categoryId;
 
-    @JoinColumn(name = "id_discount", insertable = false, updatable = false)
+    @JoinColumn(name = "id_discount", referencedColumnName = "id")
     @ManyToOne(targetEntity = Discount.class, fetch = FetchType.EAGER)
     private Discount discount;
 
-    @Column(name = "id_discount")
-    private Long idDiscount;
+//    @Column(name = "id_discount")
+//    private Long idDiscount;
 
     @NotNull
     private boolean isActive;
 
     private LocalDateTime auctionEndsAt;
 
-    @JoinColumn(name = "id_user", insertable = false, updatable = false)
+    @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
 
-    @NotNull
-    @Column(name = "id_user")
-    private Long idUser;
+//    @NotNull
+//    @Column(name = "id_user")
+//    private Long idUser;
 }
