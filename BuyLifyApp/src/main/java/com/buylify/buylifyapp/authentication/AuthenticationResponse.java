@@ -1,4 +1,4 @@
 package com.buylify.buylifyapp.authentication;
 
-public record AuthenticationResponse(String token) {
+public record AuthenticationResponse(String token, UserDto user) {
 }

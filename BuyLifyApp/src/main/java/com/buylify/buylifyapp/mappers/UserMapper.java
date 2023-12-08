@@ -1,6 +1,7 @@
 package com.buylify.buylifyapp.mappers;
 
 import com.buylify.buylifyapp.authentication.User;
+import com.buylify.buylifyapp.authentication.RegisterDto;
 import com.buylify.buylifyapp.authentication.UserDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,5 +10,7 @@ import org.mapstruct.Mapping;
 public interface UserMapper {
 
     @Mapping(target = "password", ignore = true)
-    User userDtoToUser(UserDto userDto);
+    User userDtoToUser(RegisterDto registerDto);
+
+    UserDto userToUserDto(User user);
 }
