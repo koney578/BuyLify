@@ -52,12 +52,12 @@ public class Product {
     @UpdateTimestamp
     private LocalDateTime modifiedAt;
 
-    @JoinColumn(name = "category_id", insertable = false, updatable = false)
+    @JoinColumn(name = "category_id", referencedColumnName = "id")
     @ManyToOne(targetEntity = Category.class, fetch = FetchType.EAGER)
     private Category category;
 
-    @Column(name = "category_id")
-    private Long categoryId;
+//    @Column(name = "category_id")
+//    private Long categoryId;
 
     @JoinColumn(name = "id_discount", insertable = false, updatable = false)
     @ManyToOne(targetEntity = Discount.class, fetch = FetchType.EAGER)

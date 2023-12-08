@@ -49,11 +49,11 @@ public class User {
     @NotNull
     private boolean isActive;
 
-    @JoinColumn(name = "id_user_type", insertable = false, updatable = false)
+    @JoinColumn(name = "id_user_type", referencedColumnName = "id")
     @ManyToOne(targetEntity = UserType.class, fetch = FetchType.EAGER)
     private UserType userType;
 
-    @NotNull
-    @Column(name = "id_user_type")
-    private Long idUserType;
+//    @NotNull
+//    @Column(name = "id_user_type")
+//    private Long idUserType;
 }

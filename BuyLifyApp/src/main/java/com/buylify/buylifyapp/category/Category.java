@@ -1,13 +1,11 @@
 package com.buylify.buylifyapp.category;
 
-import com.buylify.buylifyapp.product.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Set;
 
 @Entity
 @Getter
@@ -23,5 +21,4 @@ public class Category {
 
     @NotBlank
     private String name;
-
 }
