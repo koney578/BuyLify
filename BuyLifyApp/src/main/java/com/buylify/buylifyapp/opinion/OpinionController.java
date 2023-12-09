@@ -1,9 +1,9 @@
 package com.buylify.buylifyapp.opinion;
 
+import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,5 +17,13 @@ public class OpinionController {
     @GetMapping
     public List<Opinion> getAllOpinions() {
         return opinionService.getAllOpinions();
+    }
+
+    @PostMapping
+    public void addOpinion(@RequestBody CreateOpinionDto body,
+                           Authentication authentication){
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        opinionService.addOpinion(body,userId);
+
     }
 }
