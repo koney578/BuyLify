@@ -37,4 +37,10 @@ public class ProductController {
     public ProductDto getProductById(@PathVariable("id") Long id) {
         return productService.getProductById(id);
     }
+
+    @GetMapping("/posted")
+    public List<ProductDto> getProductsByLoggedUser(Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        return productService.getProductsByLoggedUser(userId);
+    }
 }

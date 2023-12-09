@@ -1,5 +1,7 @@
 package com.buylify.buylifyapp.product;
 
+import com.buylify.buylifyapp.authentication.User;
+import com.buylify.buylifyapp.authentication.UserRepository;
 import com.buylify.buylifyapp.category.Category;
 import com.buylify.buylifyapp.category.CategoryRepository;
 import com.buylify.buylifyapp.mappers.ProductMapper;
@@ -18,6 +20,7 @@ public class ProductService {
 
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
+    private final UserRepository userRepository;
     private final ProductMapper mapper;
 
     public void addProduct(CreateProductDto post, String fileName, Long userId) {
@@ -25,10 +28,11 @@ public class ProductService {
         String imageUrl = IMAGE_PREFIX + fileName + MEDIA_PARAM + fileName;
 
         Category category = categoryRepository.getReferenceById(post.getCategoryId());
+        User user = userRepository.getReferenceById(userId);
         product.setPhoto(imageUrl);
         product.setCategory(category);
         product.setActive(true);
-        product.setIdUser(userId);
+        product.setUser(user);
         productRepository.save(product);
     }
 
@@ -42,5 +46,12 @@ public class ProductService {
     public ProductDto getProductById(Long id) {
         return mapper.toProductDto(productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Not found")));
+    }
+
+    public List<ProductDto> getProductsByLoggedUser(Long userId) {
+        return productRepository.findProductsByUserId(userId)
+                .stream()
+                .map(mapper::toProductDto)
+                .toList();
     }
 }
