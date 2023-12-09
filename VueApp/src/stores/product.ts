@@ -10,8 +10,8 @@ interface Product {
 }
 
 interface Category {
-    id: number,
-    name: string,
+    id: number;
+    name: string;
 }
 
 export const useProductStore = defineStore({

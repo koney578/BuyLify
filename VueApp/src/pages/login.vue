@@ -46,7 +46,6 @@ const login = async () => {
   await auth.login(user.username, user.password)
       .catch(err => console.error(err.data))
 
-  console.log(auth.token)
   await router.push('/')
 }
 </script>
