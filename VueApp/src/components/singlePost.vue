@@ -4,19 +4,19 @@ import {useAuthStore} from "~/stores/auth";
 import {ListboxOption} from "@headlessui/vue";
 
 interface Category {
-  id: number,
-  name: string,
+  id: number;
+  name: string;
 }
 
 interface Product {
-  id: number,
-  name: string,
-  price: number,
-  count: number,
-  description: string,
-  photo: string,
-  category: Category,
-  createdAt: Date,
+  id: number;
+  name: string;
+  price: number;
+  count: number;
+  description: string;
+  photo: string;
+  category: Category;
+  createdAt: Date;
 }
 
 const props = defineProps<Product>()
@@ -33,7 +33,6 @@ const formatDateTime = (dateTimeString: Date) => {
   return dateTime.toLocaleString('pl-PL', options);
 };
 
-console.log(props.photo)
 </script>
 
 <template>

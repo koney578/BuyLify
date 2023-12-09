@@ -20,11 +20,11 @@ interface Address {
 }
 
 interface Order {
-  idPaymentMethod: number,
-  idDeliveryMethod: number,
-  idProduct: number,
-  productQuantity: number,
-  address: Address,
+  idPaymentMethod: number;
+  idDeliveryMethod: number;
+  idProduct: number;
+  productQuantity: number;
+  address: Address;
 }
 
 const methods = orderStore.methods

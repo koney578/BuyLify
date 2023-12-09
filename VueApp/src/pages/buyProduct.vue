@@ -5,19 +5,19 @@ import {useOrderStore} from "~/stores/order";
 import AddressForm from "~/components/addressForm.vue";
 
 interface Category {
-  id: number,
-  name: string,
+  id: number;
+  name: string;
 }
 
 interface Product {
-  id: number,
-  name: string,
-  price: number,
-  count: number,
-  description: string,
-  category: Category,
-  createdAt: Date,
-  photo: any,
+  id: number;
+  name: string;
+  price: number;
+  count: number;
+  description: string;
+  category: Category;
+  createdAt: Date;
+  photo: any;
 }
 
 interface Address {
