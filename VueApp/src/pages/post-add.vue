@@ -11,8 +11,8 @@ const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api
 });
 
 interface Category {
-  id: number,
-  name: string,
+  id: number;
+  name: string;
 }
 
 const noCategory: Category = {

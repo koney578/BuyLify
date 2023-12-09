@@ -3,19 +3,19 @@ import {useProductStore} from "~/stores/product";
 import {useOrderStore} from "~/stores/order";
 
 interface Category {
-  id: number,
-  name: string,
+  id: number;
+  name: string;
 }
 
 interface Product {
-  id: number,
-  name: string,
-  price: number,
-  count: number,
-  description: string,
-  category: Category,
-  createdAt: Date,
-  photo: any,
+  id: number;
+  name: string;
+  price: number;
+  count: number;
+  description: string;
+  category: Category;
+  createdAt: Date;
+  photo: any;
 }
 
 interface Address {
@@ -31,11 +31,11 @@ interface Address {
 }
 
 interface Order {
-  idPaymentMethod: number,
-  idDeliveryMethod: number,
-  idProduct: number,
-  productQuantity: number,
-  address: Address,
+  idPaymentMethod: number;
+  idDeliveryMethod: number;
+  idProduct: number;
+  productQuantity: number;
+  address: Address;
 }
 
 const auth = useAuthStore()
@@ -72,13 +72,7 @@ const addPurchaseMethods = () => {
   // console.log(productStore.address?.email)
 
   const router = useRouter()
-  // const data = await $fetch('http://localhost:8080/api/addresses', {
-  //   method: 'POST',
-  //   body: address,
-  //   headers: {Authorization: 'Bearer ' + auth.token}
-  // }).catch(err => console.error(err.data))
-  // console.log(address)
-  //
+
   router.push('')
 }
 

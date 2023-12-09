@@ -15,8 +15,8 @@ const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api
 });
 
 interface Category {
-  id: number,
-  name: string,
+  id: number;
+  name: string;
 }
 
 const noCategory: Category = {
@@ -42,14 +42,14 @@ const {data: products} = await useFetch<Product[]>('http://localhost:8080/api/pr
 });
 
 interface Product {
-  id: number,
-  name: string,
-  price: number,
-  count: number,
-  description: string,
-  photo: string,
-  category: Category,
-  createdAt: Date,
+  id: number;
+  name: string;
+  price: number;
+  count: number;
+  description: string;
+  photo: string;
+  category: Category;
+  createdAt: Date;
 }
 
 const defaultProduct = {

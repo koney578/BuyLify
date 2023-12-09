@@ -11,18 +11,18 @@ interface Address {
 }
 
 interface Methods {
-    idPaymentMethod: number,
-    idDeliveryMethod: number,
-    idProduct: number | undefined,
-    productQuantity: number,
+    idPaymentMethod: number;
+    idDeliveryMethod: number;
+    idProduct: number | undefined;
+    productQuantity: number;
 }
 
 interface Order {
-    idPaymentMethod: number,
-    idDeliveryMethod: number,
-    idProduct: number | undefined,
-    productQuantity: number,
-    address: Address,
+    idPaymentMethod: number;
+    idDeliveryMethod: number;
+    idProduct: number | undefined;
+    productQuantity: number;
+    address: Address;
 }
 
 export const useOrderStore = defineStore({

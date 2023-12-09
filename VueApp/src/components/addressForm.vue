@@ -36,13 +36,7 @@ const addAddress = () => {
   orderStore.address = address
 
   const router = useRouter()
-  // const data = await $fetch('http://localhost:8080/api/addresses', {
-  //   method: 'POST',
-  //   body: address,
-  //   headers: {Authorization: 'Bearer ' + auth.token}
-  // }).catch(err => console.error(err.data))
-  // console.log(address)
-  //
+
   router.push('/confirmation')
 }
 
