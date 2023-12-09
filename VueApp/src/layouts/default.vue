@@ -31,6 +31,12 @@ const mobileMenuOpen = ref(false)
 
         <div v-if="auth.isLoggedIn" class="flex">
           <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+            <NuxtLink to="/myPurchases">Kupione</NuxtLink>
+          </li>
+          <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
+            <NuxtLink to="/mySales">Wystawione</NuxtLink>
+          </li>
+          <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
             <NuxtLink to="/profile">
               <MdiAccountSettingsVariant/>
             </NuxtLink>
@@ -70,14 +76,20 @@ const mobileMenuOpen = ref(false)
             <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
               <NuxtLink to="/profile">Ustawienia konta</NuxtLink>
             </li>
-            <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500 mr-auto">
+            <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
               <NuxtLink to="/productAdd">Dodaj ogłoszenie</NuxtLink>
             </li>
-            <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
+            <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
               <NuxtLink to="/board">Tablica ogłoszeń</NuxtLink>
             </li>
 
             <div v-if="auth.isLoggedIn">
+              <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+                <NuxtLink to="/myPurchases">Kupione</NuxtLink>
+              </li>
+              <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+                <NuxtLink to="/mySales">Wystawione</NuxtLink>
+              </li>
               <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
                 <NuxtLink to="/profile">Ustawienia konta</NuxtLink>
               </li>
