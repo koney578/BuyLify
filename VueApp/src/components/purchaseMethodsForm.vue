@@ -55,7 +55,35 @@ const purchaseMethods = reactive({
   idPaymentMethod: 0,
   idDeliveryMethod: 0,
   idProduct: product?.id,
-  productQuantity: 0,
+  productQuantity: '',
+})
+
+
+let productQuantityError = ''
+const quantityPattern = /^[0-9]+$/;
+
+
+function validateProductCount() {
+  if (purchaseMethods.productQuantity === '') {
+    productQuantityError = "";
+    return false;
+  }
+  else if (!quantityPattern.test(purchaseMethods.productQuantity)) {
+    productQuantityError = "Nie poprawna wartość!";
+    return false;
+  }
+  else if (parseInt(purchaseMethods.productQuantity) > (product?.count ?? 0)) {
+    productQuantityError = "Sprawawca ma za niewystarczająco towaru!";
+    return false;
+  }
+  else {
+    productQuantityError = "";
+    return true;
+  }
+}
+
+watch(purchaseMethods, () => {
+  validateProductCount()
 })
 
 
@@ -63,6 +91,11 @@ const addPurchaseMethods = () => {
 
   if (!purchaseMethods.idPaymentMethod || !purchaseMethods.idDeliveryMethod || !purchaseMethods.productQuantity) {
     console.error('Wszystkie pola są wymagane')
+    return
+  }
+
+  if (!validateProductCount()) {
+    console.error(productQuantityError)
     return
   }
 
@@ -83,9 +116,6 @@ const addPurchaseMethods = () => {
 
     <div>
       <label for="methodPayment" class="block text-sm font-medium leading-6 text-gray-900">Metoda płatności</label>
-      <!--          <div v-if="productCountError" class="font-semibold text-rose-600">-->
-      <!--            {{ productCountError }}-->
-      <!--          </div>-->
       <div class="mt-2 rounded-md shadow-sm">
         <select v-model="purchaseMethods.idPaymentMethod" name="methodPayment" id="methodPayment"
                 class="block w-full rounded-md border-0 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem">
@@ -103,9 +133,7 @@ const addPurchaseMethods = () => {
 
     <div>
       <label for="methodPayment" class="block text-sm font-medium leading-6 text-gray-900">Sposób dostawy</label>
-      <!--          <div v-if="productCountError" class="font-semibold text-rose-600">-->
-      <!--            {{ productCountError }}-->
-      <!--          </div>-->
+
       <div class="mt-2 rounded-md shadow-sm">
         <select v-model="purchaseMethods.idDeliveryMethod"
                 name="DeliveryMethod"
@@ -126,6 +154,9 @@ const addPurchaseMethods = () => {
     <div>
       <label for="productQuantity" class="block text-sm font-medium leading-6 text-gray-900">Ilość produktu</label>
       <div class="mt-2">
+        <div v-if="productQuantityError" class="font-semibold text-rose-600">
+          {{ productQuantityError }}
+        </div>
         <input v-model="purchaseMethods.productQuantity" id="productQuantity" name="productQuantity" type="text"
                autocomplete="productQuantity" required=""
                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
