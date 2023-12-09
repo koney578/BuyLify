@@ -1,6 +1,8 @@
 package com.buylify.buylifyapp.order;
 
 import com.buylify.buylifyapp.address.Address;
+import com.buylify.buylifyapp.deliveryMethod.DeliveryMethod;
+import com.buylify.buylifyapp.orderStatus.OrderStatus;
 import com.buylify.buylifyapp.paymentMethod.PaymentMethod;
 import com.buylify.buylifyapp.product.Product;
 import lombok.Data;
@@ -20,11 +22,11 @@ public class OrderDto {
 
     private int productQuantity;
 
-    private String orderStatus;
+    private OrderStatus orderStatus;
 
     private float totalValue;
 
     private LocalDateTime createAt;
 
-    private String deliveryMethod;
+    private DeliveryMethod deliveryMethod;
 }
