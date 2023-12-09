@@ -162,14 +162,14 @@ const handleFileChange = (event: any) => {
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
       <form @submit.prevent="addProduct" class="space-y-6" action="#" method="POST">
         <div>
-          <label for="post-name" class="block text-sm font-medium leading-6 text-gray-900">
+          <label for="product-name" class="block text-sm font-medium leading-6 text-gray-900">
             Wpisz nazwę ogłoszenia
           </label>
           <div class="mt-2">
             <div v-if="productNameError" class="font-semibold text-rose-600">
               {{ productNameError }}
             </div>
-            <input v-model="product.name" id="post-name" name="post-name" type="text" autocomplete="post-name"
+            <input v-model="product.name" id="product-name" name="product-name" type="text" autocomplete="product-name"
                    required=""
                    placeholder="Nazwa Twojego ogłoszenia"
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
