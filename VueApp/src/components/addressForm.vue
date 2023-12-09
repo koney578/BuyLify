@@ -8,7 +8,6 @@ import {CheckIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid";
 import {PhotoIcon} from "@heroicons/vue/24/solid";
 
 const auth = useAuthStore()
-const productStore = useProductStore()
 const orderStore = useOrderStore()
 
 const address = reactive({
@@ -23,6 +22,22 @@ const address = reactive({
   postalCode: ''
 })
 
+const user = auth.user
+if (user.name) {
+  address.name = user.name
+}
+
+if (user.surname) {
+  address.surname = user.surname
+}
+
+if (user.phoneNumber) {
+  address.phoneNumber = user.phoneNumber
+}
+
+if (user.email) {
+  address.email = user.email
+}
 
 
 const addAddress = () => {

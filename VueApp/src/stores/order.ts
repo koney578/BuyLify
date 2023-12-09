@@ -14,14 +14,14 @@ interface Methods {
     idPaymentMethod: number;
     idDeliveryMethod: number;
     idProduct: number | undefined;
-    productQuantity: number;
+    productQuantity: number | string;
 }
 
 interface Order {
     idPaymentMethod: number;
     idDeliveryMethod: number;
     idProduct: number | undefined;
-    productQuantity: number;
+    productQuantity: number | string;
     address: Address;
 }
 
