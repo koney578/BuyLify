@@ -22,9 +22,13 @@ public class OrderController {
 
     }
 
-
     @GetMapping
     public List<Order> getAllOrders() {
         return orderService.getAllOrders();
+    }
+
+    public List<OrderDto> getOrdersByLoggedUser(Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        return orderService.getOrdersByLoggedUser(userId);
     }
 }
