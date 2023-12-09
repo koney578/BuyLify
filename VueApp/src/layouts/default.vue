@@ -29,15 +29,7 @@ const mobileMenuOpen = ref(false)
           <NuxtLink to="/board">Tablica ogłoszeń</NuxtLink>
         </li>
 
-        <template v-if="!auth.isLoggedIn">
-          <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-            <NuxtLink to="/login">Zaloguj się</NuxtLink>
-          </li>
-          <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-            <NuxtLink to="/register">Załóż Konto</NuxtLink>
-          </li>
-        </template>
-        <div v-else class="flex">
+        <div v-if="auth.isLoggedIn" class="flex">
           <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
             <NuxtLink to="/profile">
               <MdiAccountSettingsVariant/>
@@ -49,7 +41,18 @@ const mobileMenuOpen = ref(false)
             </a>
           </li>
         </div>
+
+        <template v-else>
+          <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+            <NuxtLink to="/login">Zaloguj się</NuxtLink>
+          </li>
+          <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+            <NuxtLink to="/register">Załóż Konto</NuxtLink>
+          </li>
+        </template>
+
       </ul>
+
       <div class="flex items-center md:hidden w-full px-4">
         <NuxtLink to="/">
           <img src="../images/logo.png" alt="logo" class="color-fuchsia w-16"/>
@@ -73,15 +76,8 @@ const mobileMenuOpen = ref(false)
             <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
               <NuxtLink to="/board">Tablica ogłoszeń</NuxtLink>
             </li>
-            <template v-if="!auth.isLoggedIn">
-              <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-                <NuxtLink to="/login">Zaloguj się</NuxtLink>
-              </li>
-              <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-                <NuxtLink to="/register">Załóż Konto</NuxtLink>
-              </li>
-            </template>
-            <div v-else>
+
+            <div v-if="auth.isLoggedIn">
               <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
                 <NuxtLink to="/profile">Ustawienia konta</NuxtLink>
               </li>
@@ -89,6 +85,16 @@ const mobileMenuOpen = ref(false)
                 <a>Wyloguj się</a>
               </li>
             </div>
+
+            <template v-else>
+              <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+                <NuxtLink to="/login">Zaloguj się</NuxtLink>
+              </li>
+              <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+                <NuxtLink to="/register">Załóż Konto</NuxtLink>
+              </li>
+            </template>
+
           </ul>
         </div>
 

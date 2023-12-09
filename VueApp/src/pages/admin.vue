@@ -3,15 +3,19 @@
 import {useAuthStore} from "~/stores/auth";
 
 const auth = useAuthStore()
-const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
-  headers: {Authorization: 'Bearer ' + auth.token}
-});
+const router = useRouter()
 
-interface Category {
-  id: number,
-  name: string,
+if (auth.user.roles) {
+  const adminRole = { authority: "administrator" }
+  const ifAdmin = auth.user.roles.some((item: { authority: string; }) => item.authority === adminRole.authority)
+
+  if (!ifAdmin) {
+    router.push('/')
+  }
 }
-
+else {
+  router.push('/')
+}
 
 const newCategory = reactive({
   name: '',
@@ -90,7 +94,6 @@ const addCategory = async () => {
     return
   }
 
-  console.log(newCategory)
   const router = useRouter()
 
   const data = await $fetch('http://localhost:8080/api/categories', {
@@ -108,7 +111,6 @@ const addPaymentMethod = async () => {
     return
   }
 
-  console.log(newPaymentMethod)
   const router = useRouter()
 
   const data = await $fetch('http://localhost:8080/api/payment-methods', {
@@ -126,7 +128,6 @@ const addDeliveryMethod = async () => {
     return
   }
 
-  console.log(newDeliveryMethod)
   const router = useRouter()
 
   const data = await $fetch('http://localhost:8080/api/delivery-methods', {

@@ -8,12 +8,12 @@ import {
 import {XMarkIcon} from '@heroicons/vue/24/outline'
 
 interface Category {
-  id: number,
-  name: string,
+  id: number;
+  name: string;
 }
 
 interface CloseProduct {
-  closeModal: Function,
+  closeModal: Function;
 }
 
 const productStore = useProductStore()
