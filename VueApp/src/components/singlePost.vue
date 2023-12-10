@@ -1,8 +1,5 @@
 <script setup lang="ts">
 
-import {useAuthStore} from "~/stores/auth";
-import {ListboxOption} from "@headlessui/vue";
-
 interface Category {
   id: number;
   name: string;
@@ -36,7 +33,6 @@ const formatDateTime = (dateTimeString: Date) => {
 </script>
 
 <template>
-
   <div class="mt-2rem">
     <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl">
       <div class="w-full">
