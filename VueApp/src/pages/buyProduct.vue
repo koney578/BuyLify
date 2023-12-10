@@ -4,34 +4,6 @@ import {useProductStore} from "~/stores/product";
 import {useOrderStore} from "~/stores/order";
 import AddressForm from "~/components/addressForm.vue";
 
-interface Category {
-  id: number;
-  name: string;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  count: number;
-  description: string;
-  category: Category;
-  createdAt: Date;
-  photo: any;
-}
-
-interface Address {
-  name: string;
-  surname: string;
-  phoneNumber: string;
-  email: string;
-  country: string;
-  city: string;
-  street: string;
-  houseUnitNumber: string;
-  postalCode: string;
-}
-
 const auth = useAuthStore()
 const productStore = useProductStore()
 const product = productStore.product
@@ -39,16 +11,6 @@ const orderStore = useOrderStore()
 
 
 orderStore.orderStage = 1
-
-const {data: deliveryMethods} = await useFetch<any[]>('http://localhost:8080/api/delivery-methods', {
-  headers: {Authorization: 'Bearer ' + auth.token}
-});
-
-const {data: paymentMethods} = await useFetch<any[]>('http://localhost:8080/api/payment-methods', {
-  headers: {Authorization: 'Bearer ' + auth.token}
-});
-
-const ifAddressConfirm = ref(false)
 
 const order = reactive({
   idPaymentMethod: 0,
