@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "followed_products")
+@Table(name = "followed_products", uniqueConstraints = {@UniqueConstraint(columnNames = {"id_product", "id_user"})})
 public class FollowedProduct {
 
     @Id

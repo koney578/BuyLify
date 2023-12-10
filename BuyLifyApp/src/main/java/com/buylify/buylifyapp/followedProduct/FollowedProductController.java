@@ -1,9 +1,11 @@
 package com.buylify.buylifyapp.followedProduct;
 
+import com.buylify.buylifyapp.deliveryMethod.DeliveryMethod;
+import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,8 +16,10 @@ public class FollowedProductController {
 
     private final FollowedProductService followedProductService;
 
-    @GetMapping
-    public List<FollowedProduct> getAllDiscounts() {
-        return followedProductService.getAllFollowedProducts();
+    @PostMapping
+    public void addFollowedProduct(@RequestBody CreateFollowedProductDto createFollowedProductDto, Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        followedProductService.addFollowedProduct(createFollowedProductDto, userId);
     }
+
 }
