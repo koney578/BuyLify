@@ -7,11 +7,6 @@ import {
 } from '@headlessui/vue'
 import {XMarkIcon} from '@heroicons/vue/24/outline'
 
-interface Category {
-  id: number;
-  name: string;
-}
-
 interface CloseProduct {
   closeModal: Function;
 }

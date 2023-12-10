@@ -2,41 +2,6 @@
 import {useProductStore} from "~/stores/product";
 import {useOrderStore} from "~/stores/order";
 
-interface Category {
-  id: number;
-  name: string;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  count: number;
-  description: string;
-  category: Category;
-  createdAt: Date;
-  photo: any;
-}
-
-interface Address {
-  name: string;
-  surname: string;
-  phoneNumber: string;
-  email: string;
-  country: string;
-  city: string;
-  street: string;
-  houseUnitNumber: string;
-  postalCode: string;
-}
-
-interface Order {
-  idPaymentMethod: number;
-  idDeliveryMethod: number;
-  idProduct: number;
-  productQuantity: number;
-  address: Address;
-}
 
 const auth = useAuthStore()
 const productStore = useProductStore()
@@ -102,7 +67,6 @@ const addPurchaseMethods = () => {
   orderStore.methods = purchaseMethods
   // orderStore.setMethods(purchaseMethods)
   orderStore.orderStage = 2
-  // console.log(productStore.address?.email)
 
   const router = useRouter()
 

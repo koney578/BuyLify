@@ -1,11 +1,7 @@
 <script setup lang="ts">
 
 import {useAuthStore} from "~/stores/auth";
-import {useProductStore} from "~/stores/product";
 import {useOrderStore} from "~/stores/order"
-import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
-import {CheckIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid";
-import {PhotoIcon} from "@heroicons/vue/24/solid";
 
 const auth = useAuthStore()
 const orderStore = useOrderStore()
