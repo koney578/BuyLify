@@ -10,4 +10,6 @@ public class UserProductDto {
     private String username;
 
     private String email;
+
+    private Float averageStars;
 }
