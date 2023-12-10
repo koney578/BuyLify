@@ -1,6 +1,7 @@
 package com.buylify.buylifyapp.opinion;
 
 import com.buylify.buylifyapp.authentication.User;
+import com.buylify.buylifyapp.product.Product;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -45,4 +46,8 @@ public class Opinion {
 //    @NotNull
 //    @Column(name = "id_user_receiver")
 //    private Long idUserReceiver;
+
+    @JoinColumn(name = "id_product", referencedColumnName = "id")
+    @ManyToOne(targetEntity = Product.class, fetch = FetchType.EAGER)
+    private Product product;
 }
