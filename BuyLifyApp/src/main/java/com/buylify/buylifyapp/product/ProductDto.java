@@ -1,5 +1,6 @@
 package com.buylify.buylifyapp.product;
 
+import com.buylify.buylifyapp.authentication.UserProductDto;
 import com.buylify.buylifyapp.category.Category;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,8 @@ public class ProductDto {
     private LocalDateTime createdAt;
 
     private int count;
+
+    private UserProductDto user;
 
 //    do zmiany
 //    private byte[] photo;

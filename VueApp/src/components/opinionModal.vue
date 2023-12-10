@@ -75,7 +75,6 @@ const opinion = reactive({
   description: '',
   star: 0,
   id_user_receiver: props.order.product.user.id,
-  id_user_sender: auth.user.id,
 })
 
 
