@@ -17,4 +17,6 @@ public class CreateOpinionDto {
     @Size(max = 400)
     private String description;
 
+    private Long productId;
+
 }
