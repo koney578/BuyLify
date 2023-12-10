@@ -1,9 +1,9 @@
 package com.buylify.buylifyapp.notification;
 
+import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -14,8 +14,14 @@ public class NotificationController {
 
     private final NotificationService notificationService;
 
+    @PostMapping
+    public void addNotification(@RequestBody CreateNotificationDto createNotificationDto) {
+        notificationService.addNotification(createNotificationDto);
+    }
+
     @GetMapping
-    public List<Notification> getAllNotifications() {
-        return notificationService.getAllNotifications();
+    public List<NotificationDto> getNotificationsByLoggedUser(Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        return notificationService.getNotificationsByLoggedUser(userId);
     }
 }
