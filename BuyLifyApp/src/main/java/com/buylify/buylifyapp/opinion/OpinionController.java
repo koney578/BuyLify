@@ -24,6 +24,15 @@ public class OpinionController {
                            Authentication authentication){
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         opinionService.addOpinion(body,userId);
+    }
 
+    @GetMapping("/average/{userId}")
+    public float getAverageStars(@PathVariable Long userId){
+        return opinionService.getAverageStars(userId);
+    }
+
+    @GetMapping("/{userId}")
+    public List<OpinionDto> getOpinionsByUserId(@PathVariable Long userId){
+        return opinionService.getOpinionsByUserId(userId);
     }
 }
