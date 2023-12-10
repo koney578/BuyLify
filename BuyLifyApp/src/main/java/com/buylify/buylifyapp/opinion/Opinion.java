@@ -10,6 +10,9 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Getter
@@ -30,6 +33,9 @@ public class Opinion {
 
     @Size(max = 400)
     private String description;
+
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @JoinColumn(name = "id_user_sender", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
