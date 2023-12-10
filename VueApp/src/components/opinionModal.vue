@@ -73,22 +73,24 @@ const auth = useAuthStore()
 
 const opinion = reactive({
   description: '',
-  star: 0,
-  id_user_receiver: props.order.product.user.id,
+  stars: 0,
+  receiverId: props.order.product.user.id,
+  productId: props.order.product.id
 })
 
 
 const setRating = (rating: number) => {
-  opinion.star = rating
+  opinion.stars = rating
   console.log(opinion)
 }
 
 
 const addOpinion = async () => {
-  if (!(opinion.star)) {
+  if (!(opinion.stars)) {
     console.error('Musisz zaznaczyc ilosc gwiazdek!')
     return
   }
+  console.log(opinion)
 
   const data = await $fetch('http://localhost:8080/api/opinions', {
     method: 'POST',
@@ -137,7 +139,7 @@ const addOpinion = async () => {
                   </div>
                   <div class="flex items-center">
                     <StarIcon v-for="rating in [0, 1, 2, 3, 4]" :key="rating" @click="setRating(rating + 1)"
-                              :class="[opinion.star > rating ? 'text-yellow-500' : 'text-gray-200', 'h-5 w-5 flex-shrink-0']"
+                              :class="[opinion.stars > rating ? 'text-yellow-500' : 'text-gray-200', 'h-5 w-5 flex-shrink-0']"
                               aria-hidden="true"
                     />
                   </div>

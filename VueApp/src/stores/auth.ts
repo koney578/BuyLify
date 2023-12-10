@@ -1,16 +1,14 @@
 interface User {
-    id: number | null;
     username: string | null;
     name: string | null;
     surname: string | null;
     phoneNumber: string | null;
     email: string | null;
     registrationDate: string | null;
-    roles: any
+    roles: any;
 }
 
 const emptyUser: User = {
-    id: null,
     username: null,
     name: null,
     surname: null,
