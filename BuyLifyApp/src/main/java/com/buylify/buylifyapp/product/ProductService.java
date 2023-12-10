@@ -5,6 +5,7 @@ import com.buylify.buylifyapp.authentication.UserRepository;
 import com.buylify.buylifyapp.category.Category;
 import com.buylify.buylifyapp.category.CategoryRepository;
 import com.buylify.buylifyapp.mappers.ProductMapper;
+import com.buylify.buylifyapp.opinion.OpinionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -21,6 +22,7 @@ public class ProductService {
     private final ProductRepository productRepository;
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
+    private final OpinionRepository opinionRepository;
     private final ProductMapper mapper;
 
     public void addProduct(CreateProductDto post, String fileName, Long userId) {
@@ -39,7 +41,13 @@ public class ProductService {
     public List<ProductDto> getAllProducts() {
         return productRepository.findAll()
                 .stream()
-                .map(mapper::toProductDto)
+                .map(product -> {
+                    ProductDto productDto = mapper.toProductDto(product);
+
+                    Float averageUserStars = opinionRepository.getUserAverageStars(product.getUser().getId());
+                    productDto.getUser().setAverageStars(averageUserStars);
+                    return productDto;
+                })
                 .toList();
     }
 

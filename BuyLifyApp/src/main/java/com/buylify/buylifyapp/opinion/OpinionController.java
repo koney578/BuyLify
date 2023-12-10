@@ -26,10 +26,10 @@ public class OpinionController {
         opinionService.addOpinion(body,userId);
     }
 
-    @GetMapping("/average/{userId}")
-    public float getAverageStars(@PathVariable Long userId){
-        return opinionService.getAverageStars(userId);
-    }
+//    @GetMapping("/average/{userId}")
+//    public float getAverageStars(@PathVariable Long userId){
+//        return opinionService.getAverageStars(userId);
+//    }
 
     @GetMapping("/{userId}")
     public List<OpinionDto> getOpinionsByUserId(@PathVariable Long userId){
