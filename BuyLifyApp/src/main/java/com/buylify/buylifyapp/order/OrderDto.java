@@ -5,6 +5,7 @@ import com.buylify.buylifyapp.deliveryMethod.DeliveryMethod;
 import com.buylify.buylifyapp.orderStatus.OrderStatus;
 import com.buylify.buylifyapp.paymentMethod.PaymentMethod;
 import com.buylify.buylifyapp.product.Product;
+import com.buylify.buylifyapp.product.ProductDto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
@@ -18,7 +19,7 @@ public class OrderDto {
 
     private PaymentMethod paymentMethod;
 
-    private Product product;
+    private ProductDto product;
 
     private int productQuantity;
 
