@@ -53,6 +53,7 @@ const order = {
 
 const buyProduct = async () => {
   const router = useRouter()
+  console.log(order)
 
   const data = await $fetch('http://localhost:8080/api/orders', {
     method: 'POST',
