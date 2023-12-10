@@ -52,7 +52,12 @@ public class OpinionService {
 
     public List<OpinionDto> getOpinionsByUserId(Long userId) {
         return opinionRepository.findOpinionsByReceiverId(userId).stream()
-                .map(opinionMapper::toDto)
+                .map(opinion -> {
+                    String username = userRepository.findById(opinion.getUserSender().getId()).orElseThrow().getUsername();
+                    OpinionDto opinionDto = opinionMapper.toDto(opinion);
+                    opinionDto.setUsername(username);
+                    return opinionDto;
+                })
                 .toList();
     }
 }
