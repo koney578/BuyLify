@@ -22,6 +22,7 @@ public class OrderController {
 
     }
 
+    @GetMapping("/all")
     public List<Order> getAllOrders() {
         return orderService.getAllOrders();
     }
