@@ -15,7 +15,7 @@ interface Product {
   description: string;
   priority: number;
   photo: any;
-  createdAt: Date;
+  createdAt: string;
   category: Category;
   discount: any;
   auctionEndsAt: any;
@@ -54,7 +54,7 @@ interface Order {
     name: string
   };
   totalValue: number;
-  createAt: Date;
+  createAt: string;
   deliveryMethod: {
     id: number;
     name: string

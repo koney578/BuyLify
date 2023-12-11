@@ -21,14 +21,14 @@ interface PostedProduct {
   description: string;
   photo: any;
   category: Category;
-  createdAt: Date;
+  createdAt: string;
   count: number;
   user: User;
 }
 
 const props = defineProps<PostedProduct>()
 
-const formatDateTime = (dateTimeString: Date) => {
+const formatDateTime = (dateTimeString: string) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: '2-digit',
@@ -42,7 +42,7 @@ const formatDateTime = (dateTimeString: Date) => {
 const editProductStore = useEditProductStore()
 const router = useRouter()
 const editProduct = () => {
-  editProductStore.setEditProduct(props)
+  // editProductStore.setEditProduct(props)
 
   router.push('/edit-product')
 }

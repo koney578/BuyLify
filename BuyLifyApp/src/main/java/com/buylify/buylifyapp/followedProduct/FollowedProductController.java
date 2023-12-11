@@ -22,4 +22,9 @@ public class FollowedProductController {
         followedProductService.addFollowedProduct(createFollowedProductDto, userId);
     }
 
+    @GetMapping
+    public List<FollowedProduct> getFollowedProducts(Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        return followedProductService.getAllFollowedProducts(userId);
+    }
 }
