@@ -5,10 +5,11 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue'
-import {XMarkIcon} from '@heroicons/vue/24/outline'
+import {StarIcon, XMarkIcon} from '@heroicons/vue/24/outline'
 
 interface CloseProduct {
   closeModal: Function;
+  averageStars: number;
 }
 
 const productStore = useProductStore()
@@ -17,6 +18,22 @@ const props = defineProps<CloseProduct>()
 const router = useRouter()
 const routeToBuyProduct = () => {
   router.push('/buyProduct')
+}
+
+
+
+const followProduct = async () => {
+  const auth = useAuthStore()
+  const followProduct = {
+    id: productStore.product?.id
+  }
+
+  const data = await $fetch('http://localhost:8080/api/followed-products', {
+    method: 'POST',
+    body: followProduct,
+    headers: {Authorization: 'Bearer ' + auth.token}
+  }).catch(err => console.error(err.data))
+  // props.closeModal()
 }
 
 </script>
@@ -71,15 +88,30 @@ const routeToBuyProduct = () => {
 
                         <div class="mt-10">
                           <div class="items-center justify-between">
-                            <h4 class="text-sm font-medium text-gray-900">Opis produktu</h4>
+                            <h4 class="text-sm font-medium text-gray-900">Opis produktu: </h4>
                             <p class="text-2xl text-gray-900">{{ productStore.product?.description }}</p>
                           </div>
                         </div>
 
-                        <button type="submit"
-                                class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                          Add to bag
-                        </button>
+                        <div class="mt-2rem">
+                          <h4 class="text-sm font-medium text-gray-900">Ocena sprzedającego: </h4>
+                          <div class="flex mt-1rem">
+                            <p class="text-2xl text-gray-900 mr-2">{{ props.averageStars }}</p>
+                            <StarIcon class="h-7 w-7 text-yellow-500" aria-hidden="true"/>
+                          </div>
+
+                        </div>
+
+                        <div class="flex w-full">
+                          <button type="submit"
+                                  class="mt-6 flex w-1/2 mr-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                            Kup teraz
+                          </button>
+                          <button type="button"
+                                  class="mt-6 flex w-1/2 ml-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                  @click="followProduct()" ref="cancelButtonRef">Zapisz na później
+                          </button>
+                        </div>
                       </form>
                     </section>
                   </div>

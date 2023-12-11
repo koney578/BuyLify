@@ -41,6 +41,8 @@ const {data: products} = await useFetch<Product[]>('http://localhost:8080/api/pr
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
+console.log(products)
+
 interface Product {
   id: number;
   name: string;
@@ -50,6 +52,7 @@ interface Product {
   photo: string;
   category: Category;
   createdAt: Date;
+  user: any;
 }
 
 const defaultProduct = {
@@ -61,6 +64,7 @@ const defaultProduct = {
   category: noCategory,
   createdAt: new Date(),
   photo: '',
+  user: {}
 }
 
 const isProductDetailsOpen = ref(false)
@@ -191,6 +195,7 @@ const filterPosts = async () => {
                         @close="closeProductDetails"
                         :is-open="selectedProduct.isOpen"
                         :closeModal="closeProductDetails"
+                        :averageStars="selectedProduct.user.averageStars"
       />
     </div>
   </div>

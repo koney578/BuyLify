@@ -50,6 +50,7 @@ const formatDateTime = (dateTimeString: Date) => {
           <p class="text-xl italic mr-1rem">{{ props.price }} zł</p>
           <p>Data dodania: {{ formatDateTime(props.createdAt) }}</p>
         </div>
+
       </div>
     </div>
   </div>

@@ -1,4 +1,5 @@
 interface User {
+    id: number | null;
     username: string | null;
     name: string | null;
     surname: string | null;
@@ -9,6 +10,7 @@ interface User {
 }
 
 const emptyUser: User = {
+    id: null,
     username: null,
     name: null,
     surname: null,
