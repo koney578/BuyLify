@@ -7,7 +7,6 @@ import ProductQuickView from "~/components/ProductQuickView.vue";
 import {CheckIcon} from "@heroicons/vue/20/solid";
 
 const auth = useAuthStore()
-const productStore = useProductStore()
 const {data: orders} = await useFetch<any[]>('http://localhost:8080/api/orders', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
