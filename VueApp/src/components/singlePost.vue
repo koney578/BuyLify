@@ -12,13 +12,13 @@ interface Product {
   count: number;
   description: string;
   photo: string;
-  category: Category;
-  createdAt: Date;
+  category: Category | null;
+  createdAt: string;
 }
 
 const props = defineProps<Product>()
 
-const formatDateTime = (dateTimeString: Date) => {
+const formatDateTime = (dateTimeString: string) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: '2-digit',

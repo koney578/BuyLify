@@ -12,7 +12,7 @@ interface Product {
   description: string;
   priority: number;
   photo: any;
-  createdAt: Date;
+  createdAt: string;
   category: Category;
   discount: any;
   auctionEndsAt: any;
@@ -51,7 +51,7 @@ interface Order {
     name: string
   };
   totalValue: number;
-  createAt: Date;
+  createAt: string;
   deliveryMethod: {
     id: number;
     name: string
@@ -60,7 +60,7 @@ interface Order {
 
 const props = defineProps<Order>()
 
-const formatDateTime = (dateTimeString: Date) => {
+const formatDateTime = (dateTimeString: string) => {
   const options: Intl.DateTimeFormatOptions = {
     year: 'numeric',
     month: '2-digit',
