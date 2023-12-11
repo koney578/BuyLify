@@ -1,12 +1,232 @@
 <script setup lang="ts">
 
 import {useEditProductStore} from "~/stores/editProduct";
+import {CheckIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid";
+import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 
 const editProductStore = useEditProductStore()
+const auth = useAuthStore()
+const product = editProductStore.product
+
+const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
+  headers: {Authorization: 'Bearer ' + auth.token}
+});
+
+interface Category {
+  id: number;
+  name: string;
+}
+
+const noCategory: Category = {
+  id: -1,
+  name: 'Brak kategorii',
+}
+
+const selected = ref<Category>(categories.value?.[0] ?? noCategory)
+
+
+const changedProduct = reactive({
+  id: product?.id,
+  name: product?.name,
+  price: product?.price.toString() || '',
+  count: product?.count.toString() || '',
+  description: product?.description,
+  category: product?.category || noCategory,
+  photo: product?.photo,
+  user: product?.user,
+})
+
+
+console.log(product)
+
+const countPattern = /^[0-9]+$/;
+const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/;
+
+
+const editProduct = async () => {
+  if (changedProduct.name === '') {
+    return
+  }
+
+  if (changedProduct.category.id === -1) {
+    return
+  }
+
+  if (changedProduct.count === '' || !countPattern.test(changedProduct.count)) {
+    return
+  }
+
+  if (changedProduct.price === '' || !pricePattern.test(changedProduct.price)) {
+    return
+  }
+
+  const router = useRouter()
+
+  const data = await $fetch('http://localhost:8080/api/???????????????', {
+    method: 'POST',
+    body: changedProduct,
+    headers: {Authorization: 'Bearer ' + auth.token}
+  }).catch(err => console.error(err.data))
+
+  await router.push('/mySales')
+}
+
+
+
+
 
 
 </script>
 
 <template>
+  <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
+      <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png" alt="BuyLify"/>
+      <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Możesz edytować swoje
+        ogłoszenie.</h1>
+    </div>
 
+    <div class="mt-2rem">
+      <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl">
+        <div class="w-2/3">
+          <img
+              :src="product?.photo"
+              alt="Główne zdjęcie"
+              class="h-auto w-1/2"
+          />
+        </div>
+        <form @submit.prevent="editProduct" method="POST" class="w-1/2">
+          <div class="w-full">
+            <div class="justify-between mt-2rem">
+              <div>
+                <label for="product-name" class="block text-sm font-medium leading-6 text-gray-900">
+                  Nazwa ogłoszenia:
+                </label>
+                <div class="mt-2">
+                  <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
+                  <!--                    {{ productNameError }}-->
+                  <!--                  </div>-->
+                  <input v-model="changedProduct.name" id="product-name" name="product-name" type="text"
+                         autocomplete="product-name"
+                         required=""
+                         placeholder="Nazwa"
+                         class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+                </div>
+              </div>
+
+
+              <Listbox as="div" v-model="selected">
+                <ListboxLabel class="block text-sm font-medium leading-6 text-gray-900 mt-4">Kategoria</ListboxLabel>
+                <div class="relative mt-2">
+                  <ListboxButton
+                      class=" relative w-full cursor-default rounded-md bg-white py-1.5 pl-3 pr-10 text-left text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:outline-none focus:ring-2 focus:ring-indigo-500 sm:text-sm sm:leading-6">
+                    <span class="flex items-center">
+                      <span class="block truncate">{{ selected.name }}</span>
+                    </span>
+                    <span class="pointer-events-none absolute inset-y-0 right-0 ml-3 flex items-center pr-2">
+                      <ChevronUpDownIcon class="h-5 w-5 text-gray-400" aria-hidden="true"/>
+                    </span>
+                  </ListboxButton>
+
+                  <transition leave-active-class="transition ease-in duration-100" leave-from-class="opacity-100"
+                              leave-to-class="opacity-0">
+                    <ListboxOptions
+                        class="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
+                      <option disabled value="">Wybierz kategorię</option>
+                      <ListboxOption as="template" v-for="category in categories" :value="category" :key="category.id"
+                                     v-slot="{ active, selected }">
+                        <li :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-3 pr-9']">
+                          <div class="flex items-center">
+                            <span :class="[selected ? 'font-semibold' : 'font-normal', 'block truncate']">
+                              {{ category.name }}
+                            </span>
+                          </div>
+                          <span v-if="selected"
+                                :class="[active ? 'text-white' : 'text-indigo-600', 'absolute inset-y-0 right-0 flex items-center pr-4']">
+                            <CheckIcon class="h-5 w-5" aria-hidden="true"/>
+                          </span>
+                        </li>
+                      </ListboxOption>
+                    </ListboxOptions>
+                  </transition>
+                </div>
+              </Listbox>
+
+
+              <div>
+                <label for="product-count" class="block mt-4 text-sm font-medium leading-6 text-gray-900">
+                  Ilość produktu:
+                </label>
+                <div class="mt-2">
+                  <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
+                  <!--                    {{ productNameError }}-->
+                  <!--                  </div>-->
+                  <input v-model="changedProduct.count" id="product-count" name="product-count" type="text"
+                         autocomplete="product-count"
+                         required=""
+                         placeholder="10"
+                         class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+                </div>
+              </div>
+
+
+              <div>
+                <label for="product-price" class="block mt-4 text-sm font-medium leading-6 text-gray-900">
+                  Cena za produkt:
+                </label>
+                <div class="mt-2">
+                  <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
+                  <!--                    {{ productNameError }}-->
+                  <!--                  </div>-->
+                  <input v-model="changedProduct.price" id="product-price" name="product-price" type="text"
+                         autocomplete="product-price"
+                         required=""
+                         placeholder="9.99"
+                         class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+                </div>
+              </div>
+
+
+              <div>
+                <div class="flex items-center justify-between">
+                  <label for="product-description"
+                         class="block mt-4 text-sm font-medium leading-6 text-gray-900">Opis</label>
+                </div>
+                <div class="mt-2">
+                  <!--                  <div v-if="productDescriptionError" class="font-semibold text-rose-600">-->
+                  <!--                    {{ productDescriptionError }}-->
+                  <!--                  </div>-->
+                  <textarea v-model="changedProduct.description" id="product-description" name="product-description"
+                            type="text"
+                            autocomplete="product-description"
+                            required=""
+                            placeholder="Dodaj opis Twojego ogłoszenia"
+                            class="h-[auto] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+                </div>
+              </div>
+
+
+              <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+                <div class="space-y-6">
+                  <submit-button/>
+                </div>
+
+                <p class="mt-10 text-center text-sm text-gray-500">
+                  Chcesz porzucić edycję?
+                  {{ ' ' }}
+                  <NuxtLink
+                      to="/mySales" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij tutaj
+                    by wrócić!
+                  </NuxtLink>
+                </p>
+              </div>
+            </div>
+
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+  </div>
 </template>
