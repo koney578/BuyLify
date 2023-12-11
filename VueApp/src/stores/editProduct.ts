@@ -5,7 +5,7 @@ interface Product {
     count: number;
     description: string;
     category: Category;
-    createdAt: '';
+    createdAt: string;
     photo: any;
     user: {
         id: number;

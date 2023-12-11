@@ -18,15 +18,16 @@ interface PostedProduct {
   id: number;
   name: string;
   price: number;
+  count: number;
   description: string;
   photo: any;
   category: Category;
   createdAt: string;
-  count: number;
   user: User;
 }
 
 const props = defineProps<PostedProduct>()
+console.log(props)
 
 const formatDateTime = (dateTimeString: string) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -42,7 +43,7 @@ const formatDateTime = (dateTimeString: string) => {
 const editProductStore = useEditProductStore()
 const router = useRouter()
 const editProduct = () => {
-  // editProductStore.setEditProduct(props)
+  editProductStore.setEditProduct(props)
 
   router.push('/edit-product')
 }
@@ -93,7 +94,6 @@ const editProduct = () => {
             Edytuj ogłoszenie
           </button>
         </div>
-
 
       </div>
     </div>
