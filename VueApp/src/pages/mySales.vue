@@ -8,7 +8,7 @@ const {data: postedProducts} = await useFetch<any[]>('http://localhost:8080/api/
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-// console.log(postedProducts)
+console.log(postedProducts)
 
 </script>
 
