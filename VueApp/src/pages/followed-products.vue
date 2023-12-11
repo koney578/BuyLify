@@ -37,11 +37,22 @@ watch(selected, (newValue) => {
   searchRestriction.categoryId = newValue.id;
 });
 
-const {data: products} = await useFetch<Product[]>('http://localhost:8080/api/' + auth.user.id + '/followed-products', {
+const {data: announcements} = await useFetch<Announcement[]>('http://localhost:8080/api/followed-products', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-console.log(products)
+console.log(announcements)
+
+interface Announcement {
+  id: number;
+  product: Product;
+  user: {
+    id: number;
+    username: number | null;
+    email: string | null;
+    averageStars: number | null;
+  }
+}
 
 interface Product {
   id: number;
@@ -51,7 +62,7 @@ interface Product {
   description: string;
   photo: string;
   category: Category;
-  createdAt: Date;
+  createdAt: string;
   user: any;
 }
 
@@ -62,7 +73,7 @@ const defaultProduct = {
   count: 0,
   description: "",
   category: noCategory,
-  createdAt: new Date(),
+  createdAt: '',
   photo: '',
   user: {}
 }
@@ -93,17 +104,17 @@ const closeProductDetails = () => {
         </div>
     </div>
     <div class="sm:mx-auto sm:w-full sm:max-w-3xl">
-      <single-post v-for="product in products"
-                   :key="product.id"
-                   :id="product.id"
-                   :name="product.name"
-                   :price="product.price"
-                   :count="product.count"
-                   :category="product.category"
-                   :description="product.description"
-                   :photo="product.photo"
-                   :created-at="product.createdAt"
-                   @click="showProductDetails(product)"
+      <single-post v-for="announcement in announcements"
+                   :key="announcement.id"
+                   :id="announcement.id"
+                   :name="announcement.product.name"
+                   :price="announcement.product.price"
+                   :count="announcement.product.count"
+                   :category="announcement.product.category"
+                   :description="announcement.product.description"
+                   :photo="announcement.product.photo"
+                   :created-at="announcement.product.createdAt"
+                   @click="showProductDetails(announcement.product)"
       />
       <ProductQuickView v-if="isProductDetailsOpen"
                         @close="closeProductDetails"

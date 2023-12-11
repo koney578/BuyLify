@@ -24,13 +24,4 @@ public class UserController {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         return userService.updateUser(userId, editUserDto);
     }
-
-    @GetMapping("/{id}/followed-product")
-    public List<FollowedProduct> getFollowedProducts(@PathVariable("id") Long id, Authentication authentication) throws Exception {
-        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
-        if (!id.equals(userId)){
-            throw new Exception("Bad request");
-        }
-        return followedProductService.getAllFollowedProducts(id);
-    }
 }

@@ -8,7 +8,7 @@ const {data: postedProducts} = await useFetch<any[]>('http://localhost:8080/api/
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-console.log(postedProducts)
+// console.log(postedProducts)
 
 </script>
 
@@ -22,6 +22,7 @@ console.log(postedProducts)
       <single-posted-product v-for="postedProduct in postedProducts"
                              :key="postedProduct.id"
                              :id="postedProduct.id"
+                             :name="postedProduct.name"
                              :price="postedProduct.price"
                              :description="postedProduct.description"
                              :photo="postedProduct.photo"
