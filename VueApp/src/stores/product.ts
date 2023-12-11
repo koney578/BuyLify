@@ -4,7 +4,7 @@ interface Product {
     price: number;
     count: number;
     description: string;
-    category: Category;
+    category: Category | null;
     createdAt: string;
     photo: any;
 }
