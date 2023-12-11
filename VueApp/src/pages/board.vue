@@ -50,8 +50,8 @@ interface Product {
   count: number;
   description: string;
   photo: string;
-  category: Category;
-  createdAt: Date;
+  category: Category | null;
+  createdAt: string;
   user: any;
 }
 
@@ -62,7 +62,7 @@ const defaultProduct = {
   count: 0,
   description: "",
   category: noCategory,
-  createdAt: new Date(),
+  createdAt: '',
   photo: '',
   user: {}
 }
