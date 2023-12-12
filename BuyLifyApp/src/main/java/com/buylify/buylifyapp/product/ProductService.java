@@ -59,7 +59,13 @@ public class ProductService {
     public List<ProductDto> getProductsByLoggedUser(Long userId) {
         return productRepository.findProductsByUserId(userId)
                 .stream()
-                .map(mapper::toProductDto)
+                .map(product -> {
+                    ProductDto productDto = mapper.toProductDto(product);
+
+                    Float averageUserStars = opinionRepository.getUserAverageStars(product.getUser().getId());
+                    productDto.getUser().setAverageStars(averageUserStars);
+                    return productDto;
+                })
                 .toList();
     }
 }
