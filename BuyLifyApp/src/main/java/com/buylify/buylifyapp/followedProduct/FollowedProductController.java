@@ -1,6 +1,7 @@
 package com.buylify.buylifyapp.followedProduct;
 
 import com.buylify.buylifyapp.deliveryMethod.DeliveryMethod;
+import com.buylify.buylifyapp.product.ProductDto;
 import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -23,7 +24,7 @@ public class FollowedProductController {
     }
 
     @GetMapping
-    public List<FollowedProduct> getFollowedProducts(Authentication authentication) {
+    public List<ProductDto> getFollowedProducts(Authentication authentication) {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         return followedProductService.getAllFollowedProducts(userId);
     }
