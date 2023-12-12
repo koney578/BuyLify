@@ -21,6 +21,9 @@ const routeToBuyProduct = () => {
 }
 
 
+const ifBid = ref(true)
+
+
 
 const followProduct = async () => {
   const auth = useAuthStore()
@@ -102,16 +105,39 @@ const followProduct = async () => {
 
                         </div>
 
-                        <div class="flex w-full">
-                          <button type="submit"
-                                  class="mt-6 flex w-1/2 mr-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                            Kup teraz
-                          </button>
-                          <button type="button"
-                                  class="mt-6 flex w-1/2 ml-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                  @click="followProduct()" ref="cancelButtonRef">Zapisz na później
-                          </button>
+                        <div v-if="ifBid">
+                          <div class="flex w-full">
+                            <button type="submit"
+                                    class="mt-6 flex w-1/2 mr-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                              Kup teraz
+                            </button>
+
+                            <button type="submit"
+                                    class="mt-6 flex w-1/2 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                              Licytuj
+                            </button>
+                          </div>
+                          <div class="flex w-full">
+                            <button type="button"
+                                    class="mt-6 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    @click="followProduct()" ref="cancelButtonRef">Zapisz na później
+                            </button>
+                          </div>
                         </div>
+
+                        <div v-else>
+                          <div class="flex w-full">
+                            <button type="submit"
+                                    class="mt-6 flex w-1/2 mr-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                              Kup teraz
+                            </button>
+                            <button type="button"
+                                    class="mt-6 flex w-1/2 ml-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                    @click="followProduct()" ref="cancelButtonRef">Zapisz na później
+                            </button>
+                          </div>
+                        </div>
+
                       </form>
                     </section>
                   </div>
