@@ -68,4 +68,16 @@ public class ProductService {
                 })
                 .toList();
     }
+
+    public void updateProduct(Long id, CreateProductDto post, Long userId) {
+        Product product = productRepository.findById(id).orElseThrow();
+        if (!product.getUser().getId().equals(userId)) {
+            throw new RuntimeException("Not allowed");
+        }
+        product.setName(post.getName());
+        product.setPrice(post.getPrice());
+        product.setDescription(post.getDescription());
+        product.setCategory(categoryRepository.getReferenceById(post.getCategoryId()));
+        productRepository.save(product);
+    }
 }
