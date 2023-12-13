@@ -27,7 +27,7 @@ interface PostedProduct {
 }
 
 const props = defineProps<PostedProduct>()
-console.log(props)
+// console.log(props)
 
 const formatDateTime = (dateTimeString: string) => {
   const options: Intl.DateTimeFormatOptions = {
