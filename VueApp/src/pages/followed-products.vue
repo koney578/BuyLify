@@ -1,8 +1,5 @@
 <script setup lang="ts">
 
-import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
-import {CheckIcon} from "@heroicons/vue/20/solid";
-
 import {useAuthStore} from "~/stores/auth";
 import SinglePost from "~/components/singlePost.vue";
 import ProductQuickView from "~/components/ProductQuickView.vue";
@@ -45,7 +42,13 @@ console.log(announcements)
 
 interface Announcement {
   id: number;
-  product: Product;
+  name: string;
+  category: Category;
+  price: number;
+  count: number;
+  description: string;
+  photo: string;
+  createdAt: string;
   user: {
     id: number;
     username: number | null;
@@ -66,7 +69,7 @@ interface Product {
   user: any;
 }
 
-const defaultProduct = {
+const product = {
   id: 0,
   name: "",
   price: 0,
@@ -79,10 +82,20 @@ const defaultProduct = {
 }
 
 const isProductDetailsOpen = ref(false)
-const selectedProduct: Ref<Product> = ref<Product>(defaultProduct)
+const selectedProduct: Ref<Product> = ref<Product>(product)
 
 
-const showProductDetails = (product: Product) => {
+const showProductDetails = (announcement: Announcement) => {
+  product.id = announcement.id
+  product.name = announcement.name
+  product.price = announcement.price
+  product.count = announcement.count
+  product.description = announcement.description
+  product.category = announcement.category
+  product.createdAt = announcement.createdAt
+  product.photo = announcement.photo
+  product.user = announcement.user
+
   selectedProduct.value = product
 
   productStore.setProduct(product)
@@ -107,14 +120,14 @@ const closeProductDetails = () => {
       <single-post v-for="announcement in announcements"
                    :key="announcement.id"
                    :id="announcement.id"
-                   :name="announcement.product.name"
-                   :price="announcement.product.price"
-                   :count="announcement.product.count"
-                   :category="announcement.product.category"
-                   :description="announcement.product.description"
-                   :photo="announcement.product.photo"
-                   :created-at="announcement.product.createdAt"
-                   @click="showProductDetails(announcement.product)"
+                   :name="announcement.name"
+                   :price="announcement.price"
+                   :count="announcement.count"
+                   :category="announcement.category"
+                   :description="announcement.description"
+                   :photo="announcement.photo"
+                   :created-at="announcement.createdAt"
+                   @click="showProductDetails(announcement)"
       />
       <ProductQuickView v-if="isProductDetailsOpen"
                         @close="closeProductDetails"
