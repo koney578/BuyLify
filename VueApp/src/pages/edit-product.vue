@@ -26,18 +26,22 @@ const selected = ref<Category>(categories.value?.[0] ?? noCategory)
 
 
 const changedProduct = reactive({
-  id: product?.id,
+  id: product?.id || -1,
   name: product?.name,
   price: product?.price.toString() || '',
   count: product?.count.toString() || '',
   description: product?.description,
-  category: product?.category || noCategory,
+  categoryId: product?.category.id || noCategory.id,
   photo: product?.photo,
-  user: product?.user,
+  modifiedAt: '',
+  createdAt: product?.createdAt,
 })
 
 
-console.log(product)
+watch(selected, () => {
+  changedProduct.categoryId = selected.value.id
+})
+
 
 const countPattern = /^[0-9]+$/;
 const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/;
@@ -48,7 +52,7 @@ const editProduct = async () => {
     return
   }
 
-  if (changedProduct.category.id === -1) {
+  if (changedProduct.categoryId === -1) {
     return
   }
 
@@ -60,10 +64,25 @@ const editProduct = async () => {
     return
   }
 
+  const currentDate = new Date();
+
+  const year = currentDate.getFullYear();
+  const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+  const day = String(currentDate.getDate()).padStart(2, '0');
+  const hours = String(currentDate.getHours()).padStart(2, '0');
+  const minutes = String(currentDate.getMinutes()).padStart(2, '0');
+  const seconds = String(currentDate.getSeconds()).padStart(2, '0');
+  const milliseconds = String(currentDate.getMilliseconds()).padStart(3, '0');
+
+  changedProduct.modifiedAt = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`
+
+
+  console.log(changedProduct)
+
   const router = useRouter()
 
-  const data = await $fetch('http://localhost:8080/api/???????????????', {
-    method: 'POST',
+  const data = await $fetch('http://localhost:8080/api/products/' + changedProduct.id, {
+    method: 'PUT',
     body: changedProduct,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
