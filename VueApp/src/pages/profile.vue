@@ -53,11 +53,18 @@ const editProfile = async () => {
   }
 
   const router = useRouter()
+  console.log(user)
 
-  const data = await $fetch('http://localhost:8080/api/???????????????', {
-    method: 'POST',
+  const data = await $fetch('http://localhost:8080/api/users', {
+    method: 'PUT',
     body: user,
     headers: {Authorization: 'Bearer ' + auth.token}
+  }).then(() => {
+    auth.user.phoneNumber = user.phoneNumber
+    auth.user.username = user.username
+    auth.user.name = user.name
+    auth.user.surname = user.surname
+    auth.user.email = user.email
   }).catch(err => console.error(err.data))
 
   await router.push('/')
