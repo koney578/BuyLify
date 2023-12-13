@@ -23,7 +23,7 @@ function validatePhoneNumber() {
 }
 
 function validateUsername() {
-  return user.username > 5;
+  return user.username.length > 5;
 }
 
 const rejectChanges = () => {
@@ -60,11 +60,16 @@ const editProfile = async () => {
     body: user,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
-    auth.user.phoneNumber = user.phoneNumber
-    auth.user.username = user.username
-    auth.user.name = user.name
-    auth.user.surname = user.surname
-    auth.user.email = user.email
+
+    if (auth.user.username !== user.username) {
+      auth.logout()
+    } else {
+      auth.user.username = user.username
+      auth.user.name = user.name
+      auth.user.surname = user.surname
+      auth.user.phoneNumber = user.phoneNumber
+      auth.user.email = user.email
+    }
   }).catch(err => console.error(err.data))
 
   await router.push('/')
