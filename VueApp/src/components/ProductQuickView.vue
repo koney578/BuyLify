@@ -99,7 +99,7 @@ const followProduct = async () => {
                         <div class="mt-2rem">
                           <h4 class="text-sm font-medium text-gray-900">Ocena sprzedającego: </h4>
                           <div class="flex mt-1rem">
-                            <p class="text-2xl text-gray-900 mr-2">{{ props.averageStars }}</p>
+                            <p class="text-2xl text-gray-900 mr-2">{{ props.averageStars || 0 }}</p>
                             <StarIcon class="h-7 w-7 text-yellow-500" aria-hidden="true"/>
                           </div>
 
