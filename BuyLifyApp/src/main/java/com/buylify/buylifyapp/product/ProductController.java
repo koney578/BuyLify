@@ -43,4 +43,10 @@ public class ProductController {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         return productService.getProductsByLoggedUser(userId);
     }
+
+    @PutMapping("/{id}")
+    public void updateProduct(@PathVariable Long id, @RequestBody CreateProductDto post, Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        productService.updateProduct(id, post, userId);
+    }
 }

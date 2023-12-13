@@ -17,9 +17,8 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final FollowedProductService followedProductService;
 
-    @PutMapping("/update")
+    @PutMapping
     public UserDto updateUser(@RequestBody @Validated EditUserDto editUserDto, Authentication authentication) {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         return userService.updateUser(userId, editUserDto);
