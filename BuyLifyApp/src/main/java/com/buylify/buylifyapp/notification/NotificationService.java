@@ -36,4 +36,12 @@ public class NotificationService {
                 .map(notificationMapper::toDto)
                 .toList();
     }
+
+    public void checkNotification(Long id, Long userId) {
+        Notification notification = notificationRepository.findById(id).orElseThrow(() -> new RuntimeException("Notification not found"));
+        if (notification.getUser().getId().equals(userId)) {
+            notification.setChecked(true);
+            notificationRepository.save(notification);
+        }
+    }
 }
