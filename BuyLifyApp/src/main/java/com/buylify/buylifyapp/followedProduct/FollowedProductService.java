@@ -24,7 +24,7 @@ public class FollowedProductService {
     private final ProductMapper productMapper;
 
     public List<ProductDto> getAllFollowedProducts(Long id) {
-        return followedProductRepository.findByProductIdAndUserId(id).stream().map(followedProduct -> {
+        return followedProductRepository.findByUserId(id).stream().map(followedProduct -> {
             ProductDto productDto = productMapper.toProductDto(followedProduct.getProduct());
             Float averageUserStars = opinionRepository.getUserAverageStars(followedProduct.getProduct().getUser().getId());
             productDto.getUser().setAverageStars(averageUserStars);
@@ -46,5 +46,10 @@ public class FollowedProductService {
             followedProductRepository.save(followedProduct);
         }
         catch (Exception e) {System.out.println(";)");}
+    }
+
+    public void removeFollowedProduct(Long userId, Long productId) {
+        FollowedProduct followedProduct = followedProductRepository.findByUserIdAndProductId(userId, productId);
+        followedProductRepository.delete(followedProduct);
     }
 }
