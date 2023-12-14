@@ -27,10 +27,24 @@ const formatDateTime = (dateTimeString: string) => {
 
 const isChecked = ref(props.checked)
 
+const readNotification = reactive({
+  id: props.id,
+  isChecked: false,
+})
+
+const auth = useAuthStore()
 const checkNotification = async () => {
   isChecked.value = !isChecked.value
-}
+  readNotification.isChecked = isChecked.value
 
+  const router = useRouter()
+
+  const data = await $fetch('http://localhost:8080/api/notifications/check', {
+    method: 'PUT',
+    body: readNotification,
+    headers: {Authorization: 'Bearer ' + auth.token}
+  }).catch(err => console.error(err.data))
+}
 
 </script>
 
