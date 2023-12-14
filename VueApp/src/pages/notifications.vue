@@ -15,7 +15,7 @@ interface Notification {
     id: number;
     name: string;
   }
-  isChecked: boolean
+  checked: boolean
 }
 
 
@@ -36,7 +36,7 @@ console.log(notifications)
                     :message="notification.message"
                     :createdAt="notification.createdAt"
                     :notificationType="notification.notificationType"
-                    :checked="notification.isChecked"
+                    :checked="notification.checked"
       />
     </div>
   </div>
