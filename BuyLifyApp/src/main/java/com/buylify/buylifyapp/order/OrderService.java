@@ -32,27 +32,38 @@ public class OrderService {
 
     public void addOrder(CreateOrderDto createOrderDto, Long userId) {
         Product product = productRepository.findById(createOrderDto.getIdProduct()).orElseThrow();
+
         if (product.getCount() < createOrderDto.getProductQuantity()) {
             throw new RuntimeException("Not enough products");
         }
+
+        // Update product count
+        product.setCount(product.getCount() - createOrderDto.getProductQuantity());
+        productRepository.save(product);
+
         User user = userRepository.findById(userId).orElseThrow();
         DeliveryMethod deliveryMethod = deliveryMethodRepository.findById(createOrderDto.getIdDeliveryMethod()).orElseThrow();
         PaymentMethod paymentMethod = paymentMethodRepository.findById(createOrderDto.getIdPaymentMethod()).orElseThrow();
         Address address = addressRepository.save(createOrderDto.getAddress());
-        OrderStatus orderStatus = orderStatusRepository.findById(1l).orElseThrow();
+        OrderStatus orderStatus = orderStatusRepository.findById(1L).orElseThrow();
         Order order = orderMapper.toEntity(createOrderDto);
         order.setProduct(product);
         order.setAddress(address);
         order.setUser(user);
         order.setDeliveryMethod(deliveryMethod);
         order.setPaymentMethod(paymentMethod);
-        order.setTotalValue(product.getPrice() * createOrderDto.getProductQuantity());
-        //TODO: NIECH KTOS TO WYCIAGNIE Z BAZY DANYCH, A NIE NA SZTYWNO
+
+        float totalValue = product.getPrice() * createOrderDto.getProductQuantity();
+
+        // Apply discount
+        if (product.getDiscount() != null) {
+            totalValue = totalValue * (1 - product.getDiscount().getDiscountPercent());
+        }
+        order.setTotalValue(totalValue);
+
         order.setOrderStatus(orderStatus);
         orderRepository.save(order);
     }
-
-
 
     public List<Order> getAllOrders() {
         return orderRepository.findAll();

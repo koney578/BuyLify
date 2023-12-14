@@ -72,7 +72,6 @@ public class Product {
     @NotNull
     private boolean isActive;
 
-
     private LocalDateTime auctionEndsAt;
 
     @JoinColumn(name = "id_user", referencedColumnName = "id")

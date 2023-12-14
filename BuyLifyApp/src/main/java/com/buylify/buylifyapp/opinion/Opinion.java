@@ -28,7 +28,7 @@ public class Opinion {
 
     @NotNull
     @Min(value = 0)
-    @Max(value = 10)
+    @Max(value = 5)
     private int stars;
 
     @Size(max = 400)
