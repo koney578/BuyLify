@@ -37,10 +37,10 @@ public class NotificationService {
                 .toList();
     }
 
-    public void checkNotification(Long id, Long userId) {
-        Notification notification = notificationRepository.findById(id).orElseThrow(() -> new RuntimeException("Notification not found"));
+    public void checkNotification(CheckDto checkDto, Long userId) {
+        Notification notification = notificationRepository.findById(checkDto.getId()).orElseThrow(() -> new RuntimeException("Notification not found"));
         if (notification.getUser().getId().equals(userId)) {
-            notification.setChecked(true);
+            notification.setChecked(checkDto.isChecked());
             notificationRepository.save(notification);
         }
     }
