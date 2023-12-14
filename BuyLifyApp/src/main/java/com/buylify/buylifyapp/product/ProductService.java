@@ -34,11 +34,12 @@ public class ProductService {
         Category category = categoryRepository.getReferenceById(post.getCategoryId());
         User user = userRepository.getReferenceById(userId);
 
-        System.out.println(post.getAuctionEndsAt());
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime localDateTime = LocalDateTime.parse(post.getAuctionEndsAt(), formatter);
+       if (post.getAuctionEndsAt() != null) {
+           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
+           LocalDateTime localDateTime = LocalDateTime.parse(post.getAuctionEndsAt(), formatter);
+           product.setAuctionEndsAt(localDateTime);
+       }
 
-        product.setAuctionEndsAt(localDateTime);
         product.setPhoto(imageUrl);
         product.setCategory(category);
         product.setActive(true);
