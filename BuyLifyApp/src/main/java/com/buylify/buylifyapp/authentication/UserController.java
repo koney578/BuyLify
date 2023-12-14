@@ -23,4 +23,15 @@ public class UserController {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         return userService.updateUser(userId, editUserDto);
     }
+
+    @PatchMapping("/type/premium")
+    public void setPremiumUserType(Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        userService.setPremiumUserType(userId);
+    }
+    @PatchMapping("/type/basic")
+    public void setBasicUserType(Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        userService.setBasicUserType(userId);
+    }
 }
