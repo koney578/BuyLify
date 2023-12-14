@@ -41,7 +41,6 @@ const {data: products} = await useFetch<Product[]>('http://localhost:8080/api/pr
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-console.log(products)
 
 interface Product {
   id: number;
