@@ -36,6 +36,7 @@ const auth = useAuthStore()
 const checkNotification = async () => {
   isChecked.value = !isChecked.value
   readNotification.isChecked = isChecked.value
+  console.log(readNotification)
 
   const router = useRouter()
 
