@@ -25,6 +25,28 @@ const formatDateTime = (dateTimeString: string) => {
   return dateTime.toLocaleString('pl-PL', options);
 };
 
+const isChecked = ref(props.checked)
+
+const readNotification = reactive({
+  id: props.id,
+  isChecked: false,
+})
+
+const auth = useAuthStore()
+const checkNotification = async () => {
+  isChecked.value = !isChecked.value
+  readNotification.isChecked = isChecked.value
+  console.log(readNotification)
+
+  const router = useRouter()
+
+  const data = await $fetch('http://localhost:8080/api/notifications/check', {
+    method: 'PUT',
+    body: readNotification,
+    headers: {Authorization: 'Bearer ' + auth.token}
+  }).catch(err => console.error(err.data))
+}
+
 </script>
 
 <template>
@@ -44,19 +66,19 @@ const formatDateTime = (dateTimeString: string) => {
           <div class="text-xl mr-2rem flex">Data stworzenia: <p class="italic ml-1">{{ formatDateTime(props.createdAt) }} </p></div>
         </div>
 
-        <div v-if="!props.checked" class="w-full flex mt-2rem justify-center">
-          <button type="submit"
+        <div v-if="!isChecked" class="w-full flex mt-2rem justify-center">
+          <button type="button"
                   class="flex w-1/4 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  @click=""
+                  @click="checkNotification"
           >
             Odczytałem
           </button>
         </div>
 
         <div v-else class="w-full flex mt-2rem justify-center">
-          <button type="submit"
+          <button type="button"
                   class="flex w-1/4 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  @click=""
+                  @click="checkNotification"
           >
             Odznacz
           </button>
