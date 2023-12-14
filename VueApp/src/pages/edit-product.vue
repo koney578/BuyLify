@@ -91,6 +91,39 @@ const editProduct = async () => {
 
 
 
+const discount = reactive({
+  discountPercent: 0,
+  days: 0,
+})
+
+const setDiscount = async () => {
+  if (discount.discountPercent > 1 && discount.discountPercent < 100) {
+    discount.discountPercent = discount.discountPercent / 100
+  }
+
+  if (discount.discountPercent < 0 && discount.discountPercent > 1) {
+    return
+  }
+  if (discount.days < 0) {
+    return
+  }
+
+  const router = useRouter()
+  const data = await $fetch('http://localhost:8080/api/discounts/' + changedProduct.id, {
+    method: 'PATCH',
+    body: discount,
+    headers: {Authorization: 'Bearer ' + auth.token}
+  }).then(() => {
+    router.push('/mySales')
+  }).catch(err => console.error(err.data))
+
+}
+
+const discountVisible = ref(false)
+const discountButtonClicked = () => {
+  discountVisible.value = !discountVisible.value
+}
+
 
 
 </script>
@@ -111,7 +144,56 @@ const editProduct = async () => {
               alt="Główne zdjęcie"
               class="h-auto w-1/2"
           />
+
+          <div class="mt-2rem">
+            <button type="button" @click="discountButtonClicked"
+                    class="flex justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              ustawienia promocji
+            </button>
+          </div>
+
+
+          <div v-if="discountVisible" class="mt-2rem">
+            <form @submit.prevent="setDiscount">
+              <label for="discount-percent" class="block text-sm font-medium leading-6 text-gray-900">
+                Zniżka w procentach (wpisać samą liczbę!):
+              </label>
+              <div class="mt-2">
+                <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
+                <!--                    {{ productNameError }}-->
+                <!--                  </div>-->
+                <input v-model="discount.discountPercent" id="discount-percent" name="discount-percent" type="text"
+                       autocomplete="discount-percent"
+                       required=""
+                       placeholder="40"
+                       class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+              </div>
+
+              <label for="discount-days" class="block text-sm font-medium leading-6 text-gray-900">
+                Czas trwania zniżki (w dniach)
+              </label>
+              <div class="mt-2">
+                <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
+                <!--                    {{ productNameError }}-->
+                <!--                  </div>-->
+                <input v-model="discount.days" id="discount-days" name="discount-days" type="text"
+                       autocomplete="discount-days"
+                       required=""
+                       placeholder="3"
+                       class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+              </div>
+
+              <div class="mt-2rem">
+                <button type="submit"
+                        class="flex justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  Ustaw zniżkę
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
+
+
         <form @submit.prevent="editProduct" method="POST" class="w-1/2">
           <div class="w-full">
             <div class="justify-between mt-2rem">
