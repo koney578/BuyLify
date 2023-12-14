@@ -9,6 +9,8 @@ import com.buylify.buylifyapp.opinion.OpinionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -31,6 +33,12 @@ public class ProductService {
 
         Category category = categoryRepository.getReferenceById(post.getCategoryId());
         User user = userRepository.getReferenceById(userId);
+
+        System.out.println(post.getAuctionEndsAt());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime localDateTime = LocalDateTime.parse(post.getAuctionEndsAt(), formatter);
+
+        product.setAuctionEndsAt(localDateTime);
         product.setPhoto(imageUrl);
         product.setCategory(category);
         product.setActive(true);
@@ -78,6 +86,7 @@ public class ProductService {
         product.setPrice(post.getPrice());
         product.setDescription(post.getDescription());
         product.setCategory(categoryRepository.getReferenceById(post.getCategoryId()));
+        product.setCount(post.getCount());
         productRepository.save(product);
     }
 }
