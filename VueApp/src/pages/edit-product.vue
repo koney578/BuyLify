@@ -77,8 +77,6 @@ const editProduct = async () => {
   changedProduct.modifiedAt = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`
 
 
-  console.log(changedProduct)
-
   const router = useRouter()
 
   const data = await $fetch('http://localhost:8080/api/products/' + changedProduct.id, {
