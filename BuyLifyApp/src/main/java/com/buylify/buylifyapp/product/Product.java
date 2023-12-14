@@ -32,6 +32,9 @@ public class Product {
     @NotNull
     private float price;
 
+//    @NotNull
+//    private float priceAfterDiscount;
+
     @NotNull
     private int count;
 
@@ -68,6 +71,7 @@ public class Product {
 
     @NotNull
     private boolean isActive;
+
 
     private LocalDateTime auctionEndsAt;
 

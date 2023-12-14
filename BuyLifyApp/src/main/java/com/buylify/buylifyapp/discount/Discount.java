@@ -29,6 +29,5 @@ public class Discount {
     private LocalDateTime startAt;
 
     @Column(nullable = false)
-    @CreationTimestamp
     private LocalDateTime endAt;
 }

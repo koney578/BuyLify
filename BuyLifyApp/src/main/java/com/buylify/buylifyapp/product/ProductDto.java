@@ -30,7 +30,4 @@ public class ProductDto {
     private UserProductDto user;
 
 
-//    do zmiany
-//    private byte[] photo;
-
 }
