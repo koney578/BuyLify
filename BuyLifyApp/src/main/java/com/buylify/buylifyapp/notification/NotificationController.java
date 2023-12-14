@@ -27,7 +27,7 @@ public class NotificationController {
         return notificationService.getNotificationsByLoggedUser(userId);
     }
 
-    @PostMapping("/check")
+    @PutMapping("/check")
     public void checkNotification(@RequestBody CheckDto checkDto, Authentication authentication) {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         notificationService.checkNotification(checkDto, userId);
