@@ -2,6 +2,7 @@
 import IcBaselineDensityMedium from "~/icons/IcBaselineDensityMedium.vue";
 import MdiAccountSettingsVariant from "~/icons/MdiAccountSettingsVariant.vue";
 import MdiLogout from "~/icons/MdiLogout.vue";
+import MdiBellRing from "~/icons/MdiBellRing.vue";
 
 const auth = useAuthStore()
 
@@ -9,6 +10,7 @@ const mobileMenuOpen = ref(false)
 </script>
 
 <template>
+  <title>BuyLify</title>
   <body class="bg-gray-200 min-h-screen">
   <header class="bg-white p-1 shadow-2xl relative z-[1000]">
     <nav class="items-center flex">
@@ -41,9 +43,16 @@ const mobileMenuOpen = ref(false)
           </li>
           <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
             <NuxtLink to="/profile">
-              <MdiAccountSettingsVariant/>
+              <MdiAccountSettingsVariant />
             </NuxtLink>
           </li>
+
+          <li class="color-black p-4 ml-1rem mr-1rem text-3xl hover:text-gray-500">
+            <NuxtLink to="/notifications">
+              <MdiBellRing />
+            </NuxtLink>
+          </li>
+
           <li @click="auth.logout()" class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
             <a>
               <mdi-logout/>
@@ -98,6 +107,9 @@ const mobileMenuOpen = ref(false)
               </li>
               <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
                 <NuxtLink to="/profile">Ustawienia konta</NuxtLink>
+              </li>
+              <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+                <NuxtLink to="/notifications">Powiadomienia</NuxtLink>
               </li>
               <li @click="auth.logout()" class="color-black p-4 ml-1rem mr-1rem text-lg">
                 <a>Wyloguj się</a>
