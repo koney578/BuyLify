@@ -28,4 +28,10 @@ public class FollowedProductController {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         return followedProductService.getAllFollowedProducts(userId);
     }
+
+    @DeleteMapping("/{productId}")
+    public void removeFollowedProduct(@PathVariable("productId") Long productId, Authentication authentication){
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        followedProductService.removeFollowedProduct(userId,productId);
+    }
 }

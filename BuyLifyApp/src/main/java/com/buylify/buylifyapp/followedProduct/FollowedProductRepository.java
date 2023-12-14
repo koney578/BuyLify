@@ -9,5 +9,9 @@ import java.util.Optional;
 
 public interface FollowedProductRepository extends JpaRepository<FollowedProduct, Long> {
     @Query("SELECT fp FROM FollowedProduct fp WHERE fp.user.id = :userId")
-    List<FollowedProduct> findByProductIdAndUserId(@Param("userId") Long userId);
+    List<FollowedProduct> findByUserId(@Param("userId") Long userId);
+
+    @Query("SELECT fp FROM FollowedProduct fp WHERE fp.user.id = :userId AND fp.product.id = :productId")
+    FollowedProduct findByUserIdAndProductId(@Param("userId") Long userId, @Param("productId") Long productId);
+
 }
