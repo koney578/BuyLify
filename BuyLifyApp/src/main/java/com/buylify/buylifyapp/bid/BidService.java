@@ -45,6 +45,12 @@ public class BidService {
             throw new RuntimeException("Auction has ended");
         }
 
+        Float maxPrice = bidRepository.getMaxBidPrice(createBidDto.getIdProduct());
+
+        if (maxPrice != null && maxPrice > createBidDto.getPrice()) {
+            throw new RuntimeException("Price is too low");
+        }
+
         bid.setPrice(createBidDto.getPrice());
         bid.setUser(userRepository.getReferenceById(userId));
         bid.setProduct(productRepository.getReferenceById(createBidDto.getIdProduct()));
