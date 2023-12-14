@@ -26,4 +26,12 @@ public class NotificationController {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         return notificationService.getNotificationsByLoggedUser(userId);
     }
+
+    @PostMapping("/check/{id}")
+    public void checkNotification(@PathVariable Long id, Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        notificationService.checkNotification(id, userId);
+    }
+
+
 }
