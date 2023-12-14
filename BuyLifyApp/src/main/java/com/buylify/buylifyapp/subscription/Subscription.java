@@ -27,7 +27,6 @@ public class Subscription {
     private LocalDateTime startAt;
 
     @Column(nullable = false)
-    @CreationTimestamp
     private LocalDateTime endAt;
 
     @JoinColumn(name = "id_user", referencedColumnName = "id")
