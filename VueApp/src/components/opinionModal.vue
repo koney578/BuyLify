@@ -81,7 +81,6 @@ const opinion = reactive({
 
 const setRating = (rating: number) => {
   opinion.stars = rating
-  console.log(opinion)
 }
 
 
@@ -90,7 +89,6 @@ const addOpinion = async () => {
     console.error('Musisz zaznaczyc ilosc gwiazdek!')
     return
   }
-  console.log(opinion)
 
   const data = await $fetch('http://localhost:8080/api/opinions', {
     method: 'POST',
