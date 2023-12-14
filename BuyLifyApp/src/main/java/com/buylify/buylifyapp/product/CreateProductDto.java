@@ -37,6 +37,5 @@ public class CreateProductDto {
     @NotNull
     private int count;
 
-//    do zmiany
-//    private byte[] photo;
+    private String auctionEndsAt;
 }
