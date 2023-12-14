@@ -219,7 +219,6 @@ const sendNotification = async () => {
     return
   }
 
-  console.log(newNotification)
   const router = useRouter()
 
   const data = await $fetch('http://localhost:8080/api/notifications', {
