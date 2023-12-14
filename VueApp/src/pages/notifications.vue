@@ -19,8 +19,6 @@ interface Notification {
 }
 
 
-console.log(notifications)
-
 </script>
 
 <template>

@@ -38,7 +38,6 @@ const {data: announcements} = await useFetch<Announcement[]>('http://localhost:8
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-console.log(announcements)
 
 interface Announcement {
   id: number;
