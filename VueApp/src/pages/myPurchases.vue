@@ -11,9 +11,6 @@ const {data: orders} = await useFetch<any[]>('http://localhost:8080/api/orders',
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-console.log(orders)
-
-
 </script>
 
 <template>
