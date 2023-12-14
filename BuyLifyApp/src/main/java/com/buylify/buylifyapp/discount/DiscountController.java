@@ -1,7 +1,10 @@
 package com.buylify.buylifyapp.discount;
 
+import com.buylify.buylifyapp.product.Product;
+import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,21 +21,12 @@ public class DiscountController {
         return discountService.getAllDiscounts();
     }
 
-    @PreAuthorize("hasAuthority('administrator')")
-    @PostMapping
-    public void addDiscount(@RequestBody Discount discount) {
-        discountService.addDiscount(discount);
+    @PatchMapping("/{productId}")
+    public void addDiscount(@RequestBody CreateDiscountDto discountDto, @PathVariable("productId") Long productId, Authentication authentication){
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+
+
+        discountService.addDiscount(discountDto, productId, userId);
     }
 
-    @PreAuthorize("hasAuthority('administrator')")
-    @DeleteMapping("/{id}")
-    public void deleteDiscount(@PathVariable("id") Long id) {
-        discountService.deleteDiscount(id);
-    }
-
-    @PreAuthorize("hasAuthority('administrator')")
-    @PutMapping("/{id}")
-    public void editDiscount(@PathVariable("id") Long id, @RequestBody Discount discountToEdit) {
-        discountService.editDiscount(id, discountToEdit);
-    }
 }
