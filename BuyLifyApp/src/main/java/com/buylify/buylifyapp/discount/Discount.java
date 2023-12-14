@@ -1,6 +1,8 @@
 package com.buylify.buylifyapp.discount;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +24,8 @@ public class Discount {
     private Long id;
 
     @NotNull
+    @Min(value = 0)
+    @Max(value = 1)
     private float discountPercent;
 
     @Column(nullable = false)
