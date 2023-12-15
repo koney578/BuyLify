@@ -7,5 +7,5 @@ public class CheckDto {
 
     private Long id;
 
-    private boolean isChecked;
+    private Boolean isChecked;
 }
