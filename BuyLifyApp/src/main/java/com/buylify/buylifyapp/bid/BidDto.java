@@ -12,7 +12,7 @@ public class BidDto {
 
     private float price;
 
-    private ProductDto product;
-
     private String createdAt;
+
+    private String username;
 }

@@ -68,7 +68,8 @@ public class BidService {
         entityManager.getTransaction().commit();
         entityManager.close();
 
-
-        return bidMapper.bidToBidDto(bid);
+        BidDto bidDto = bidMapper.bidToBidDto(bid);
+        bidDto.setUsername(bid.getUser().getUsername());
+        return bidDto;
     }
 }
