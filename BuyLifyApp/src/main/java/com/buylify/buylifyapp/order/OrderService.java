@@ -55,15 +55,18 @@ public class OrderService {
         order.setPaymentMethod(paymentMethod);
 
         float totalValue = product.getPrice() * createOrderDto.getProductQuantity();
-        int compareDatesResult = product.getDiscount().getEndAt().compareTo(LocalDateTime.now());
-        // Apply discount
-        if (product.getDiscount() != null && compareDatesResult >=0)  {
-            totalValue = totalValue * (1 - product.getDiscount().getDiscountPercent());
+        if (product.getDiscount().getEndAt() != null){
+            int compareDatesResult = product.getDiscount().getEndAt().compareTo(LocalDateTime.now());
+            // Apply discount
+            if (product.getDiscount() != null && compareDatesResult >=0)  {
+                totalValue = totalValue * (1 - product.getDiscount().getDiscountPercent());
+            }
+            if (compareDatesResult < 0) {
+                product.setDiscount(null);
+                productRepository.save(product);
+            }
         }
-        if (compareDatesResult < 0) {
-            product.setDiscount(null);
-            productRepository.save(product);
-        }
+
         order.setTotalValue(totalValue);
 
         order.setOrderStatus(orderStatus);
