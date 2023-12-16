@@ -38,7 +38,7 @@ const bid = reactive<Bid>({
 })
 const ifBid = ref(false)
 
-if (product) {
+if (product?.auctionEndsAt) {
   try {
     const {data: fetchedBid} = await useFetch<Bid>(
         'http://localhost:8080/api/bids/winning/' + product.id,
