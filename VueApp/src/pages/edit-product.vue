@@ -89,8 +89,6 @@ const editProduct = async () => {
 }
 
 
-
-
 const discount = reactive({
   discountPercent: 0,
   days: 0,
@@ -125,6 +123,32 @@ const discountButtonClicked = () => {
 }
 
 
+const bid = reactive({
+  price: '',
+  idProduct: product?.id,
+})
+
+const createBid = async () => {
+  if (bid.price === '' || !pricePattern.test(bid.price)) {
+    return
+  }
+
+  console.log(bid)
+  const router = useRouter()
+  const data = await $fetch('http://localhost:8080/api/bids', {
+    method: 'POST',
+    body: bid,
+    headers: {Authorization: 'Bearer ' + auth.token}
+  }).then(() => {
+    router.push('/mySales')
+  }).catch(err => console.error(err.data))
+
+}
+
+const bidVisible = ref(false)
+const bidButtonClicked = () => {
+  bidVisible.value = !bidVisible.value
+}
 
 </script>
 
@@ -144,52 +168,91 @@ const discountButtonClicked = () => {
               alt="Główne zdjęcie"
               class="h-auto w-1/2"
           />
-
-          <div class="mt-2rem">
-            <button type="button" @click="discountButtonClicked"
-                    class="flex justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-              ustawienia promocji
-            </button>
-          </div>
-
-
-          <div v-if="discountVisible" class="mt-2rem">
-            <form @submit.prevent="setDiscount">
-              <label for="discount-percent" class="block text-sm font-medium leading-6 text-gray-900">
-                Zniżka w procentach (wpisać samą liczbę!):
-              </label>
-              <div class="mt-2">
-                <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
-                <!--                    {{ productNameError }}-->
-                <!--                  </div>-->
-                <input v-model="discount.discountPercent" id="discount-percent" name="discount-percent" type="text"
-                       autocomplete="discount-percent"
-                       required=""
-                       placeholder="40"
-                       class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
-              </div>
-
-              <label for="discount-days" class="block text-sm font-medium leading-6 text-gray-900">
-                Czas trwania zniżki (w dniach)
-              </label>
-              <div class="mt-2">
-                <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
-                <!--                    {{ productNameError }}-->
-                <!--                  </div>-->
-                <input v-model="discount.days" id="discount-days" name="discount-days" type="text"
-                       autocomplete="discount-days"
-                       required=""
-                       placeholder="3"
-                       class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
-              </div>
-
-              <div class="mt-2rem">
-                <button type="submit"
+          <div class="flex">
+            <div>
+              <div class="my-1rem mx-2rem">
+                <button type="button" @click="discountButtonClicked"
                         class="flex justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  Ustaw zniżkę
+                  ustawienia promocji
                 </button>
               </div>
-            </form>
+
+
+              <div v-if="discountVisible" class="mt-2rem">
+                <form @submit.prevent="setDiscount">
+                  <label for="discount-percent" class="block text-sm font-medium leading-6 text-gray-900">
+                    Zniżka w procentach (wpisać samą liczbę!):
+                  </label>
+                  <div class="mt-2">
+                    <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
+                    <!--                    {{ productNameError }}-->
+                    <!--                  </div>-->
+                    <input v-model="discount.discountPercent" id="discount-percent" name="discount-percent" type="text"
+                           autocomplete="discount-percent"
+                           required=""
+                           placeholder="40"
+                           class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+                  </div>
+
+                  <label for="discount-days" class="block text-sm font-medium leading-6 text-gray-900">
+                    Czas trwania zniżki (w dniach)
+                  </label>
+                  <div class="mt-2">
+                    <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
+                    <!--                    {{ productNameError }}-->
+                    <!--                  </div>-->
+                    <input v-model="discount.days" id="discount-days" name="discount-days" type="text"
+                           autocomplete="discount-days"
+                           required=""
+                           placeholder="3"
+                           class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+                  </div>
+
+                  <div class="mt-2rem">
+                    <button type="submit"
+                            class="flex justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                      Ustaw zniżkę
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
+            <div>
+              <div class="my-1rem mx-2rem">
+                <button type="button" @click="bidButtonClicked"
+                        class="flex justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  Rozpocznij licytację!
+                </button>
+              </div>
+
+
+              <div v-if="bidVisible" class="mt-2rem">
+                <form @submit.prevent="createBid">
+                  <label for="bid-price" class="block text-sm font-medium leading-6 text-gray-900">
+                    Cena wywoławcza (w zł)
+                  </label>
+                  <div class="mt-2">
+                    <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
+                    <!--                    {{ productNameError }}-->
+                    <!--                  </div>-->
+                    <input v-model="bid.price" id="bid-price" name="bid-price" type="text"
+                           autocomplete="bid-price"
+                           required=""
+                           placeholder="40.80"
+                           class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+                  </div>
+
+                  <div class="mt-2rem">
+                    <button type="submit"
+                            class="flex justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                      Zacznij licytację
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+
           </div>
         </div>
 
