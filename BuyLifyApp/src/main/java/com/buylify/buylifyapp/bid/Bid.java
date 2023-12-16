@@ -36,16 +36,7 @@ public class Bid {
     @ManyToOne(targetEntity = Product.class, fetch = FetchType.EAGER)
     private Product product;
 
-//    @NotNull
-//    @Column(name = "id_product")
-//    private Long idProduct;
-
-
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
-
-//    @NotNull
-//    @Column(name = "id_user")
-//    private Long idUser;
 }

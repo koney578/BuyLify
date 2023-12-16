@@ -32,9 +32,6 @@ public class Product {
     @NotNull
     private float price;
 
-//    @NotNull
-//    private float priceAfterDiscount;
-
     @NotNull
     private int count;
 
@@ -59,15 +56,9 @@ public class Product {
     @ManyToOne(targetEntity = Category.class, fetch = FetchType.EAGER)
     private Category category;
 
-//    @Column(name = "category_id")
-//    private Long categoryId;
-
     @JoinColumn(name = "id_discount", referencedColumnName = "id")
     @ManyToOne(targetEntity = Discount.class, fetch = FetchType.EAGER)
     private Discount discount;
-
-//    @Column(name = "id_discount")
-//    private Long idDiscount;
 
     @NotNull
     private boolean isActive;
@@ -77,8 +68,4 @@ public class Product {
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
-
-//    @NotNull
-//    @Column(name = "id_user")
-//    private Long idUser;
 }
