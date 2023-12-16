@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import {useEditProductStore} from "~/stores/editProduct";
 
 interface Category {
   id: number;

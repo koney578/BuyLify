@@ -1,8 +1,5 @@
 <script setup lang="ts">
 
-import {useProductStore} from "~/stores/product";
-import {useOrderStore} from "~/stores/order";
-import AddressForm from "~/components/addressForm.vue";
 
 const auth = useAuthStore()
 const productStore = useProductStore()

@@ -1,10 +1,5 @@
 <script setup lang="ts">
 
-import {useAuthStore} from "~/stores/auth";
-import SinglePost from "~/components/singlePost.vue";
-import ProductQuickView from "~/components/ProductQuickView.vue";
-import {useProductStore} from "~/stores/product";
-
 const auth = useAuthStore()
 const productStore = useProductStore()
 const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
@@ -48,6 +43,7 @@ interface Announcement {
   description: string;
   photo: string;
   createdAt: string;
+  auctionEndsAt: any;
   user: {
     id: number;
     username: number | null;
@@ -65,6 +61,7 @@ interface Product {
   photo: string;
   category: Category;
   createdAt: string;
+  auctionEndsAt: any;
   user: any;
 }
 
@@ -77,7 +74,8 @@ const product = {
   category: noCategory,
   createdAt: '',
   photo: '',
-  user: {}
+  auctionEndsAt: '',
+  user: {},
 }
 
 const isProductDetailsOpen = ref(false)
@@ -93,6 +91,7 @@ const showProductDetails = (announcement: Announcement) => {
   product.category = announcement.category
   product.createdAt = announcement.createdAt
   product.photo = announcement.photo
+  product.auctionEndsAt = announcement.auctionEndsAt
   product.user = announcement.user
 
   selectedProduct.value = product

@@ -6,7 +6,6 @@ const auth = useAuthStore()
 const {data: notifications} = await useFetch<Notification[]>('http://localhost:8080/api/notifications', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
-console.log(notifications)
 
 interface Notification {
   id: number;

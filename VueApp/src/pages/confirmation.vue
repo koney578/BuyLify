@@ -1,33 +1,10 @@
 <script setup lang="ts">
 
-import {useOrderStore} from "~/stores/order";
-import {useAuthStore} from "~/stores/auth";
-
 const auth = useAuthStore()
 const productStore = useProductStore()
 const product = productStore.product
 const orderStore = useOrderStore()
 orderStore.orderStage = 3
-
-interface Address {
-  name: string;
-  surname: string;
-  phoneNumber: string;
-  email: string;
-  country: string;
-  city: string;
-  street: string;
-  houseUnitNumber: string;
-  postalCode: string;
-}
-
-interface Order {
-  idPaymentMethod: number;
-  idDeliveryMethod: number;
-  idProduct: number;
-  productQuantity: number;
-  address: Address;
-}
 
 const methods = orderStore.methods
 const address = orderStore.address
@@ -54,14 +31,142 @@ const order = {
 const buyProduct = async () => {
   const router = useRouter()
 
-  const data = await $fetch('http://localhost:8080/api/orders', {
-    method: 'POST',
-    body: order,
-    headers: {Authorization: 'Bearer ' + auth.token}
-  }).catch(err => console.error(err.data))
+  if (ifBid) {
+    const data = await $fetch('http://localhost:8080/api/bids', {
+      method: 'POST',
+      body: {
+        price: bidPrice.value,
+        idProduct: product?.id,
+      },
+      headers: {Authorization: 'Bearer ' + auth.token}
+    }).catch(err => console.error(err.data))
+  } else {
+    const data = await $fetch('http://localhost:8080/api/orders', {
+      method: 'POST',
+      body: order,
+      headers: {Authorization: 'Bearer ' + auth.token}
+    }).catch(err => console.error(err.data))
+  }
+
 
   await router.push('/board')
 }
+
+
+interface Bid {
+  id: number | null | undefined;
+  price: string | null | undefined;
+  createdAt: string | null | undefined;
+  product: {
+    name: string;
+    price: string;
+    description: string;
+    photo: string;
+    category: {
+      id: number;
+      name: string;
+    },
+    createdAt: string;
+    count: 1,
+    user: {
+      id: number;
+      username: string;
+      email: string;
+      averageStars: number | null;
+    },
+    id: number;
+  } | null | undefined,
+}
+
+
+const bid = reactive<Bid>({
+  id: null,
+  price: null,
+  createdAt: null,
+  product: null
+})
+const ifBid = ref(false)
+
+if (product) {
+  try {
+    const {data: fetchedBid} = await useFetch<Bid>(
+        'http://localhost:8080/api/bids/winning/' + product.id,
+        {
+          headers: {Authorization: 'Bearer ' + auth.token},
+        }
+    );
+    bid.id = fetchedBid.value?.id
+    bid.product = fetchedBid.value?.product
+    bid.createdAt = fetchedBid.value?.createdAt
+    bid.price = fetchedBid.value?.price
+
+    if (bid.id) {
+      ifBid.value = true
+    }
+    // Now you can safely use bid and product here
+  } catch (err: any) {
+    console.error(err.data);
+    ifBid.value = false
+    // Handle the error appropriately
+  }
+} else {
+  // Handle the case where product is null
+  console.error('Product is null');
+  ifBid.value = false
+}
+
+const newBidPrice = ref(bid.price)
+const bidPrice = ref()
+
+const setBidPrice = async () => {
+  if (newBidPrice.value && bid.price && +newBidPrice.value <= +bid.price) {
+    return
+  }
+  bidPrice.value = newBidPrice.value
+}
+
+const formattedTime = ref('loading ...')
+
+const calculateAuctionTime = () => {
+  if (product?.auctionEndsAt) {
+    const auctionEndTime = Date.parse(product.auctionEndsAt); // Parsowanie daty z product.auctionEndsAt
+    const currentTime = Date.now(); // Aktualny czas w milisekundach
+    const auctionTime = auctionEndTime - currentTime;
+    if (auctionTime < 0) {
+      return "Aukcja zakończona"
+    }
+    return formatTimeDifference(auctionTime);
+  }
+  return 0;
+}
+
+const formatTimeDifference = (milliseconds: number) => {
+  const seconds = Math.floor(milliseconds / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  const remainingHours = hours % 24;
+  const remainingMinutes = minutes % 60;
+  const remainingSeconds = seconds % 60;
+
+  formattedTime.value = `${days}d ${remainingHours}h ${remainingMinutes}m ${remainingSeconds}s`;
+  return formattedTime;
+};
+
+onMounted(() => {
+  calculateAuctionTime();
+
+  const intervalId = setInterval(() => {
+    calculateAuctionTime();
+  }, 1000);
+
+  onUnmounted(() => {
+    clearInterval(intervalId);
+  });
+});
+
+
 
 </script>
 
@@ -80,15 +185,54 @@ const buyProduct = async () => {
               alt="Główne zdjęcie"
               class=" h-auto w-1/2"
           />
+
+          <div v-if="ifBid" class="mt-2rem">
+            <form @submit.prevent="setBidPrice">
+              <label for="new-bid-price" class="block text-sm font-medium leading-6 text-gray-900">
+                Podbij cenę (w zł)
+              </label>
+              <div class="mt-2">
+                <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
+                <!--                    {{ productNameError }}-->
+                <!--                  </div>-->
+                <input v-model="newBidPrice" id="new-bid-price" name="new-bid-price" type="text"
+                       autocomplete="new-bid-price"
+                       required=""
+                       placeholder="40"
+                       class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+              </div>
+
+              <div class="mt-2rem">
+                <button type="submit"
+                        class="flex justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  Zatwierdź
+                </button>
+              </div>
+            </form>
+          </div>
+
+
+
         </div>
         <div class="w-full">
 
 
           <div class="grid justify-items-center">
             <p class="text-xl italic ml-1rem">Wybrano: {{ order?.productQuantity }}</p>
-            <p class="text-xl italic ml-1rem">Cena jednostkowa za produkt: {{ product?.price }} zł</p>
-            <p class="text-xl italic ml-1rem">Ilość produktu w ogłoszeniu: {{ product?.count }}</p>
-            <p class="text-2xl italic ml-1rem mt-1rem">Łączny koszt: {{ product?.price * order?.productQuantity }} zł</p>
+
+            <div v-if="ifBid" class="grid justify-items-center">
+              <p class="text-xl italic ml-1rem">Aktualna cena aukcyjna: {{ bid.price }} zł</p>
+              <p class="text-xl italic ml-1rem">Ilość produktu w ogłoszeniu: {{ product?.count }}</p>
+              <p v-if="bidPrice" class="text-xl font-bold italic ml-1rem">Podbijasz cenę do: {{ bidPrice }} zł</p>
+              <p class="text-2xl italic ml-1rem mt-1rem">Pozostały czas aukcji: {{ calculateAuctionTime() }} </p>
+              <p class="text-2xl italic ml-1rem mt-1rem">Łączny koszt: {{ bid.price * order?.productQuantity }} zł</p>
+            </div>
+            <div v-else class="grid justify-items-center">
+              <p class="text-xl italic ml-1rem">Cena jednostkowa za produkt: {{ product?.price }} zł</p>
+              <p class="text-xl italic ml-1rem">Ilość produktu w ogłoszeniu: {{ product?.count }}</p>
+              <p class="text-2xl italic ml-1rem mt-1rem">Łączny koszt: {{ product?.price * order?.productQuantity }} zł</p>
+            </div>
+
           </div>
           <div class="grid justify-between mt-2rem">
             <p class="text-2xl">Nazwa: {{ product?.name }}</p>
