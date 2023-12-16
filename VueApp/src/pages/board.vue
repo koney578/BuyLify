@@ -3,10 +3,6 @@
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import {CheckIcon} from "@heroicons/vue/20/solid";
 
-import {useAuthStore} from "~/stores/auth";
-import SinglePost from "~/components/singlePost.vue";
-import ProductQuickView from "~/components/ProductQuickView.vue";
-import {useProductStore} from "~/stores/product";
 
 const auth = useAuthStore()
 const productStore = useProductStore()
@@ -51,6 +47,7 @@ interface Product {
   photo: string;
   category: Category | null;
   createdAt: string;
+  auctionEndsAt: string | null;
   user: any;
 }
 
@@ -63,7 +60,8 @@ const defaultProduct = {
   category: noCategory,
   createdAt: '',
   photo: '',
-  user: {}
+  auctionEndsAt: '',
+  user: {},
 }
 
 const isProductDetailsOpen = ref(false)
@@ -83,9 +81,9 @@ const closeProductDetails = () => {
 
 
 
-const filterPosts = async () => {
+const filterPosts = async () => { // TODO nie ma na backendzie
   const router = useRouter()
-  const data = await $fetch('http://localhost:8080/api/products', { // TODO sprawdzic czy taki adres zostanie czy inny
+  const data = await $fetch('http://localhost:8080/api/products', {
     method: 'POST',
     body: searchRestriction,
     headers: {Authorization: 'Bearer ' + auth.token}

@@ -12,6 +12,7 @@ interface CloseProduct {
   averageStars: number;
 }
 
+const auth = useAuthStore()
 const productStore = useProductStore()
 const props = defineProps<CloseProduct>()
 
@@ -20,8 +21,68 @@ const routeToBuyProduct = () => {
   router.push('/buyProduct')
 }
 
+interface Bid {
+  id: number | null | undefined;
+  price: string | null | undefined;
+  createdAt: string | null | undefined;
+  product: {
+    name: string;
+    price: string;
+    description: string;
+    photo: string;
+    category: {
+      id: number;
+      name: string;
+    },
+    createdAt: string;
+    count: number,
+    user: {
+      id: number;
+      username: string;
+      email: string;
+      averageStars: number | null;
+    },
+    id: number;
+  } | null | undefined,
+}
 
+
+const product = productStore.product;
+const bid = reactive<Bid>({
+  id: null,
+  price: null,
+  createdAt: null,
+  product: null
+})
 const ifBid = ref(false)
+
+if (product) {
+  try {
+    const {data: fetchedBid} = await useFetch<Bid>(
+        'http://localhost:8080/api/bids/winning/' + product.id,
+        {
+          headers: {Authorization: 'Bearer ' + auth.token},
+        }
+    );
+    bid.id = fetchedBid.value?.id
+    bid.product = fetchedBid.value?.product
+    bid.createdAt = fetchedBid.value?.createdAt
+    bid.price = fetchedBid.value?.price
+
+    if (bid.id) {
+      ifBid.value = true
+    }
+    // Now you can safely use bid and product here
+  } catch (err: any) {
+    console.error(err.data);
+    ifBid.value = false
+    // Handle the error appropriately
+  }
+} else {
+  // Handle the case where product is null
+  console.error('Product is null');
+  ifBid.value = false
+}
 
 
 const route = useRoute()
@@ -42,7 +103,6 @@ const unFollowProduct = async () => {
     props.closeModal()
   }).catch(err => console.error(err.data))
 }
-
 
 
 const followProduct = async () => {
@@ -97,8 +157,16 @@ const followProduct = async () => {
 
                     <section aria-labelledby="information-heading" class="mt-2">
                       <h3 id="information-heading" class="sr-only">Product information</h3>
+                      <div v-if="ifBid">
+                        <h4 class="text-sm font-medium text-gray-900">Cena w licytacji:  </h4>
+                        <p  class="text-2xl text-gray-900">{{ bid?.price }} zł</p>
+                        <div class="mt-10">
+                          <h4 class="text-sm font-medium text-gray-900">Licytację prowadzi:  </h4>
+                          <p  class="text-2xl text-gray-900">{{ bid }}</p>
+                        </div>
+                      </div>
+                      <p v-else class="text-2xl text-gray-900">{{ productStore.product?.price }} zł</p>
 
-                      <p class="text-2xl text-gray-900">{{ productStore.product?.price }} zł</p>
                     </section>
 
                     <section aria-labelledby="options-heading" class="mt-10">
@@ -134,7 +202,7 @@ const followProduct = async () => {
                             </button>
 
                             <button type="submit"
-                                    class="mt-6 flex w-1/2 items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                                    class="mt-6 flex w-1/2 ml-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                               Licytuj
                             </button>
                           </div>

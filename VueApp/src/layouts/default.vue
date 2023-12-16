@@ -6,6 +6,45 @@ import MdiBellRing from "~/icons/MdiBellRing.vue";
 
 const auth = useAuthStore()
 
+interface Notification {
+  id: number;
+  message: string;
+  createdAt: string;
+  notificationType: {
+    id: number;
+    name: string;
+  }
+  checked: boolean
+}
+
+const uncheckedNotificationsCount = ref(0)
+
+const watchNotifications = async () => {
+  if (auth.isLoggedIn) {
+    const {data: notifications} = await useFetch<Notification[]>('http://localhost:8080/api/notifications', {
+      headers: {Authorization: 'Bearer ' + auth.token}
+    });
+
+    const uncheckedNotifications = (notifications.value ?? []).filter(notification => !notification.checked)
+    uncheckedNotificationsCount.value = uncheckedNotifications.length
+    return uncheckedNotificationsCount.value
+  }
+}
+
+onMounted(() => {
+  watchNotifications();
+
+  const intervalId = setInterval(() => {
+    watchNotifications();
+  }, 60000);  // check notifications every minute
+
+  onUnmounted(() => {
+    clearInterval(intervalId);
+  });
+});
+
+
+
 const mobileMenuOpen = ref(false)
 </script>
 
@@ -49,7 +88,10 @@ const mobileMenuOpen = ref(false)
 
           <li class="color-black p-4 ml-1rem mr-1rem text-3xl hover:text-gray-500">
             <NuxtLink to="/notifications">
-              <MdiBellRing />
+              <div class="w-full h-auto relative">
+                <MdiBellRing :uncheckedNotificationCount="uncheckedNotificationsCount"/>
+                <div v-if="uncheckedNotificationsCount" class="absolute -right-4 -top-4 inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full dark:border-gray-900">{{ uncheckedNotificationsCount }}</div>
+              </div>
             </NuxtLink>
           </li>
 
