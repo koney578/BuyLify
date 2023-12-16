@@ -1,7 +1,5 @@
 <script setup lang="ts">
 
-import {useAuthStore} from "~/stores/auth";
-import {useOrderStore} from "~/stores/order"
 
 const auth = useAuthStore()
 const orderStore = useOrderStore()
