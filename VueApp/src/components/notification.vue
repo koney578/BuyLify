@@ -36,9 +36,6 @@ const auth = useAuthStore()
 const checkNotification = async () => {
   isChecked.value = !isChecked.value
   readNotification.isChecked = isChecked.value
-  console.log(readNotification)
-
-  const router = useRouter()
 
   const data = await $fetch('http://localhost:8080/api/notifications/check', {
     method: 'PUT',
