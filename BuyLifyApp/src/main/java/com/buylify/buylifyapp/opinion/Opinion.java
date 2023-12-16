@@ -41,17 +41,9 @@ public class Opinion {
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User userSender;
 
-//    @NotNull
-//    @Column(name = "id_user_sender")
-//    private Long idUserSender;
-
     @JoinColumn(name = "id_user_receiver", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User userReceiver;
-
-//    @NotNull
-//    @Column(name = "id_user_receiver")
-//    private Long idUserReceiver;
 
     @JoinColumn(name = "id_product", referencedColumnName = "id")
     @ManyToOne(targetEntity = Product.class, fetch = FetchType.EAGER)

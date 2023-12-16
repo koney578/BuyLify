@@ -52,8 +52,4 @@ public class User {
     @JoinColumn(name = "id_user_type", referencedColumnName = "id")
     @ManyToOne(targetEntity = UserType.class, fetch = FetchType.EAGER)
     private UserType userType;
-
-//    @NotNull
-//    @Column(name = "id_user_type")
-//    private Long idUserType;
 }

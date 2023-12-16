@@ -2,7 +2,6 @@ package com.buylify.buylifyapp.subscription;
 
 import com.buylify.buylifyapp.authentication.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,8 +31,4 @@ public class Subscription {
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
-
-//    @NotNull
-//    @Column(name = "id_user")
-//    private Long idUser;
 }
