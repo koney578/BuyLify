@@ -25,25 +25,7 @@ interface Bid {
   id: number | null | undefined;
   price: string | null | undefined;
   createdAt: string | null | undefined;
-  product: {
-    name: string;
-    price: string;
-    description: string;
-    photo: string;
-    category: {
-      id: number;
-      name: string;
-    },
-    createdAt: string;
-    count: number,
-    user: {
-      id: number;
-      username: string;
-      email: string;
-      averageStars: number | null;
-    },
-    id: number;
-  } | null | undefined,
+  username: string | null | undefined;
 }
 
 
@@ -52,7 +34,7 @@ const bid = reactive<Bid>({
   id: null,
   price: null,
   createdAt: null,
-  product: null
+  username: null
 })
 const ifBid = ref(false)
 
@@ -65,7 +47,7 @@ if (product) {
         }
     );
     bid.id = fetchedBid.value?.id
-    bid.product = fetchedBid.value?.product
+    bid.username = fetchedBid.value?.username
     bid.createdAt = fetchedBid.value?.createdAt
     bid.price = fetchedBid.value?.price
 
@@ -161,8 +143,8 @@ const followProduct = async () => {
                         <h4 class="text-sm font-medium text-gray-900">Cena w licytacji:  </h4>
                         <p  class="text-2xl text-gray-900">{{ bid?.price }} zł</p>
                         <div class="mt-10">
-                          <h4 class="text-sm font-medium text-gray-900">Licytację prowadzi:  </h4>
-                          <p  class="text-2xl text-gray-900">{{ bid }}</p>
+                          <h4 class="text-sm font-medium text-gray-900">W licytacji prowadzi:  </h4>
+                          <p  class="text-2xl text-gray-900">{{ bid.username }}</p>
                         </div>
                       </div>
                       <p v-else class="text-2xl text-gray-900">{{ productStore.product?.price }} zł</p>
