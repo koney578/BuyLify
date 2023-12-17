@@ -1,6 +1,7 @@
 <script setup lang="ts">
 
-import {useEditProductStore} from "~/stores/editProduct";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid";
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 
@@ -125,7 +126,6 @@ const discountButtonClicked = () => {
 
 const bid = reactive({
   price: '',
-  idProduct: product?.id,
   auctionEndsAt: '',
 })
 
@@ -136,7 +136,7 @@ const createBid = async () => {
 
   console.log(bid)
   const router = useRouter()
-  const data = await $fetch('http://localhost:8080/api/bids', {
+  const data = await $fetch('http://localhost:8080/api/bids/' + product?.id, {
     method: 'PUT',
     body: bid,
     headers: {Authorization: 'Bearer ' + auth.token}
@@ -244,19 +244,10 @@ const bidButtonClicked = () => {
                            class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
                   </div>
 
-                  <label for="bid-auction-end-at" class="block text-sm font-medium leading-6 text-gray-900">
+                  <label for="bid-auction-end-at" class="mt-2 block text-sm font-medium leading-6 text-gray-900">
                     Koniec licytacji
                   </label>
-                  <div class="mt-2">
-                    <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
-                    <!--                    {{ productNameError }}-->
-                    <!--                  </div>-->
-                    <input v-model="bid.auctionEndsAt" id="bid-auction-end-at" name="bid-auction-end-at" type="text"
-                           autocomplete="bid-auction-end-at"
-                           required=""
-                           placeholder="40.80"
-                           class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
-                  </div>
+                  <VueDatePicker v-model="bid.auctionEndsAt" locale="pl-PL" cancelText="Odrzuć" selectText="Potwierdź"></VueDatePicker>
 
                   <div class="mt-2rem">
                     <button type="submit"

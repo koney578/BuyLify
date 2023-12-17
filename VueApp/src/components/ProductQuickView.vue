@@ -9,7 +9,7 @@ import {StarIcon, XMarkIcon} from '@heroicons/vue/24/outline'
 
 interface CloseProduct {
   closeModal: Function;
-  averageStars: number;
+  averageStars: number | null;
 }
 
 const auth = useAuthStore()
@@ -30,6 +30,7 @@ interface Bid {
 
 
 const product = productStore.product;
+console.log(product)
 const bid = reactive<Bid>({
   id: null,
   price: null,
@@ -71,7 +72,7 @@ const ifFollowed = ref(isFollowedProducts)
 const unFollowProduct = async () => {
   const auth = useAuthStore()
   const followProduct = {
-    id: productStore.product?.id
+    id: product?.id
   }
 
   const data = await $fetch('http://localhost:8080/api/followed-products/' + followProduct.id, {
@@ -86,7 +87,7 @@ const unFollowProduct = async () => {
 const followProduct = async () => {
   const auth = useAuthStore()
   const followProduct = {
-    id: productStore.product?.id
+    id: product?.id
   }
 
   const data = await $fetch('http://localhost:8080/api/followed-products', {
@@ -128,10 +129,10 @@ const followProduct = async () => {
 
                 <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
                   <div class="aspect-h-3 aspect-w-2 overflow-hidden rounded-lg bg-gray-100 sm:col-span-4 lg:col-span-5">
-                    <img :src="productStore.product?.photo" alt="" class="object-cover object-center"/>
+                    <img :src="product?.photo" alt="" class="object-cover object-center"/>
                   </div>
                   <div class="sm:col-span-8 lg:col-span-7">
-                    <h2 class="text-2xl font-bold text-gray-900 sm:pr-12">{{ productStore.product?.name }}</h2>
+                    <h2 class="text-2xl font-bold text-gray-900 sm:pr-12">{{ product?.name }}</h2>
 
                     <section aria-labelledby="information-heading" class="mt-2">
                       <h3 id="information-heading" class="sr-only">Product information</h3>
@@ -143,7 +144,7 @@ const followProduct = async () => {
                           <p  class="text-2xl text-gray-900">{{ bid.username }}</p>
                         </div>
                       </div>
-                      <p v-else class="text-2xl text-gray-900">{{ productStore.product?.price }} zł</p>
+                      <p v-else class="text-2xl text-gray-900">{{ product?.price }} zł</p>
 
                     </section>
 
@@ -153,20 +154,20 @@ const followProduct = async () => {
                       <form @submit.prevent="routeToBuyProduct">
                         <div>
                           <h4 class="text-sm font-medium text-gray-900">Ilość: </h4>
-                          <p class="text-2xl text-gray-900">{{ productStore.product?.count }}</p>
+                          <p class="text-2xl text-gray-900">{{ product?.count }}</p>
                         </div>
 
                         <div class="mt-10">
                           <div class="items-center justify-between">
                             <h4 class="text-sm font-medium text-gray-900">Opis produktu: </h4>
-                            <p class="text-2xl text-gray-900">{{ productStore.product?.description }}</p>
+                            <p class="text-2xl text-gray-900">{{ product?.description }}</p>
                           </div>
                         </div>
 
                         <div class="mt-2rem">
                           <h4 class="text-sm font-medium text-gray-900">Ocena sprzedającego: </h4>
                           <div class="flex mt-1rem">
-                            <p class="text-2xl text-gray-900 mr-2">{{ props.averageStars || 0 }}</p>
+                            <p class="text-2xl text-gray-900 mr-2">{{ props?.averageStars || '0' }}</p>
                             <StarIcon class="h-7 w-7 text-yellow-500" aria-hidden="true"/>
                           </div>
 
