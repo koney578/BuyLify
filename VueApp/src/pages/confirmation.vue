@@ -31,7 +31,8 @@ const order = {
 const buyProduct = async () => {
   const router = useRouter()
 
-  if (ifBid) {
+  if (ifBid.value) {
+    console.log()
     const data = await $fetch('http://localhost:8080/api/bids', {
       method: 'POST',
       body: {
@@ -41,6 +42,7 @@ const buyProduct = async () => {
       headers: {Authorization: 'Bearer ' + auth.token}
     }).catch(err => console.error(err.data))
   } else {
+    console.log(order)
     const data = await $fetch('http://localhost:8080/api/orders', {
       method: 'POST',
       body: order,
@@ -103,15 +105,11 @@ if (product) {
     if (bid.id) {
       ifBid.value = true
     }
-    // Now you can safely use bid and product here
   } catch (err: any) {
     console.error(err.data);
     ifBid.value = false
-    // Handle the error appropriately
   }
 } else {
-  // Handle the case where product is null
-  console.error('Product is null');
   ifBid.value = false
 }
 
