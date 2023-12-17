@@ -112,7 +112,7 @@ function validateDeliveryMethodName() {
 
 function validateNotificationType() {
   if (newNotificationType.name !== "") {
-    if (newDeliveryMethod.name.length < 3) {
+    if (newNotificationType.name.length < 3) {
       notificationTypeError = "Nazwa musi składać się przynajmniej z 3 znaków!";
       return false;
     } else {
