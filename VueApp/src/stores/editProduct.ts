@@ -1,11 +1,12 @@
 interface Product {
     id: number;
     name: string;
-    price: number;
-    count: number;
+    price: string;
+    count: string;
     description: string;
     category: Category;
     createdAt: string;
+    auctionEndsAt: string | null;
     photo: any;
     user: {
         id: number;

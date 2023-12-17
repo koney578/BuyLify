@@ -7,7 +7,17 @@ import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} fro
 
 const editProductStore = useEditProductStore()
 const auth = useAuthStore()
-const product = editProductStore.product
+const product = reactive ({
+  id: editProductStore.product?.id,
+  name: editProductStore.product?.name,
+  price: editProductStore.product?.price,
+  count: editProductStore.product?.count,
+  description: editProductStore.product?.count,
+  category: editProductStore.product?.category,
+  createdAt: editProductStore.product?.createdAt,
+  photo: editProductStore.product?.photo,
+  auctionEndsAt: editProductStore.product?.auctionEndsAt,
+})
 
 const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token}
@@ -23,16 +33,16 @@ const noCategory: Category = {
   name: 'Brak kategorii',
 }
 
-const selected = ref<Category>(categories.value?.[0] ?? noCategory)
+const selected = ref<Category>(product?.category ?? noCategory)
 
 
 const changedProduct = reactive({
   id: product?.id || -1,
   name: product?.name,
-  price: product?.price.toString() || '',
-  count: product?.count.toString() || '',
+  price: (product?.price || '').toString(),
+  count: (product?.count || '').toString(),
   description: product?.description,
-  categoryId: product?.category.id || noCategory.id,
+  categoryId: (product?.category || noCategory).id,
   photo: product?.photo,
   modifiedAt: '',
   createdAt: product?.createdAt,
@@ -124,21 +134,16 @@ const discountButtonClicked = () => {
 }
 
 
-const bid = reactive({
-  price: '',
-  auctionEndsAt: '',
-})
-
 const createBid = async () => {
-  if (bid.price === '' || !pricePattern.test(bid.price) || bid.auctionEndsAt === '') {
+  if (product?.price === '' || !pricePattern.test(product?.price ?? '') || product?.auctionEndsAt === '') {
     return
   }
 
-  console.log(bid)
+  console.log(product)
   const router = useRouter()
-  const data = await $fetch('http://localhost:8080/api/bids/' + product?.id, {
+  const data = await $fetch('http://localhost:8080/api/products/' + product?.id, {
     method: 'PUT',
-    body: bid,
+    body: product,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
     router.push('/mySales')
@@ -237,7 +242,7 @@ const bidButtonClicked = () => {
                     <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
                     <!--                    {{ productNameError }}-->
                     <!--                  </div>-->
-                    <input v-model="bid.price" id="bid-price" name="bid-price" type="text"
+                    <input v-model="product.price" id="bid-price" name="bid-price" type="text"
                            autocomplete="bid-price"
                            required=""
                            placeholder="40.80"
@@ -247,7 +252,7 @@ const bidButtonClicked = () => {
                   <label for="bid-auction-end-at" class="mt-2 block text-sm font-medium leading-6 text-gray-900">
                     Koniec licytacji
                   </label>
-                  <VueDatePicker v-model="bid.auctionEndsAt" locale="pl-PL" cancelText="Odrzuć" selectText="Potwierdź"></VueDatePicker>
+                  <VueDatePicker v-model="product.auctionEndsAt" locale="pl-PL" cancelText="Odrzuć" selectText="Potwierdź"></VueDatePicker>
 
                   <div class="mt-2rem">
                     <button type="submit"
