@@ -8,7 +8,7 @@
       <h1 class="color-amber-600 font-bold text-4xl">Wyszukaj coś dla siebie!</h1>
       <p class="color-amber-600 font-bold text-2xl">U nas najlepszy wybor!</p>
       <label class="">
-        <input class="block bg-white color-black p-1rem rounded-3xl max-w-2xl w-full mt-2rem shadow-2xl" value="" placeholder="Wpisz cos sobie byku">
+        <input class="block bg-white color-black p-1rem rounded-3xl max-w-2xl w-full mt-2rem shadow-2xl" value="" placeholder="Wyszukaj produkt">
       </label>
       <search-button />
     </div>
