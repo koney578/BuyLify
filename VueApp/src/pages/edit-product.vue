@@ -126,17 +126,18 @@ const discountButtonClicked = () => {
 const bid = reactive({
   price: '',
   idProduct: product?.id,
+  auctionEndsAt: '',
 })
 
 const createBid = async () => {
-  if (bid.price === '' || !pricePattern.test(bid.price)) {
+  if (bid.price === '' || !pricePattern.test(bid.price) || bid.auctionEndsAt === '') {
     return
   }
 
   console.log(bid)
   const router = useRouter()
   const data = await $fetch('http://localhost:8080/api/bids', {
-    method: 'POST',
+    method: 'PUT',
     body: bid,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
@@ -238,6 +239,20 @@ const bidButtonClicked = () => {
                     <!--                  </div>-->
                     <input v-model="bid.price" id="bid-price" name="bid-price" type="text"
                            autocomplete="bid-price"
+                           required=""
+                           placeholder="40.80"
+                           class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
+                  </div>
+
+                  <label for="bid-auction-end-at" class="block text-sm font-medium leading-6 text-gray-900">
+                    Koniec licytacji
+                  </label>
+                  <div class="mt-2">
+                    <!--                  <div v-if="productNameError" class="font-semibold text-rose-600">-->
+                    <!--                    {{ productNameError }}-->
+                    <!--                  </div>-->
+                    <input v-model="bid.auctionEndsAt" id="bid-auction-end-at" name="bid-auction-end-at" type="text"
+                           autocomplete="bid-auction-end-at"
                            required=""
                            placeholder="40.80"
                            class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>

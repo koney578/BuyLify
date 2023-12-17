@@ -54,15 +54,11 @@ if (product?.auctionEndsAt) {
     if (bid.id) {
       ifBid.value = true
     }
-    // Now you can safely use bid and product here
   } catch (err: any) {
     console.error(err.data);
     ifBid.value = false
-    // Handle the error appropriately
   }
 } else {
-  // Handle the case where product is null
-  console.error('Product is null');
   ifBid.value = false
 }
 

@@ -32,6 +32,7 @@ const noNotification = {
 const {data: notificationTypes} = await useFetch<notificationType[]>('http://localhost:8080/api/notification-types', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
+console.log(notificationTypes)
 
 const selected = ref<notificationType>(notificationTypes.value?.[0] ?? noNotification)
 
@@ -58,7 +59,7 @@ const newNotificationType = reactive({
 
 const newNotification = reactive({
   message: '',
-  notificationTypeId: 0,
+  notificationTypeId: selected.value.id,
   userId: 0,
 })
 
@@ -222,6 +223,7 @@ const sendNotification = async () => {
 
   const router = useRouter()
 
+  console.log(newNotification)
   const data = await $fetch('http://localhost:8080/api/notifications', {
     method: 'POST',
     body: newNotification,
