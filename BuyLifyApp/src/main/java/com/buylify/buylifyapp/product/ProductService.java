@@ -83,6 +83,12 @@ public class ProductService {
         if (!product.getUser().getId().equals(userId)) {
             throw new RuntimeException("Not allowed");
         }
+
+        if (post.getAuctionEndsAt() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
+            LocalDateTime localDateTime = LocalDateTime.parse(post.getAuctionEndsAt(), formatter);
+            product.setAuctionEndsAt(localDateTime);
+        }
         product.setName(post.getName());
         product.setPrice(post.getPrice());
         product.setDescription(post.getDescription());

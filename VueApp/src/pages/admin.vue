@@ -294,7 +294,7 @@ const addNotificationType = async () => {
       <form @submit.prevent="addPaymentMethod" class="space-y-6" action="#" method="POST">
         <div>
           <label for="payment-name" class="block text-sm font-medium leading-6 text-gray-900">
-            Wpisz nazwę metody
+            Wpisz nazwę metody płatności
           </label>
           <div class="mt-2">
             <div v-if="paymentMethodNameError" class="font-semibold text-rose-600">
@@ -381,7 +381,7 @@ const addNotificationType = async () => {
       <form @submit.prevent="sendNotification" class="space-y-6" action="#" method="POST">
         <div>
           <label for="notification-message" class="block text-sm font-medium leading-6 text-gray-900">
-            Wpisz nazwę sposobu dostawy
+            Wpisz treść powiadomienia
           </label>
           <div class="mt-2">
             <div v-if="messageNotificationError" class="font-semibold text-rose-600">
