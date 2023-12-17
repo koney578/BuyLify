@@ -113,7 +113,7 @@ function validateDeliveryMethodName() {
 
 function validateNotificationType() {
   if (newNotificationType.name !== "") {
-    if (newDeliveryMethod.name.length < 3) {
+    if (newNotificationType.name.length < 3) {
       notificationTypeError = "Nazwa musi składać się przynajmniej z 3 znaków!";
       return false;
     } else {
@@ -235,7 +235,7 @@ const sendNotification = async () => {
 }
 
 const addNotificationType = async () => {
-  if (!validateMessageNotification()) {
+  if (!validateNotificationType()) {
     console.error('To pole jest nie prawidłowe')
     return
   }
@@ -244,7 +244,7 @@ const addNotificationType = async () => {
 
   const data = await $fetch('http://localhost:8080/api/notification-types', {
     method: 'POST',
-    body: newNotification,
+    body: newNotificationType,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
