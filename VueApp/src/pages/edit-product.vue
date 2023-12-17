@@ -23,7 +23,7 @@ const noCategory: Category = {
   name: 'Brak kategorii',
 }
 
-const selected = ref<Category>(categories.value?.[0] ?? noCategory)
+const selected = ref<Category>(product?.category ?? noCategory)
 
 
 const changedProduct = reactive({
