@@ -12,7 +12,7 @@ const product = reactive ({
   name: editProductStore.product?.name,
   price: editProductStore.product?.price,
   count: editProductStore.product?.count,
-  description: editProductStore.product?.count,
+  description: editProductStore.product?.description,
   categoryId: editProductStore.product?.category.id,
   createdAt: editProductStore.product?.createdAt,
   photo: editProductStore.product?.photo,
@@ -33,7 +33,7 @@ const noCategory: Category = {
   name: 'Brak kategorii',
 }
 
-const selected = ref<Category>(editProductStore.product ?? noCategory)
+const selected = ref<Category>(editProductStore.product?.category ?? noCategory)
 
 
 const changedProduct = reactive({
