@@ -9,7 +9,9 @@ import com.buylify.buylifyapp.opinion.OpinionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
@@ -34,11 +36,24 @@ public class ProductService {
         Category category = categoryRepository.getReferenceById(post.getCategoryId());
         User user = userRepository.getReferenceById(userId);
 
-       if (post.getAuctionEndsAt() != null) {
-           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
-           LocalDateTime localDateTime = LocalDateTime.parse(post.getAuctionEndsAt(), formatter);
-           product.setAuctionEndsAt(localDateTime);
-       }
+//       if (post.getAuctionEndsAt() != null) {
+//           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+//           LocalDateTime localDateTime = LocalDateTime.parse(post.getAuctionEndsAt(), formatter);
+//           product.setAuctionEndsAt(localDateTime);
+//       }
+
+
+        if (post.getAuctionEndsAt() != null) {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
+
+            // Parse as an Instant (UTC) and then convert to LocalDateTime
+            Instant instant = Instant.parse(post.getAuctionEndsAt());
+            LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
+
+            product.setAuctionEndsAt(localDateTime);
+        }
+
+
 
         product.setPhoto(imageUrl);
         product.setCategory(category);

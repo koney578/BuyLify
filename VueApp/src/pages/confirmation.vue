@@ -31,8 +31,14 @@ const order = {
 const buyProduct = async () => {
   const router = useRouter()
 
+  console.log(ifBid.value)
   if (ifBid.value) {
-    console.log()
+
+    console.log({
+      price: bidPrice.value,
+      idProduct: product?.id,
+    })
+
     const data = await $fetch('http://localhost:8080/api/bids', {
       method: 'POST',
       body: {
