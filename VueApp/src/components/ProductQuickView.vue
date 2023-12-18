@@ -99,6 +99,18 @@ const followProduct = async () => {
   }).catch(err => console.error(err.data))
 }
 
+const ifAuctionWasEnded = ref(false)
+const ifAuctionEnd = () => {
+  if (product?.auctionEndsAt) {
+    ifAuctionWasEnded.value = new Date(product?.auctionEndsAt).getTime() < new Date().getTime();
+  }
+}
+
+watchEffect(() => {
+  ifAuctionEnd()
+})
+
+
 </script>
 
 <template>
@@ -140,8 +152,9 @@ const followProduct = async () => {
                         <h4 class="text-sm font-medium text-gray-900">Cena w licytacji:  </h4>
                         <p  class="text-2xl text-gray-900">{{ bid?.price }} zł</p>
                         <div class="mt-10">
-                          <h4 class="text-sm font-medium text-gray-900">W licytacji prowadzi:  </h4>
-                          <p  class="text-2xl text-gray-900">{{ bid.username }}</p>
+                          <h4 v-if="ifAuctionWasEnded" class="text-lg font-bold text-amber-600">Licytację wygrał:  </h4>
+                          <h4 v-else class="text-sm font-medium text-gray-900">W licytacji prowadzi:  </h4>
+                          <p class="text-2xl text-gray-900">{{ bid.username }}</p>
                         </div>
                       </div>
                       <p v-else class="text-2xl text-gray-900">{{ product?.price }} zł</p>
