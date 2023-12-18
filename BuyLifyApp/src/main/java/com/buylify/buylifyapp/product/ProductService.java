@@ -100,7 +100,7 @@ public class ProductService {
         }
 
         if (post.getAuctionEndsAt() != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy, HH:mm");
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
             LocalDateTime localDateTime = LocalDateTime.parse(post.getAuctionEndsAt(), formatter);
             product.setAuctionEndsAt(localDateTime);
         }
