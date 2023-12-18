@@ -39,29 +39,44 @@ const bid = reactive<Bid>({
 })
 const ifBid = ref(false)
 
-if (product?.auctionEndsAt) {
-  try {
-    const {data: fetchedBid} = await useFetch<Bid>(
-        'http://localhost:8080/api/bids/winning/' + product.id,
-        {
-          headers: {Authorization: 'Bearer ' + auth.token},
-        }
-    );
-    bid.id = fetchedBid.value?.id
-    bid.username = fetchedBid.value?.username
-    bid.createdAt = fetchedBid.value?.createdAt
-    bid.price = fetchedBid.value?.price
 
-    if (bid.id) {
+const ifAuctionWasEnded = ref(false)
+const ifAuctionEnd = () => {
+  if (product?.auctionEndsAt) {
+    ifAuctionWasEnded.value = new Date(product?.auctionEndsAt).getTime() < new Date().getTime();
+  }
+}
+
+watchEffect(() => {
+  ifAuctionEnd()
+})
+
+if (product?.auctionEndsAt) {
+  if (!ifAuctionWasEnded.value) {
+    try {
+      const {data: fetchedBid} = await useFetch<Bid>(
+          'http://localhost:8080/api/bids/winning/' + product.id,
+          {
+            headers: {Authorization: 'Bearer ' + auth.token},
+          }
+      );
+      bid.id = fetchedBid.value?.id
+      bid.username = fetchedBid.value?.username
+      bid.createdAt = fetchedBid.value?.createdAt
+      bid.price = fetchedBid.value?.price
+      console.log(bid)
+
       ifBid.value = true
+
+    } catch (err: any) {
+      console.error(err.data);
+      ifBid.value = false
     }
-  } catch (err: any) {
-    console.error(err.data);
+  } else {
     ifBid.value = false
   }
-} else {
-  ifBid.value = false
-}
+  }
+
 
 
 const route = useRoute()
@@ -99,16 +114,7 @@ const followProduct = async () => {
   }).catch(err => console.error(err.data))
 }
 
-const ifAuctionWasEnded = ref(false)
-const ifAuctionEnd = () => {
-  if (product?.auctionEndsAt) {
-    ifAuctionWasEnded.value = new Date(product?.auctionEndsAt).getTime() < new Date().getTime();
-  }
-}
 
-watchEffect(() => {
-  ifAuctionEnd()
-})
 
 
 </script>
@@ -150,11 +156,11 @@ watchEffect(() => {
                       <h3 id="information-heading" class="sr-only">Product information</h3>
                       <div v-if="ifBid">
                         <h4 class="text-sm font-medium text-gray-900">Cena w licytacji:  </h4>
-                        <p  class="text-2xl text-gray-900">{{ bid?.price }} zł</p>
+                        <p  class="text-2xl text-gray-900">{{ bid?.price || product?.price }} zł</p>
                         <div class="mt-10">
                           <h4 v-if="ifAuctionWasEnded" class="text-lg font-bold text-amber-600">Licytację wygrał:  </h4>
                           <h4 v-else class="text-sm font-medium text-gray-900">W licytacji prowadzi:  </h4>
-                          <p class="text-2xl text-gray-900">{{ bid.username }}</p>
+                          <p class="text-2xl text-gray-900">{{ bid.username || 'Nikt nie bierze udziału w licytacji, bądź pierwszy!' }}</p>
                         </div>
                       </div>
                       <p v-else class="text-2xl text-gray-900">{{ product?.price }} zł</p>

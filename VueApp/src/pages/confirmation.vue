@@ -106,11 +106,9 @@ if (product) {
     bid.id = fetchedBid.value?.id
     bid.product = fetchedBid.value?.product
     bid.createdAt = fetchedBid.value?.createdAt
-    bid.price = fetchedBid.value?.price
+    bid.price = String(fetchedBid.value?.price || product?.price)
 
-    if (bid.id) {
-      ifBid.value = true
-    }
+    ifBid.value = true
   } catch (err: any) {
     console.error(err.data);
     ifBid.value = false
@@ -123,7 +121,7 @@ const newBidPrice = ref(bid.price)
 const bidPrice = ref()
 
 const setBidPrice = async () => {
-  if (newBidPrice.value && bid.price && +newBidPrice.value <= +bid.price) {
+  if (newBidPrice.value && bid.price && +newBidPrice.value <= (+bid.price)) {
     return
   }
   bidPrice.value = newBidPrice.value
@@ -225,11 +223,11 @@ onMounted(() => {
             <p class="text-xl italic ml-1rem">Wybrano: {{ order?.productQuantity }}</p>
 
             <div v-if="ifBid" class="grid justify-items-center">
-              <p class="text-xl italic ml-1rem">Aktualna cena aukcyjna: {{ bid.price }} zł</p>
+              <p class="text-xl italic ml-1rem">Aktualna cena aukcyjna: {{ bid.price || product?.price }} zł</p>
               <p class="text-xl italic ml-1rem">Ilość produktu w ogłoszeniu: {{ product?.count }}</p>
               <p v-if="bidPrice" class="text-xl font-bold italic ml-1rem">Podbijasz cenę do: {{ bidPrice }} zł</p>
               <p class="text-2xl italic ml-1rem mt-1rem">Pozostały czas aukcji: {{ calculateAuctionTime() }} </p>
-              <p class="text-2xl italic ml-1rem mt-1rem">Łączny koszt: {{ bid.price * order?.productQuantity }} zł</p>
+              <p class="text-2xl italic ml-1rem mt-1rem">Łączny koszt: {{ (bidPrice || bid.price || product?.price) * order?.productQuantity }} zł</p>
             </div>
             <div v-else class="grid justify-items-center">
               <p class="text-xl italic ml-1rem">Cena jednostkowa za produkt: {{ product?.price }} zł</p>
