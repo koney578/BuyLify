@@ -6,7 +6,7 @@ interface Product {
     description: string;
     category: Category;
     createdAt: string;
-    auctionEndsAt: string | null;
+    auctionEndsAt: Date | string | null;
     photo: any;
     user: {
         id: number;

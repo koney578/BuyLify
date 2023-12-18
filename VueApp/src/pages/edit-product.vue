@@ -13,7 +13,7 @@ const product = reactive ({
   price: editProductStore.product?.price,
   count: editProductStore.product?.count,
   description: editProductStore.product?.count,
-  category: editProductStore.product?.category,
+  categoryId: editProductStore.product?.category.id,
   createdAt: editProductStore.product?.createdAt,
   photo: editProductStore.product?.photo,
   auctionEndsAt: editProductStore.product?.auctionEndsAt,
@@ -33,7 +33,7 @@ const noCategory: Category = {
   name: 'Brak kategorii',
 }
 
-const selected = ref<Category>(product?.category ?? noCategory)
+const selected = ref<Category>(editProductStore.product ?? noCategory)
 
 
 const changedProduct = reactive({
@@ -42,7 +42,7 @@ const changedProduct = reactive({
   price: (product?.price || '').toString(),
   count: (product?.count || '').toString(),
   description: product?.description,
-  categoryId: (product?.category || noCategory).id,
+  categoryId: product?.categoryId || noCategory.id,
   photo: product?.photo,
   modifiedAt: '',
   createdAt: product?.createdAt,
@@ -90,6 +90,7 @@ const editProduct = async () => {
 
   const router = useRouter()
 
+  console.log(changedProduct)
   const data = await $fetch('http://localhost:8080/api/products/' + changedProduct.id, {
     method: 'PUT',
     body: changedProduct,
@@ -139,6 +140,8 @@ const createBid = async () => {
     return
   }
 
+  // product.auctionEndsAt = product.auctionEndsAt?.toString()
+
   console.log(product)
   const router = useRouter()
   const data = await $fetch('http://localhost:8080/api/products/' + product?.id, {
@@ -155,6 +158,13 @@ const bidVisible = ref(false)
 const bidButtonClicked = () => {
   bidVisible.value = !bidVisible.value
 }
+
+// const format = (product.auctionEndsAt) => {
+//   const day = product.auctionEndsAt?.getDate();
+//   const month = product.auctionEndsAt?.getMonth() + 1;
+//   const year = product.auctionEndsAt?.getFullYear();
+// }
+
 
 </script>
 
@@ -252,7 +262,7 @@ const bidButtonClicked = () => {
                   <label for="bid-auction-end-at" class="mt-2 block text-sm font-medium leading-6 text-gray-900">
                     Koniec licytacji
                   </label>
-                  <VueDatePicker v-model="product.auctionEndsAt" locale="pl-PL" cancelText="Odrzuć" selectText="Potwierdź"></VueDatePicker>
+                  <VueDatePicker v-model="product.auctionEndsAt" locale="pl-PL" cancelText="Odrzuć" selectText="Potwierdź" ></VueDatePicker>
 
                   <div class="mt-2rem">
                     <button type="submit"
