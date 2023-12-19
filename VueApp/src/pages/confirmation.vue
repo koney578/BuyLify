@@ -108,7 +108,9 @@ if (product) {
     bid.createdAt = fetchedBid.value?.createdAt
     bid.price = String(fetchedBid.value?.price || product?.price)
 
-    ifBid.value = true
+    if (product?.auctionEndsAt) {
+      ifBid.value = true
+    }
   } catch (err: any) {
     console.error(err.data);
     ifBid.value = false
