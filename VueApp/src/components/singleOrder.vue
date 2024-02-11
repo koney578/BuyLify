@@ -1,62 +1,6 @@
 <script setup lang="ts">
-interface Category {
-  id: number;
-  name: string;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  count: number;
-  description: string;
-  priority: number;
-  photo: any;
-  createdAt: string;
-  category: Category;
-  discount: any;
-  auctionEndsAt: any;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-  };
-  active: boolean;
-}
-
-interface Address {
-  id: number;
-  name: string;
-  surname: string;
-  phoneNumber: string;
-  email: string;
-  country: string;
-  city: string;
-  street: string;
-  houseUnitNumber: string;
-  postalCode: string;
-}
-
-interface Order {
-  id: number;
-  address: Address;
-  paymentMethod: {
-    id: number;
-    name: string
-  };
-  product: Product;
-  productQuantity: number;
-  orderStatus: {
-    id: number;
-    name: string
-  };
-  totalValue: number;
-  createAt: string;
-  deliveryMethod: {
-    id: number;
-    name: string
-  };
-}
+import type { Order } from "~/types";
+import type { Ref } from "vue";
 
 const props = defineProps<Order>()
 
@@ -72,7 +16,6 @@ const formatDateTime = (dateTimeString: string) => {
   return dateTime.toLocaleString('pl-PL', options);
 }
 
-
 const isOpinionModalOpen = ref(false)
 const selectedOrder: Ref<any> = ref<any>('')
 
@@ -84,9 +27,6 @@ const showOpinionModal = (order: Order) => {
 const closeOrderDetails = () => {
   isOpinionModalOpen.value = false
 }
-
-
-
 </script>
 
 <template>
@@ -129,7 +69,6 @@ const closeOrderDetails = () => {
           <div class="text-xl flex">Kontakt: <p class="italic ml-1">{{ props.product.user.email }}</p></div>
         </div>
 
-
         <div class="w-full flex mt-2rem justify-center">
             <button type="submit"
                     class="flex w-1/4 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
@@ -140,7 +79,6 @@ const closeOrderDetails = () => {
         </div>
         <opinionModal v-if="isOpinionModalOpen"
                       @close="closeOrderDetails"
-                      :is-open="selectedOrder.isOpen"
                       :order="props"
                       :closeModal="closeOrderDetails"
         />

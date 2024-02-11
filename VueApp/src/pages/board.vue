@@ -2,18 +2,13 @@
 
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import {CheckIcon} from "@heroicons/vue/20/solid";
-
+import type { Category, Product } from "~/types"
 
 const auth = useAuthStore()
 const productStore = useProductStore()
 const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
-
-interface Category {
-  id: number;
-  name: string;
-}
 
 const noCategory: Category = {
   id: -1,
@@ -37,20 +32,6 @@ const {data: products} = await useFetch<Product[]>('http://localhost:8080/api/pr
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  count: number;
-  description: string;
-  photo: string;
-  category: Category | null;
-  createdAt: string;
-  auctionEndsAt: string | null;
-  user: any;
-}
-
 const defaultProduct = {
   id: 0,
   name: "",
@@ -60,17 +41,14 @@ const defaultProduct = {
   category: noCategory,
   createdAt: '',
   photo: '',
-  auctionEndsAt: '',
   user: {},
 }
 
 const isProductDetailsOpen = ref(false)
 const selectedProduct: Ref<Product> = ref<Product>(defaultProduct)
 
-
 const showProductDetails = (product: Product) => {
   selectedProduct.value = product
-
   productStore.setProduct(product)
   isProductDetailsOpen.value = true
 }
@@ -78,8 +56,6 @@ const showProductDetails = (product: Product) => {
 const closeProductDetails = () => {
   isProductDetailsOpen.value = false
 }
-
-
 
 const filterPosts = async () => { // TODO nie ma na backendzie
   const router = useRouter()
@@ -190,7 +166,6 @@ const filterPosts = async () => { // TODO nie ma na backendzie
       />
       <ProductQuickView v-if="isProductDetailsOpen"
                         @close="closeProductDetails"
-                        :is-open="selectedProduct.isOpen"
                         :closeModal="closeProductDetails"
                         :averageStars="selectedProduct.user.averageStars"
       />

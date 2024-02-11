@@ -1,19 +1,13 @@
 <script setup lang="ts">
-
+import type { Category } from "~/types"
 import {PhotoIcon} from "@heroicons/vue/24/solid";
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from '@headlessui/vue'
 import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
-import {useAuthStore} from "~/stores/auth";
 
 const auth = useAuthStore()
 const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
-
-interface Category {
-  id: number;
-  name: string;
-}
 
 const noCategory: Category = {
   id: -1,
@@ -21,7 +15,6 @@ const noCategory: Category = {
 }
 
 const selected = ref<Category>(categories.value?.[0] ?? noCategory)
-
 const product = reactive({
   name: '',
   price: '',
@@ -41,7 +34,6 @@ let productPriceError = "";
 let productCountError = "";
 let productDescriptionError = "";
 
-
 function validateProductName() {
   if (product.name !== "") {
     if (product.name.length < 3) {
@@ -57,6 +49,7 @@ function validateProductName() {
 }
 
 const pricePattern = /^[0-9]+(\.[0-9]{1,2})?$/;
+const countPattern = /^[0-9]+$/;
 
 function validateProductPrice() {
   if (product.price === "") {
@@ -71,9 +64,6 @@ function validateProductPrice() {
     return true;
   }
 }
-
-const countPattern = /^[0-9]+$/;
-
 
 function validateProductCount() {
   if (product.count === "") {
@@ -170,12 +160,11 @@ const handleFileChange = (event: any) => {
               {{ productNameError }}
             </div>
             <input v-model="product.name" id="product-name" name="product-name" type="text" autocomplete="product-name"
-                   required=""
+                   required
                    placeholder="Nazwa Twojego ogłoszenia"
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
-
 
         <Listbox as="div" v-model="selected">
           <ListboxLabel class="block text-sm font-medium leading-6 text-gray-900">Kategoria</ListboxLabel>
@@ -212,7 +201,6 @@ const handleFileChange = (event: any) => {
           </div>
         </Listbox>
 
-
         <div>
           <label for="count" class="block text-sm font-medium leading-6 text-gray-900">Ilość</label>
           <div v-if="productCountError" class="font-semibold text-rose-600">
@@ -225,7 +213,6 @@ const handleFileChange = (event: any) => {
             />
           </div>
         </div>
-
 
         <div>
           <label for="price" class="block text-sm font-medium leading-6 text-gray-900">Cena</label>
@@ -252,7 +239,6 @@ const handleFileChange = (event: any) => {
           </div>
         </div>
 
-
         <div>
           <div class="flex items-center justify-between">
             <label for="description" class="block text-sm font-medium leading-6 text-gray-900">Opis</label>
@@ -263,12 +249,11 @@ const handleFileChange = (event: any) => {
             </div>
             <textarea v-model="product.description" id="description" name="description" type="text"
                       autocomplete="description"
-                      required=""
+                      required
                       placeholder="Dodaj opis Twojego ogłoszenia"
                       class="h-[auto] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
-
 
         <div>
           <div class="items-center justify-between">
@@ -279,9 +264,7 @@ const handleFileChange = (event: any) => {
                   <label for="photos"
                          class="cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
                     <span>Wybierz plik</span>
-<!--                    <input v-on:change="post.photos" id="photos" name="photos" type="file" class="sr-only"/>-->
                     <input v-on:change="handleFileChange" id="photos" name="photos" type="file" class="sr-only"/>
-
                   </label>
                   <p class="pl-1">lub przenieś</p>
                 </div>

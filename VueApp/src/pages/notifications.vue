@@ -1,22 +1,9 @@
 <script setup lang="ts">
-import {useAuthStore} from "~/stores/auth";
-import {useProductStore} from "~/stores/product";
-
+import type { Notification } from "~/types"
 const auth = useAuthStore()
 const {data: notifications} = await useFetch<Notification[]>('http://localhost:8080/api/notifications', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
-
-interface Notification {
-  id: number;
-  message: string;
-  createdAt: string;
-  notificationType: {
-    id: number;
-    name: string;
-  }
-  checked: boolean
-}
 
 
 </script>

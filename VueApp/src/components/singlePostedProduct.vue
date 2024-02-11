@@ -1,29 +1,5 @@
 <script setup lang="ts">
-
-
-interface Category {
-  id: number;
-  name: string
-}
-
-interface User {
-  id: number;
-  username: string | null;
-  email: string | null;
-  averageStars: number | null;
-}
-
-interface PostedProduct {
-  id: number;
-  name: string;
-  price: number;
-  count: number;
-  description: string;
-  photo: any;
-  category: Category;
-  createdAt: string;
-  user: User;
-}
+import type { PostedProduct } from "~/types"
 
 const props = defineProps<PostedProduct>()
 
@@ -38,15 +14,14 @@ const formatDateTime = (dateTimeString: string) => {
   const dateTime = new Date(dateTimeString);
   return dateTime.toLocaleString('pl-PL', options);
 }
+
 const editProductStore = useEditProductStore()
 const router = useRouter()
+
 const editProduct = () => {
   editProductStore.setEditProduct(props)
-
   router.push('/edit-product')
 }
-
-
 </script>
 
 <template>
