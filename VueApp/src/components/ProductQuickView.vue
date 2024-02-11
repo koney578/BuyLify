@@ -5,82 +5,19 @@ import {
   TransitionChild,
   TransitionRoot,
 } from '@headlessui/vue'
-import {StarIcon, XMarkIcon} from '@heroicons/vue/24/outline'
 
-interface CloseProduct {
-  closeModal: Function;
-  averageStars: number | null;
-}
+import type { CloseProduct } from "~/types"
 
-const auth = useAuthStore()
+const router = useRouter()
 const productStore = useProductStore()
 const props = defineProps<CloseProduct>()
 
-const router = useRouter()
 const routeToBuyProduct = () => {
   router.push('/buyProduct')
 }
 
-interface Bid {
-  id: number | null | undefined;
-  price: string | null | undefined;
-  createdAt: string | null | undefined;
-  username: string | null | undefined;
-}
-
-
 const product = productStore.product;
-console.log(product)
-const bid = reactive<Bid>({
-  id: null,
-  price: null,
-  createdAt: null,
-  username: null
-})
-const ifBid = ref(false)
-
-
-const ifAuctionWasEnded = ref(false)
-const ifAuctionEnd = () => {
-  if (product?.auctionEndsAt) {
-    ifAuctionWasEnded.value = new Date(product?.auctionEndsAt).getTime() < new Date().getTime();
-  }
-}
-
-watchEffect(() => {
-  ifAuctionEnd()
-})
-
-if (product?.auctionEndsAt) {
-  if (!ifAuctionWasEnded.value) {
-    try {
-      const {data: fetchedBid} = await useFetch<Bid>(
-          'http://localhost:8080/api/bids/winning/' + product.id,
-          {
-            headers: {Authorization: 'Bearer ' + auth.token},
-          }
-      );
-      bid.id = fetchedBid.value?.id
-      bid.username = fetchedBid.value?.username
-      bid.createdAt = fetchedBid.value?.createdAt
-      bid.price = fetchedBid.value?.price
-      console.log(bid)
-
-      ifBid.value = true
-
-    } catch (err: any) {
-      console.error(err.data);
-      ifBid.value = false
-    }
-  } else {
-    ifBid.value = false
-  }
-  }
-
-
-
 const route = useRoute()
-
 const isFollowedProducts = route.path.includes('/followed-products')
 const ifFollowed = ref(isFollowedProducts)
 
@@ -98,7 +35,6 @@ const unFollowProduct = async () => {
   }).catch(err => console.error(err.data))
 }
 
-
 const followProduct = async () => {
   const auth = useAuthStore()
   const followProduct = {
@@ -113,10 +49,6 @@ const followProduct = async () => {
     props.closeModal()
   }).catch(err => console.error(err.data))
 }
-
-
-
-
 </script>
 
 <template>
@@ -142,7 +74,7 @@ const followProduct = async () => {
                         class="absolute right-4 top-4 text-gray-400 hover:text-gray-500 sm:right-6 sm:top-8 md:right-6 md:top-6 lg:right-8 lg:top-8"
                         @click="props.closeModal()">
                   <span class="sr-only">Close</span>
-                  <XMarkIcon class="h-6 w-6" aria-hidden="true"/>
+                  <Icon name="heroicons:x-mark-solid" class="h-6 w-6" aria-hidden="true" />
                 </button>
 
                 <div class="grid w-full grid-cols-1 items-start gap-x-6 gap-y-8 sm:grid-cols-12 lg:gap-x-8">
@@ -154,17 +86,7 @@ const followProduct = async () => {
 
                     <section aria-labelledby="information-heading" class="mt-2">
                       <h3 id="information-heading" class="sr-only">Product information</h3>
-                      <div v-if="ifBid">
-                        <h4 class="text-sm font-medium text-gray-900">Cena w licytacji:  </h4>
-                        <p  class="text-2xl text-gray-900">{{ bid?.price || product?.price }} zł</p>
-                        <div class="mt-10">
-                          <h4 v-if="ifAuctionWasEnded" class="text-lg font-bold text-amber-600">Licytację wygrał:  </h4>
-                          <h4 v-else class="text-sm font-medium text-gray-900">W licytacji prowadzi:  </h4>
-                          <p class="text-2xl text-gray-900">{{ bid.username || 'Nikt nie bierze udziału w licytacji, bądź pierwszy!' }}</p>
-                        </div>
-                      </div>
-                      <p v-else class="text-2xl text-gray-900">{{ product?.price }} zł</p>
-
+                      <p class="text-2xl text-gray-900">{{ product?.price }} zł</p>
                     </section>
 
                     <section aria-labelledby="options-heading" class="mt-10">
@@ -187,33 +109,11 @@ const followProduct = async () => {
                           <h4 class="text-sm font-medium text-gray-900">Ocena sprzedającego: </h4>
                           <div class="flex mt-1rem">
                             <p class="text-2xl text-gray-900 mr-2">{{ props?.averageStars || '0' }}</p>
-                            <StarIcon class="h-7 w-7 text-yellow-500" aria-hidden="true"/>
-                          </div>
-
-                        </div>
-
-                        <div v-if="ifBid">
-                          <div class="flex w-full">
-                            <button type="submit"
-                                    class="mt-6 flex w-1/2 mr-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                             Licytuj
-                            </button>
-                            <div v-if="!ifFollowed">
-                              <button type="button"
-                                      class="mt-6 flex w-full ml-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                      @click="followProduct()" ref="cancelButtonRef">Zapisz na później
-                              </button>
-                            </div>
-                            <div v-else class="flex w-full">
-                              <button type="button"
-                                      class="mt-6 flex w-full ml-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-                                      @click="unFollowProduct()" ref="cancelButtonRef">Usuń z obserwowanych
-                              </button>
-                            </div>
+                            <Icon name="heroicons:star" class="h-7 w-7 text-yellow-500" aria-hidden="true" />
                           </div>
                         </div>
 
-                        <div v-else class="flex w-full">
+                        <div class="flex w-full">
                           <div class="flex w-full">
                             <button type="submit"
                                     class="mt-6 flex w-1/2 mr-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">

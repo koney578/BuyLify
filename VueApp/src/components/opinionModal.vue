@@ -1,76 +1,9 @@
 <script setup lang="ts">
-import {Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot} from '@headlessui/vue'
-import {StarIcon} from '@heroicons/vue/24/outline'
-
-interface Category {
-  id: number;
-  name: string;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  count: number;
-  description: string;
-  priority: number;
-  photo: any;
-  createdAt: string;
-  category: Category;
-  discount: any;
-  auctionEndsAt: any;
-  user: {
-    id: number;
-    username: string;
-    email: string;
-  };
-  active: boolean;
-}
-
-interface Address {
-  id: number;
-  name: string;
-  surname: string;
-  phoneNumber: string;
-  email: string;
-  country: string;
-  city: string;
-  street: string;
-  houseUnitNumber: string;
-  postalCode: string;
-}
-
-interface Order {
-  id: number;
-  address: Address;
-  paymentMethod: {
-    id: number;
-    name: string
-  };
-  product: Product;
-  productQuantity: number;
-  orderStatus: {
-    id: number;
-    name: string
-  };
-  totalValue: number;
-  createAt: string;
-  deliveryMethod: {
-    id: number;
-    name: string
-  };
-}
-
-interface OpinionModal {
-  closeModal: Function;
-  order: Order;
-}
+import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
+import type { OpinionModal } from "~/types"
 
 const props = defineProps<OpinionModal>()
-
 const auth = useAuthStore()
-
-
 const opinion = reactive({
   description: '',
   stars: 0,
@@ -78,11 +11,9 @@ const opinion = reactive({
   productId: props.order.product.id
 })
 
-
 const setRating = (rating: number) => {
   opinion.stars = rating
 }
-
 
 const addOpinion = async () => {
   if (!(opinion.stars)) {
@@ -98,9 +29,6 @@ const addOpinion = async () => {
 
   props.closeModal()
 }
-
-
-
 </script>
 
 <template>
@@ -124,7 +52,7 @@ const addOpinion = async () => {
                 <div class="sm:flex sm:items-start">
                   <div
                       class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-yellow-100 sm:mx-0 sm:h-10 sm:w-10">
-                    <StarIcon class="h-6 w-6 text-yellow-500" aria-hidden="true"/>
+                    <Icon name="heroicons:star" class="h-6 w-6 text-yellow-500" aria-hidden="true" />
                   </div>
                   <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900">Oceń produkt
@@ -136,15 +64,15 @@ const addOpinion = async () => {
                     </div>
                   </div>
                   <div class="flex items-center">
-                    <StarIcon v-for="rating in [0, 1, 2, 3, 4]" :key="rating" @click="setRating(rating + 1)"
-                              :class="[opinion.stars > rating ? 'text-yellow-500' : 'text-gray-200', 'h-5 w-5 flex-shrink-0']"
-                              aria-hidden="true"
+                    <Icon name="heroicons:star" v-for="rating in [0, 1, 2, 3, 4]" :key="rating" @click="setRating(rating + 1)"
+                          :class="[opinion.stars > rating ? 'text-yellow-500' : 'text-gray-200', 'h-5 w-5 flex-shrink-0']"
+                          aria-hidden="true"
                     />
                   </div>
                 </div>
                 <textarea v-model="opinion.description" id="description" name="description" type="text"
                           autocomplete="description"
-                          required=""
+                          required
                           placeholder="Dodatkowa treść do opinii"
                           class="h-[auto] block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem mt-1rem"/>
               </div>

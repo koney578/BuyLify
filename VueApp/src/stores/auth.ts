@@ -1,15 +1,6 @@
-interface User {
-    id: number | null;
-    username: string | null;
-    name: string | null;
-    surname: string | null;
-    phoneNumber: string | null;
-    email: string | null;
-    registrationDate: string | null;
-    roles: any;
-}
+import type {ComplexUser} from "~/types";
 
-const emptyUser: User = {
+const emptyUser: ComplexUser = {
     id: null,
     username: null,
     name: null,
@@ -20,29 +11,24 @@ const emptyUser: User = {
     roles: null
 }
 
-
 export const useAuthStore = defineStore('auth', () => {
     const token = useLocalStorage('auth: token', '')
     const user = useLocalStorage('auth: user', emptyUser)
-        // <User>(emptyUser)
 
     const login = async (username: string, password: string) => {
-        const data = await $fetch<{ token: string, user: User }>('http://localhost:8080/api/login', {
+        const data = await $fetch<{ token: string, user: ComplexUser }>('http://localhost:8080/api/login', {
             method: 'POST',
             body: { username, password }
         })
-
         user.value = data.user
         token.value = data.token
     }
 
     const register = async (username: string, password: string, email: string) => {
-        const data = await $fetch<{ token: string, user: User }>('http://localhost:8080/api/register', {
+        const data = await $fetch('http://localhost:8080/api/register', { // TODO register niech nie zwraca ani usera ani tokena
             method: 'POST',
             body: { username, password, email }
         })
-
-        // token.value = data.token
     }
 
     const logout = () => {

@@ -1,33 +1,12 @@
-interface Product {
-    id: number;
-    name: string;
-    price: string;
-    count: string;
-    description: string;
-    category: Category;
-    createdAt: string;
-    auctionEndsAt: Date | string | null;
-    photo: any;
-    user: {
-        id: number;
-        username: string | null;
-        email: string | null;
-        averageStars: number | null;
-    }
-}
-
-interface Category {
-    id: number;
-    name: string;
-}
+import type {PostedProduct} from "~/types";
 
 export const useEditProductStore = defineStore({
     id: 'EditProductStore',
     state: () => ({
-        product: null as Product | null,
+        product: null as PostedProduct | null,
     }),
     actions: {
-        setEditProduct(product: Product) {
+        setEditProduct(product: PostedProduct) {
             this.product = product;
         },
     },

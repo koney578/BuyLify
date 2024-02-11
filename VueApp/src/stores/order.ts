@@ -1,29 +1,4 @@
-interface Address {
-    name: string;
-    surname: string;
-    phoneNumber: string;
-    email: string;
-    country: string;
-    city: string;
-    street: string;
-    houseUnitNumber: string;
-    postalCode: string;
-}
-
-interface Methods {
-    idPaymentMethod: number;
-    idDeliveryMethod: number;
-    idProduct: number | undefined;
-    productQuantity: number | string;
-}
-
-interface Order {
-    idPaymentMethod: number;
-    idDeliveryMethod: number;
-    idProduct: number | undefined;
-    productQuantity: number | string;
-    address: Address;
-}
+import type { Address, Methods, Order } from "~/types"
 
 export const useOrderStore = defineStore({
     id: 'productStore',

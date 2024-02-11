@@ -1,6 +1,4 @@
 <script setup lang="ts">
-
-
 const auth = useAuthStore()
 const productStore = useProductStore()
 const product = productStore.product
@@ -21,10 +19,8 @@ const purchaseMethods = reactive({
   productQuantity: '',
 })
 
-
 let productQuantityError = ''
 const quantityPattern = /^[0-9]+$/;
-
 
 function validateProductCount() {
   if (purchaseMethods.productQuantity === '') {
@@ -83,7 +79,7 @@ const addPurchaseMethods = () => {
                 class="block w-full rounded-md border-0 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem">
           <option value="0" selected disabled hidden>Wybierz metodę płatności</option>
           <option v-for="paymentMethod in paymentMethods"
-                  :key="paymentMethods.id"
+                  :key="paymentMethods?.id"
                   :value="paymentMethod.id">
             {{ paymentMethod.name }}
           </option>
@@ -120,14 +116,10 @@ const addPurchaseMethods = () => {
           {{ productQuantityError }}
         </div>
         <input v-model="purchaseMethods.productQuantity" id="productQuantity" name="productQuantity" type="text"
-               autocomplete="productQuantity" required=""
+               autocomplete="productQuantity" required
                class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
       </div>
     </div>
-
-    <!--        TODO dodać jakieś info o tym produkcie ktory wybral-->
-    <!--        <div class="block text-sm font-medium leading-6 text-gray-900">{{ product?.name }}</div>-->
-    <!--        <div class="block text-sm font-medium leading-6 text-gray-900">{{ product?.description }}</div>-->
     <div>
       <button type="submit"
               class="flex w-full justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">

@@ -1,16 +1,10 @@
 <script setup lang="ts">
 import {useAuthStore} from "~/stores/auth";
-import {useProductStore} from "~/stores/product";
-import SinglePost from "~/components/singlePost.vue";
-import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
-import ProductQuickView from "~/components/ProductQuickView.vue";
-import {CheckIcon} from "@heroicons/vue/20/solid";
 
 const auth = useAuthStore()
 const {data: orders} = await useFetch<any[]>('http://localhost:8080/api/orders', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
-
 </script>
 
 <template>
@@ -34,5 +28,4 @@ const {data: orders} = await useFetch<any[]>('http://localhost:8080/api/orders',
       />
     </div>
   </div>
-
 </template>
