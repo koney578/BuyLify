@@ -42,7 +42,6 @@ const login = async () => {
   }
 
   const router = useRouter()
-
   const auth = useAuthStore()
   await auth.login(user.username, user.password)
       .catch(
@@ -73,7 +72,7 @@ const login = async () => {
         <div>
           <label for="username" class="block text-sm font-medium leading-6 text-gray-900">Nazwa użytkownika</label>
           <div class="mt-2">
-            <input v-model="user.username" id="username" name="username" type="text" autocomplete="username" required=""
+            <input v-model="user.username" id="username" name="username" type="text" autocomplete="username" required
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
@@ -92,7 +91,7 @@ const login = async () => {
               {{ passwordError }}
             </div>
             <input v-model="user.password" id="password" name="password" type="password" autocomplete="current-password"
-                   required=""
+                   required
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>

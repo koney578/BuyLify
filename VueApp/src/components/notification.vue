@@ -1,15 +1,5 @@
 <script setup lang="ts">
-
-interface Notification {
-  id: number;
-  message: string;
-  createdAt: string;
-  notificationType: {
-    id: number;
-    name: string;
-  }
-  checked: boolean
-}
+import type { Notification } from "~/types"
 
 const props = defineProps<Notification>()
 
@@ -52,7 +42,7 @@ const checkNotification = async () => {
       <div class="w-full">
 
         <div class="grid justify-items-center">
-          <p class="text-3xl">{{ props.notificationType.name }}</p>
+          <p class="text-3xl">{{ props?.notificationType.name }}</p>
         </div>
 
         <div class="flex mt-2rem justify-between">
@@ -60,7 +50,7 @@ const checkNotification = async () => {
         </div>
 
         <div class="flex mt-2rem justify-between">
-          <div class="text-xl mr-2rem flex">Data stworzenia: <p class="italic ml-1">{{ formatDateTime(props.createdAt) }} </p></div>
+          <div class="text-xl mr-2rem flex">Data stworzenia: <p class="italic ml-1">{{ formatDateTime(props?.createdAt) }} </p></div>
         </div>
 
         <div v-if="!isChecked" class="w-full flex mt-2rem justify-center">

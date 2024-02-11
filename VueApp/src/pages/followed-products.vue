@@ -1,15 +1,10 @@
 <script setup lang="ts">
-
+import type { Category, Announcement, Product } from "~/types"
 const auth = useAuthStore()
 const productStore = useProductStore()
 const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
-
-interface Category {
-  id: number;
-  name: string;
-}
 
 const noCategory: Category = {
   id: -1,
@@ -17,7 +12,6 @@ const noCategory: Category = {
 }
 
 const selected = ref<Category>(categories.value?.[0] ?? noCategory)
-
 const searchRestriction = reactive({
   filterName: '',
   priceMin: '',
@@ -33,38 +27,6 @@ const {data: announcements} = await useFetch<Announcement[]>('http://localhost:8
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-
-interface Announcement {
-  id: number;
-  name: string;
-  category: Category;
-  price: number;
-  count: number;
-  description: string;
-  photo: string;
-  createdAt: string;
-  auctionEndsAt: any;
-  user: {
-    id: number;
-    username: number | null;
-    email: string | null;
-    averageStars: number | null;
-  }
-}
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  count: number;
-  description: string;
-  photo: string;
-  category: Category;
-  createdAt: string;
-  auctionEndsAt: any;
-  user: any;
-}
-
 const product = {
   id: 0,
   name: "",
@@ -74,7 +36,6 @@ const product = {
   category: noCategory,
   createdAt: '',
   photo: '',
-  auctionEndsAt: '',
   user: {},
 }
 
@@ -91,7 +52,6 @@ const showProductDetails = (announcement: Announcement) => {
   product.category = announcement.category
   product.createdAt = announcement.createdAt
   product.photo = announcement.photo
-  product.auctionEndsAt = announcement.auctionEndsAt
   product.user = announcement.user
 
   selectedProduct.value = product
@@ -129,7 +89,6 @@ const closeProductDetails = () => {
       />
       <ProductQuickView v-if="isProductDetailsOpen"
                         @close="closeProductDetails"
-                        :is-open="selectedProduct.isOpen"
                         :closeModal="closeProductDetails"
                         :averageStars="selectedProduct.user.averageStars"
       />

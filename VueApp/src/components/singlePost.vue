@@ -1,20 +1,5 @@
 <script setup lang="ts">
-
-interface Category {
-  id: number;
-  name: string;
-}
-
-interface Product {
-  id: number;
-  name: string;
-  price: number;
-  count: number;
-  description: string;
-  photo: string;
-  category: Category | null;
-  createdAt: string;
-}
+import type { Product } from "~/types"
 
 const props = defineProps<Product>()
 
@@ -29,7 +14,6 @@ const formatDateTime = (dateTimeString: string) => {
   const dateTime = new Date(dateTimeString);
   return dateTime.toLocaleString('pl-PL', options);
 };
-
 </script>
 
 <template>
@@ -50,7 +34,6 @@ const formatDateTime = (dateTimeString: string) => {
           <p class="text-xl italic mr-1rem">{{ props.price }} zł</p>
           <p>Data dodania: {{ formatDateTime(props.createdAt) }}</p>
         </div>
-
       </div>
     </div>
   </div>

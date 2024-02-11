@@ -1,7 +1,4 @@
 <script setup>
-import {PhotoIcon, UserCircleIcon} from '@heroicons/vue/24/solid'
-import {useAuthStore} from "~/stores/auth";
-
 const auth = useAuthStore()
 
 const user = reactive({
@@ -46,9 +43,6 @@ const ifSubscribed = () => {
 
 ifSubscribed()
 
-watch(ifSubscribedVariable, () => {
-
-})
 
 
 const subscribe = async () => {
@@ -64,9 +58,6 @@ const subscribe = async () => {
 
   }).catch(err => console.error(err.data))
 }
-
-
-
 
 const editProfile = async () => {
   if (user.username === '' || !validateUsername()) {
@@ -196,8 +187,6 @@ const editProfile = async () => {
 
           </div>
         </div>
-
-
         <div v-if="!ifSubscribedVariable" class="border-b border-gray-900/10 pb-12">
           <div class="sm:mx-auto sm:w-full sm:max-w-sm">
             <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Subskrypcja</h1>
