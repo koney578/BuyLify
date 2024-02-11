@@ -1,31 +1,7 @@
 <script setup lang="ts">
-
-
-const auth = useAuthStore()
 const productStore = useProductStore()
-const product = productStore.product
 const orderStore = useOrderStore()
-
-
 orderStore.orderStage = 1
-
-const order = reactive({
-  idPaymentMethod: 0,
-  idDeliveryMethod: 0,
-  idProduct: product?.id,
-  productQuantity: 0,
-  address: {
-    name: '',
-    surname: '',
-    phoneNumber: '',
-    email: '',
-    country: '',
-    city: '',
-    street: '',
-    houseUnitNumber: '',
-    postalCode: '',
-  },
-})
 
 const decreaseStage = () => {
   orderStore.orderStage = 1

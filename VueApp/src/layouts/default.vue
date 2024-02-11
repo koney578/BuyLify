@@ -1,23 +1,8 @@
 <script setup lang="ts">
-import IcBaselineDensityMedium from "~/icons/IcBaselineDensityMedium.vue";
-import MdiAccountSettingsVariant from "~/icons/MdiAccountSettingsVariant.vue";
-import MdiLogout from "~/icons/MdiLogout.vue";
-import MdiBellRing from "~/icons/MdiBellRing.vue";
-
+import type { Notification } from "~/types"
 const auth = useAuthStore()
-
-interface Notification {
-  id: number;
-  message: string;
-  createdAt: string;
-  notificationType: {
-    id: number;
-    name: string;
-  }
-  checked: boolean
-}
-
 const uncheckedNotificationsCount = ref(0)
+const mobileMenuOpen = ref(false)
 
 const watchNotifications = async () => {
   if (auth.isLoggedIn) {
@@ -42,10 +27,6 @@ onMounted(() => {
     clearInterval(intervalId);
   });
 });
-
-
-
-const mobileMenuOpen = ref(false)
 </script>
 
 <template>
@@ -82,23 +63,23 @@ const mobileMenuOpen = ref(false)
           </li>
           <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
             <NuxtLink to="/profile">
-              <MdiAccountSettingsVariant />
+              <Icon name="mdi:account-settings-variant" class="text-2rem"/>
             </NuxtLink>
           </li>
 
-          <li class="color-black p-4 ml-1rem mr-1rem text-3xl hover:text-gray-500">
+          <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
             <NuxtLink to="/notifications">
               <div class="w-full h-auto relative">
-                <MdiBellRing :uncheckedNotificationCount="uncheckedNotificationsCount"/>
+                <Icon name="mdi:bell-ring-outline" :uncheckedNotificationCount="uncheckedNotificationsCount" class="relative inline-flex items-center text-2rem text-black hover:text-gray-500" />
                 <div v-if="uncheckedNotificationsCount" class="absolute -right-4 -top-4 inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full dark:border-gray-900">{{ uncheckedNotificationsCount }}</div>
               </div>
             </NuxtLink>
           </li>
 
-          <li @click="auth.logout()" class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-            <a>
-              <mdi-logout/>
-            </a>
+          <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+            <NuxtLink to="/logout">
+              <Icon name="mdi:logout" class="text-2rem" />
+            </NuxtLink>
           </li>
         </div>
 
@@ -120,7 +101,7 @@ const mobileMenuOpen = ref(false)
 
         <div @click="mobileMenuOpen = !mobileMenuOpen" class="relative ml-auto">
           <div class="text-black">
-            <IcBaselineDensityMedium/>
+            <Icon name="mdi:menu" class="text-2rem" />
           </div>
 
           <ul v-if="mobileMenuOpen" class="fixed inset-0 top-19 bg-gray-200">
@@ -153,8 +134,10 @@ const mobileMenuOpen = ref(false)
               <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
                 <NuxtLink to="/notifications">Powiadomienia</NuxtLink>
               </li>
-              <li @click="auth.logout()" class="color-black p-4 ml-1rem mr-1rem text-lg">
-                <a>Wyloguj się</a>
+              <li class="color-black p-4 ml-1rem mr-1rem text-lg">
+                <NuxtLink to="/logout">
+                  <p>Wyloguj się</p>
+                </NuxtLink>
               </li>
             </div>
 
@@ -166,21 +149,18 @@ const mobileMenuOpen = ref(false)
                 <NuxtLink to="/register">Załóż Konto</NuxtLink>
               </li>
             </template>
-
           </ul>
         </div>
-
       </div>
-
     </nav>
   </header>
   <section class="min-h-screen flex flex-col">
     <nuxt-page/>
   </section>
   <footer class="bg-gray-50 p-2rem shadow-2xl">
-    <p class="color-black">bla bla bla</p>
-    <p class="color-black">bla bla bla</p>
-    <p class="color-black">bla bla bla</p>
+<!--    <p class="color-black">bla bla bla</p>-->
+<!--    <p class="color-black">bla bla bla</p>-->
+<!--    <p class="color-black">bla bla bla</p>-->
   </footer>
   </body>
 </template>

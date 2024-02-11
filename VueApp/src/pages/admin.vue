@@ -1,6 +1,5 @@
 <script setup lang="ts">
 
-import {useAuthStore} from "~/stores/auth";
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid";
 
@@ -203,14 +202,13 @@ const addDeliveryMethod = async () => {
     return
   }
 
-  const router = useRouter()
-
   const data = await $fetch('http://localhost:8080/api/delivery-methods', {
     method: 'POST',
     body: newDeliveryMethod,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
+  const router = useRouter()
   await router.push('')
 }
 
@@ -221,16 +219,13 @@ const sendNotification = async () => {
     return
   }
 
-  const router = useRouter()
-
-  console.log(newNotification)
   const data = await $fetch('http://localhost:8080/api/notifications', {
     method: 'POST',
     body: newNotification,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
-
+  const router = useRouter()
   await router.push('')
 }
 
@@ -240,18 +235,15 @@ const addNotificationType = async () => {
     return
   }
 
-  const router = useRouter()
-
   const data = await $fetch('http://localhost:8080/api/notification-types', {
     method: 'POST',
     body: newNotificationType,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
+  const router = useRouter()
   await router.push('')
 }
-
-
 </script>
 
 <template>
@@ -262,7 +254,6 @@ const addNotificationType = async () => {
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-
       <form @submit.prevent="addCategory" class="space-y-6" action="#" method="POST">
         <div>
           <label for="category-name" class="block text-sm font-medium leading-6 text-gray-900">
@@ -274,14 +265,12 @@ const addNotificationType = async () => {
             </div>
             <input v-model="newCategory.name" id="category-name" name="category-name" type="text"
                    autocomplete="category-name"
-                   required=""
+                   required
                    placeholder="Kategoria"
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
-
         <submit-button />
-
       </form>
     </div>
 
@@ -304,14 +293,12 @@ const addNotificationType = async () => {
             </div>
             <input v-model="newPaymentMethod.name" id="payment-name" name="payment-name" type="text"
                    autocomplete="payment-name"
-                   required=""
+                   required
                    placeholder="Metoda płatności"
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
-
         <submit-button />
-
       </form>
     </div>
 
@@ -333,14 +320,12 @@ const addNotificationType = async () => {
             </div>
             <input v-model="newDeliveryMethod.name" id="delivery-name" name="delivery-name" type="text"
                    autocomplete="delivery-name"
-                   required=""
+                   required
                    placeholder="Sposób dostawy"
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
-
         <submit-button />
-
       </form>
     </div>
 
@@ -350,7 +335,6 @@ const addNotificationType = async () => {
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-
       <form @submit.prevent="addNotificationType" class="space-y-6" action="#" method="POST">
         <div>
           <label for="notification-name" class="block text-sm font-medium leading-6 text-gray-900">
@@ -362,14 +346,12 @@ const addNotificationType = async () => {
             </div>
             <input v-model="newNotificationType.name" id="notification-name" name="notification-name" type="text"
                    autocomplete="notification-name"
-                   required=""
+                   required
                    placeholder="typ powiadomienia"
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
         </div>
-
         <submit-button />
-
       </form>
     </div>
 
@@ -391,7 +373,7 @@ const addNotificationType = async () => {
             </div>
             <input v-model="newNotification.message" id="notification-message" name="notification-message" type="text"
                    autocomplete="notification-message"
-                   required=""
+                   required
                    placeholder="treść powiadomienia"
                    class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
           </div>
@@ -402,12 +384,9 @@ const addNotificationType = async () => {
               Wpisz id usera do którego ma dotrzeć powiadomienie
             </label>
             <div class="mt-2">
-<!--              <div v-if="messageNotificationError" class="font-semibold text-rose-600">-->
-<!--                {{ messageNotificationError }}-->
-<!--              </div>-->
               <input v-model="newNotification.userId" id="notification-user" name="notification-user" type="text"
                      autocomplete="notification-user"
-                     required=""
+                     required
                      placeholder="81"
                      class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
             </div>
@@ -448,15 +427,9 @@ const addNotificationType = async () => {
               </transition>
             </div>
           </Listbox>
-
-
-
         </div>
-
         <submit-button />
-
       </form>
     </div>
-
   </div>
 </template>
