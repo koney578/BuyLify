@@ -2,7 +2,6 @@ package com.buylify.buylifyapp.product;
 
 import com.buylify.buylifyapp.authentication.User;
 import com.buylify.buylifyapp.category.Category;
-import com.buylify.buylifyapp.discount.Discount;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -56,14 +55,8 @@ public class Product {
     @ManyToOne(targetEntity = Category.class, fetch = FetchType.EAGER)
     private Category category;
 
-    @JoinColumn(name = "id_discount", referencedColumnName = "id")
-    @ManyToOne(targetEntity = Discount.class, fetch = FetchType.EAGER)
-    private Discount discount;
-
     @NotNull
     private boolean isActive;
-
-    private LocalDateTime auctionEndsAt;
 
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)

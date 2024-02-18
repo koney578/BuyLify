@@ -35,16 +35,9 @@ public class Order {
     @ManyToOne(targetEntity = PaymentMethod.class, fetch = FetchType.EAGER)
     private PaymentMethod paymentMethod;
 
-    @JoinColumn(name = "id_product", referencedColumnName = "id")
-    @ManyToOne(targetEntity = Product.class, fetch = FetchType.EAGER)
-    private Product product;
-
     @JoinColumn(name = "id_user", referencedColumnName = "id")
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     private User user;
-
-    @NotNull
-    private int productQuantity;
 
     @NotNull
     @Column(scale = 2)

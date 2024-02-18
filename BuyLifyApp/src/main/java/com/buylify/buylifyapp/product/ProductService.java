@@ -36,25 +36,6 @@ public class ProductService {
         Category category = categoryRepository.getReferenceById(post.getCategoryId());
         User user = userRepository.getReferenceById(userId);
 
-//       if (post.getAuctionEndsAt() != null) {
-//           DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-//           LocalDateTime localDateTime = LocalDateTime.parse(post.getAuctionEndsAt(), formatter);
-//           product.setAuctionEndsAt(localDateTime);
-//       }
-
-
-        if (post.getAuctionEndsAt() != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-
-            // Parse as an Instant (UTC) and then convert to LocalDateTime
-            Instant instant = Instant.parse(post.getAuctionEndsAt());
-            LocalDateTime localDateTime = LocalDateTime.ofInstant(instant, ZoneOffset.UTC);
-
-            product.setAuctionEndsAt(localDateTime);
-        }
-
-
-
         product.setPhoto(imageUrl);
         product.setCategory(category);
         product.setActive(true);
@@ -99,11 +80,7 @@ public class ProductService {
             throw new RuntimeException("Not allowed");
         }
 
-        if (post.getAuctionEndsAt() != null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSX");
-            LocalDateTime localDateTime = LocalDateTime.parse(post.getAuctionEndsAt(), formatter);
-            product.setAuctionEndsAt(localDateTime);
-        }
+
         product.setName(post.getName());
         product.setPrice(post.getPrice());
         product.setDescription(post.getDescription());

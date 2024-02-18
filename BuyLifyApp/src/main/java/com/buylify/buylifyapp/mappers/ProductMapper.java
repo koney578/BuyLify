@@ -9,7 +9,6 @@ import org.mapstruct.Mapping;
 @Mapper
 public interface ProductMapper {
 
-    @Mapping(target = "auctionEndsAt", ignore = true)
     Product toEntity(CreateProductDto dto);
 
     ProductDto toProductDto(Product product);
