@@ -48,24 +48,12 @@ public class OrderService {
         Address address = addressRepository.save(createOrderDto.getAddress());
         OrderStatus orderStatus = orderStatusRepository.findById(1L).orElseThrow();
         Order order = orderMapper.toEntity(createOrderDto);
-        order.setProduct(product);
         order.setAddress(address);
         order.setUser(user);
         order.setDeliveryMethod(deliveryMethod);
         order.setPaymentMethod(paymentMethod);
 
         float totalValue = product.getPrice() * createOrderDto.getProductQuantity();
-        if (product.getDiscount() != null && product.getDiscount().getEndAt() != null){
-            int compareDatesResult = product.getDiscount().getEndAt().compareTo(LocalDateTime.now());
-            // Apply discount
-            if (product.getDiscount() != null && compareDatesResult >=0)  {
-                totalValue = totalValue * (1 - product.getDiscount().getDiscountPercent());
-            }
-            if (compareDatesResult < 0) {
-                product.setDiscount(null);
-                productRepository.save(product);
-            }
-        }
 
         order.setTotalValue(totalValue);
 
