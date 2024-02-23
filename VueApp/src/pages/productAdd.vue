@@ -128,7 +128,7 @@ const addProduct = async () => {
   const formData = new FormData();
   formData.append('post', blob);
   formData.append('file', product.photos);
-  const data = await $fetch('http://localhost:8080/api/products', {
+  await $fetch('http://localhost:8080/api/products', {
     method: 'POST',
     body: formData,
     headers: {Authorization: 'Bearer ' + auth.token}

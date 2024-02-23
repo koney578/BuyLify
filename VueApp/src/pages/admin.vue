@@ -170,7 +170,7 @@ const addCategory = async () => {
 
   const router = useRouter()
 
-  const data = await $fetch('http://localhost:8080/api/categories', {
+  await $fetch('http://localhost:8080/api/categories', {
     method: 'POST',
     body: newCategory,
     headers: {Authorization: 'Bearer ' + auth.token}
@@ -187,7 +187,7 @@ const addPaymentMethod = async () => {
 
   const router = useRouter()
 
-  const data = await $fetch('http://localhost:8080/api/payment-methods', {
+  await $fetch('http://localhost:8080/api/payment-methods', {
     method: 'POST',
     body: newPaymentMethod,
     headers: {Authorization: 'Bearer ' + auth.token}
@@ -202,7 +202,7 @@ const addDeliveryMethod = async () => {
     return
   }
 
-  const data = await $fetch('http://localhost:8080/api/delivery-methods', {
+  await $fetch('http://localhost:8080/api/delivery-methods', {
     method: 'POST',
     body: newDeliveryMethod,
     headers: {Authorization: 'Bearer ' + auth.token}
@@ -219,7 +219,7 @@ const sendNotification = async () => {
     return
   }
 
-  const data = await $fetch('http://localhost:8080/api/notifications', {
+  await $fetch('http://localhost:8080/api/notifications', {
     method: 'POST',
     body: newNotification,
     headers: {Authorization: 'Bearer ' + auth.token}
@@ -235,7 +235,7 @@ const addNotificationType = async () => {
     return
   }
 
-  const data = await $fetch('http://localhost:8080/api/notification-types', {
+  await $fetch('http://localhost:8080/api/notification-types', {
     method: 'POST',
     body: newNotificationType,
     headers: {Authorization: 'Bearer ' + auth.token}

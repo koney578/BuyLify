@@ -4,6 +4,7 @@ const auth = useAuthStore()
 const orderStore = useOrderStore()
 
 const address = reactive({
+  id: 0,
   name: '',
   surname: '',
   phoneNumber: '',
