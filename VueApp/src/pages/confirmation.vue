@@ -27,7 +27,7 @@ const order = {
 }
 
 const buyProduct = async () => {
-  const data = await $fetch('http://localhost:8080/api/orders', {
+  await $fetch('http://localhost:8080/api/orders', {
     method: 'POST',
     body: order,
     headers: {Authorization: 'Bearer ' + auth.token}
@@ -35,6 +35,11 @@ const buyProduct = async () => {
   const router = useRouter()
   await router.push('/board')
 }
+
+const totalPrice = ref(0)
+watchEffect(() => {
+  totalPrice.value = (product?.price || 0) * (product?.count || 0)
+})
 
 // const formattedTime = ref('loading ...')
 //
@@ -102,7 +107,7 @@ const buyProduct = async () => {
             <div class="grid justify-items-center">
               <p class="text-xl italic ml-1rem">Cena jednostkowa za produkt: {{ product?.price }} zł</p>
               <p class="text-xl italic ml-1rem">Ilość produktu w ogłoszeniu: {{ product?.count }}</p>
-              <p class="text-2xl italic ml-1rem mt-1rem">Łączny koszt: {{ product?.price * order?.productQuantity }} zł</p>
+              <p class="text-2xl italic ml-1rem mt-1rem">Łączny koszt: {{ totalPrice.toFixed(2) }} zł</p>
             </div>
 
           </div>

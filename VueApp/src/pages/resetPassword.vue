@@ -10,7 +10,7 @@ const resetPassword = async () => {
   // TODO Gdy nie ma maila w bazie danych wywalic blad
 
   const router = useRouter()
-  const data = await $fetch('http://localhost:8080/api/resetPassword', {
+  await $fetch('http://localhost:8080/api/resetPassword', {
     method: 'POST',
     body: email.value
   }).catch(err => console.error(err.data))

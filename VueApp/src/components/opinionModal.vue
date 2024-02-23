@@ -7,7 +7,7 @@ const auth = useAuthStore()
 const opinion = reactive({
   description: '',
   stars: 0,
-  receiverId: props.order.product.user.id,
+  receiverId: props.order.product.user?.id,
   productId: props.order.product.id
 })
 
@@ -21,7 +21,7 @@ const addOpinion = async () => {
     return
   }
 
-  const data = await $fetch('http://localhost:8080/api/opinions', {
+  await $fetch('http://localhost:8080/api/opinions', {
     method: 'POST',
     body: opinion,
     headers: {Authorization: 'Bearer ' + auth.token}

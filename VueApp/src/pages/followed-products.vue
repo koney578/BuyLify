@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Category, Announcement, Product } from "~/types"
+import type { Category, Product } from "~/types"
 const auth = useAuthStore()
 const productStore = useProductStore()
 const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
@@ -23,39 +23,29 @@ watch(selected, (newValue) => {
   searchRestriction.categoryId = newValue.id;
 });
 
-const {data: announcements} = await useFetch<Announcement[]>('http://localhost:8080/api/followed-products', {
+const {data: announcements} = await useFetch<Product[]>('http://localhost:8080/api/followed-products', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-const product = {
-  id: 0,
-  name: "",
-  price: 0,
-  count: 0,
-  description: "",
-  category: noCategory,
-  createdAt: '',
-  photo: '',
-  user: {},
-}
-
 const isProductDetailsOpen = ref(false)
-const selectedProduct: Ref<Product> = ref<Product>(product)
+const averageStars = ref(0)
 
+const showProductDetails = (announcement: Product) => {
+  const product = reactive<Product>({
+    id: announcement.id,
+    name: announcement.name,
+    price: announcement.price,
+    count: announcement.price,
+    description: announcement.description,
+    category: announcement.category,
+    createdAt: announcement.createdAt,
+    photo: announcement.photo,
+    user: announcement.user,
 
-const showProductDetails = (announcement: Announcement) => {
-  product.id = announcement.id
-  product.name = announcement.name
-  product.price = announcement.price
-  product.count = announcement.count
-  product.description = announcement.description
-  product.category = announcement.category
-  product.createdAt = announcement.createdAt
-  product.photo = announcement.photo
-  product.user = announcement.user
-
-  selectedProduct.value = product
-
+  })
+  if (announcement.user?.averageStars) {
+    averageStars.value = announcement.user?.averageStars
+  }
   productStore.setProduct(product)
   isProductDetailsOpen.value = true
 }
@@ -90,7 +80,7 @@ const closeProductDetails = () => {
       <ProductQuickView v-if="isProductDetailsOpen"
                         @close="closeProductDetails"
                         :closeModal="closeProductDetails"
-                        :averageStars="selectedProduct.user.averageStars"
+                        :averageStars="averageStars"
       />
     </div>
   </div>

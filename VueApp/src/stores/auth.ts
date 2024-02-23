@@ -1,4 +1,4 @@
-import type {ComplexUser} from "~/types";
+import type { ComplexUser } from "~/types";
 
 const emptyUser: ComplexUser = {
     id: null,
@@ -25,7 +25,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     const register = async (username: string, password: string, email: string) => {
-        const data = await $fetch('http://localhost:8080/api/register', { // TODO register niech nie zwraca ani usera ani tokena
+        await $fetch('http://localhost:8080/api/register', { // TODO register niech nie zwraca ani usera ani tokena
             method: 'POST',
             body: { username, password, email }
         })

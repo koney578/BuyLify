@@ -1,12 +1,12 @@
-import type {PostedProduct} from "~/types";
+import type { Product } from "~/types";
 
 export const useEditProductStore = defineStore({
     id: 'EditProductStore',
     state: () => ({
-        product: null as PostedProduct | null,
+        product: null as Product | null,
     }),
     actions: {
-        setEditProduct(product: PostedProduct) {
+        setEditProduct(product: Product) {
             this.product = product;
         },
     },

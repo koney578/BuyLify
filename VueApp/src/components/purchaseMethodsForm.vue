@@ -1,16 +1,23 @@
 <script setup lang="ts">
+import type { DeliveryMethod, PaymentMethod } from "~/types";
+
 const auth = useAuthStore()
 const productStore = useProductStore()
 const product = productStore.product
 const orderStore = useOrderStore()
 
-const {data: deliveryMethods} = await useFetch<any[]>('http://localhost:8080/api/delivery-methods', {
+const {data: deliveryMethods} = await useFetch<DeliveryMethod[]>('http://localhost:8080/api/delivery-methods', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-const {data: paymentMethods} = await useFetch<any[]>('http://localhost:8080/api/payment-methods', {
+const {data: paymentMethods} = await useFetch<PaymentMethod[]>('http://localhost:8080/api/payment-methods', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
+
+watchEffect(() => {
+  console.log(deliveryMethods)
+  console.log(paymentMethods)
+})
 
 const purchaseMethods = reactive({
   idPaymentMethod: 0,
@@ -79,7 +86,7 @@ const addPurchaseMethods = () => {
                 class="block w-full rounded-md border-0 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem">
           <option value="0" selected disabled hidden>Wybierz metodę płatności</option>
           <option v-for="paymentMethod in paymentMethods"
-                  :key="paymentMethods?.id"
+                  :key="paymentMethod.id"
                   :value="paymentMethod.id">
             {{ paymentMethod.name }}
           </option>
