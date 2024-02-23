@@ -3,11 +3,6 @@ export default defineNuxtConfig({
     srcDir: "src/",
     ssr: false,
     devtools: {enabled: true},
-    runtimeConfig: {
-        public: {
-            baseURL: 'http://localhost:8080/',
-        },
-    },
     modules: [
       '@unocss/nuxt',
       '@nuxt/ui',
