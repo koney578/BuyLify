@@ -27,7 +27,7 @@ const unFollowProduct = async () => {
     id: product?.id
   }
 
-  const data = await $fetch('http://localhost:8080/api/followed-products/' + followProduct.id, {
+  await $fetch('http://localhost:8080/api/followed-products/' + followProduct.id, {
     method: 'DELETE',
     headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
@@ -41,7 +41,7 @@ const followProduct = async () => {
     id: product?.id
   }
 
-  const data = await $fetch('http://localhost:8080/api/followed-products', {
+  await $fetch('http://localhost:8080/api/followed-products', {
     method: 'POST',
     body: followProduct,
     headers: {Authorization: 'Bearer ' + auth.token}

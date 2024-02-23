@@ -72,7 +72,7 @@ const editProduct = async () => {
   const milliseconds = String(currentDate.getMilliseconds()).padStart(3, '0');
   changedProduct.modifiedAt = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`
 
-  const data = await $fetch('http://localhost:8080/api/products/' + changedProduct.id, {
+  await $fetch('http://localhost:8080/api/products/' + changedProduct.id, {
     method: 'PUT',
     body: changedProduct,
     headers: {Authorization: 'Bearer ' + auth.token}
@@ -101,7 +101,7 @@ const setDiscount = async () => {
   }
 
   const router = useRouter()
-  const data = await $fetch('http://localhost:8080/api/discounts/' + changedProduct.id, {
+  await $fetch('http://localhost:8080/api/discounts/' + changedProduct.id, {
     method: 'PATCH',
     body: discount,
     headers: {Authorization: 'Bearer ' + auth.token}

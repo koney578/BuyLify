@@ -33,7 +33,7 @@ const ifSubscribedVariable = ref(true)
 
 
 const ifSubscribed = () => {
-  if (auth.user.roles.some(role => role.authority === 'premium')) {
+  if (auth.user.roles.some(role => role.authority === 'premium')) { // TODO potestowac czy dziala po uproszczeniu ifa
     ifSubscribedVariable.value = true
   } else {
     ifSubscribedVariable.value = false

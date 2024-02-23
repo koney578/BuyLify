@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import type { PostedProduct } from "~/types"
+import type { Product } from "~/types"
 
-const props = defineProps<PostedProduct>()
+const props = defineProps<Product>()
 
 const formatDateTime = (dateTimeString: string) => {
   const options: Intl.DateTimeFormatOptions = {
@@ -55,7 +55,7 @@ const editProduct = () => {
         </div>
 
         <div class="flex mt-2rem justify-between">
-          <p class="text-xl italic mr-1rem">Ocena: {{ props.user.averageStars }} </p>
+          <p class="text-xl italic mr-1rem">Ocena: {{ props.user?.averageStars }} </p>
         </div>
 
 
