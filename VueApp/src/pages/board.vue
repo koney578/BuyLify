@@ -32,23 +32,13 @@ const {data: products} = await useFetch<Product[]>('http://localhost:8080/api/pr
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-const defaultProduct = {
-  id: 0,
-  name: "",
-  price: 0,
-  count: 0,
-  description: "",
-  category: noCategory,
-  createdAt: '',
-  photo: '',
-  user: {},
-}
-
 const isProductDetailsOpen = ref(false)
-const selectedProduct: Ref<Product> = ref<Product>(defaultProduct)
+const averageStars = ref(0)
 
 const showProductDetails = (product: Product) => {
-  selectedProduct.value = product
+  if (product.user?.averageStars) {
+    averageStars.value = product.user?.averageStars
+  }
   productStore.setProduct(product)
   isProductDetailsOpen.value = true
 }
@@ -59,7 +49,7 @@ const closeProductDetails = () => {
 
 const filterPosts = async () => { // TODO nie ma na backendzie
   const router = useRouter()
-  const data = await $fetch('http://localhost:8080/api/products', {
+  await $fetch('http://localhost:8080/api/products', {
     method: 'POST',
     body: searchRestriction,
     headers: {Authorization: 'Bearer ' + auth.token}
@@ -167,7 +157,7 @@ const filterPosts = async () => { // TODO nie ma na backendzie
       <ProductQuickView v-if="isProductDetailsOpen"
                         @close="closeProductDetails"
                         :closeModal="closeProductDetails"
-                        :averageStars="selectedProduct.user.averageStars"
+                        :averageStars="averageStars"
       />
     </div>
   </div>

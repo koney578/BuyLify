@@ -65,8 +65,8 @@ const closeOrderDetails = () => {
         </div>
 
         <div class="flex mt-1rem justify-between">
-          <div class="text-xl flex mr-1rem">Sprzedawca: <p class="italic ml-1">{{ props.product.user.username }}</p></div>
-          <div class="text-xl flex">Kontakt: <p class="italic ml-1">{{ props.product.user.email }}</p></div>
+          <div class="text-xl flex mr-1rem">Sprzedawca: <p class="italic ml-1">{{ props.product.user?.username }}</p></div>
+          <div class="text-xl flex">Kontakt: <p class="italic ml-1">{{ props.product.user?.email }}</p></div>
         </div>
 
         <div class="w-full flex mt-2rem justify-center">

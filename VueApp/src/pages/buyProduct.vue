@@ -1,5 +1,4 @@
 <script setup lang="ts">
-const productStore = useProductStore()
 const orderStore = useOrderStore()
 orderStore.orderStage = 1
 

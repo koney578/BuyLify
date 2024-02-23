@@ -58,13 +58,6 @@ export interface CloseProduct {
     averageStars: number | null;
 }
 
-export interface Bid {
-    id: number | null | undefined;
-    price: string | null | undefined;
-    createdAt: string | null | undefined;
-    username: string | null | undefined;
-}
-
 export interface User {
     id: number;
     username: string | null;
@@ -83,34 +76,7 @@ export interface ComplexUser {
     roles: any;
 }
 
-
-export interface PostedProduct {
-    id: number;
-    name: string;
-    price: number;
-    count: number;
-    description: string;
-    photo: any;
-    category: Category;
-    createdAt: string;
-    user: User;
-}
-
 export interface Product {
-    id: number;
-    name: string;
-    price: number;
-    count: number;
-    description: string;
-    priority: number;
-    photo: any;
-    createdAt: string;
-    category: Category;
-    discount: any;
-    user: User;
-}
-
-export interface Announcement {
     id: number;
     name: string;
     category: Category;
@@ -119,12 +85,7 @@ export interface Announcement {
     description: string;
     photo: string;
     createdAt: string;
-    user: {
-        id: number;
-        username: number | null;
-        email: string | null;
-        averageStars: number | null;
-    }
+    user: User | null;
 }
 
 export interface Methods {
@@ -132,4 +93,14 @@ export interface Methods {
     idDeliveryMethod: number;
     idProduct: number | undefined;
     productQuantity: number | string;
+}
+
+export interface DeliveryMethod {
+    id: number;
+    name: string;
+}
+
+export interface PaymentMethod {
+    id: number;
+    name: string;
 }
