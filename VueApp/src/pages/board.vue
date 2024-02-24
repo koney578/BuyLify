@@ -152,6 +152,7 @@ const filterPosts = async () => { // TODO nie ma na backendzie
                    :description="product.description"
                    :photo="product.photo"
                    :created-at="product.createdAt"
+                   :user="product.user"
                    @click="showProductDetails(product)"
       />
       <ProductQuickView v-if="isProductDetailsOpen"
