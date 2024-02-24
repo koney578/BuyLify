@@ -43,6 +43,9 @@ public class Order {
     @Column(scale = 2)
     private float totalValue;
 
+    @NotNull
+    private int productQuantity;
+
     @Column(nullable = false)
     @CreationTimestamp
     private LocalDateTime createAt;

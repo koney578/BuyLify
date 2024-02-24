@@ -18,7 +18,8 @@ public class OrderController {
     public void addOrder(@RequestBody CreateOrderDto body,
                          Authentication authentication){
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
-        orderService.addOrder(body,userId);
+        //orderService.addOrder(body,userId);
+        orderService.addNewOrder(body,userId);
 
     }
 

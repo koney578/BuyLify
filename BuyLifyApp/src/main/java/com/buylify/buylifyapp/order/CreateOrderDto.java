@@ -5,21 +5,27 @@ import com.buylify.buylifyapp.product.Product;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class CreateOrderDto {
 
-    @NotNull
-    private Address address;
+//    @NotNull
+//    private Address address;
+//
+//    @NotNull
+//    private Long idPaymentMethod;
+//
+//    @NotNull
+//    private Long idDeliveryMethod;
+//
+//    @NotNull
+//    private Long idProduct;
+//
+//    @NotNull
+//    private int productQuantity;
 
-    @NotNull
-    private Long idPaymentMethod;
+    List<OrderProduct> products;
 
-    @NotNull
-    private Long idDeliveryMethod;
-
-    @NotNull
-    private Long idProduct;
-
-    @NotNull
-    private int productQuantity;
+    List<OrderInfo> orderInfo;
 }
