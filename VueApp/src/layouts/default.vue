@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import type { Notification } from "~/types"
 const auth = useAuthStore()
+const cartStore = useCartStore()
 const uncheckedNotificationsCount = ref(0)
 const mobileMenuOpen = ref(false)
 
@@ -61,9 +62,13 @@ onMounted(() => {
           <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
             <NuxtLink to="/mySales">Wystawione</NuxtLink>
           </li>
+
           <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-            <NuxtLink to="/profile">
-              <Icon name="mdi:account-settings-variant" class="text-2rem"/>
+            <NuxtLink to="/cart">
+              <div class="w-full h-auto relative">
+                <Icon name="ic:outline-shopping-cart-checkout" :uncheckedNotificationCount="uncheckedNotificationsCount" class="relative inline-flex items-center text-2rem text-black hover:text-gray-500" />
+                <div v-if="cartStore.cartState.length" class="absolute -right-4 -top-4 inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full dark:border-gray-900">{{ cartStore.cartState.length }}</div>
+              </div>
             </NuxtLink>
           </li>
 
@@ -73,6 +78,12 @@ onMounted(() => {
                 <Icon name="mdi:bell-ring-outline" :uncheckedNotificationCount="uncheckedNotificationsCount" class="relative inline-flex items-center text-2rem text-black hover:text-gray-500" />
                 <div v-if="uncheckedNotificationsCount" class="absolute -right-4 -top-4 inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full dark:border-gray-900">{{ uncheckedNotificationsCount }}</div>
               </div>
+            </NuxtLink>
+          </li>
+
+          <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+            <NuxtLink to="/profile">
+              <Icon name="mdi:account-settings-variant" class="text-2rem"/>
             </NuxtLink>
           </li>
 
