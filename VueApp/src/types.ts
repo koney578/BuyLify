@@ -91,8 +91,6 @@ export interface Product {
 export interface Methods {
     idPaymentMethod: number;
     idDeliveryMethod: number;
-    idProduct: number | undefined;
-    productQuantity: number | string;
 }
 
 export interface DeliveryMethod {
@@ -103,4 +101,21 @@ export interface DeliveryMethod {
 export interface PaymentMethod {
     id: number;
     name: string;
+}
+
+
+export interface CartItem {
+    product: Product;
+    quantity: number;
+}
+
+export interface SellerItem {
+    user: User;
+    deliveryMethod: DeliveryMethod;
+    paymentMethod: PaymentMethod;
+}
+
+export interface CartStoreState {
+    cartState: CartItem[];
+    sellerState: SellerItem[];
 }

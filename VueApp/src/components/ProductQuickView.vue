@@ -8,18 +8,24 @@ import {
 
 import type { CloseProduct } from "~/types"
 
-const router = useRouter()
+const cartStore = useCartStore()
 const productStore = useProductStore()
 const props = defineProps<CloseProduct>()
 
-const routeToBuyProduct = () => {
-  router.push('/buyProduct')
-}
 
 const product = productStore.product;
 const route = useRoute()
 const isFollowedProducts = route.path.includes('/followed-products')
 const ifFollowed = ref(isFollowedProducts)
+
+
+const routeToBuyProduct = () => {
+  // router.push('/buyProduct')
+  if (product) {
+    cartStore.addProductToCart(product)
+  }
+  props.closeModal()
+}
 
 const unFollowProduct = async () => {
   const auth = useAuthStore()
@@ -117,7 +123,7 @@ const followProduct = async () => {
                           <div class="flex w-full">
                             <button type="submit"
                                     class="mt-6 flex w-1/2 mr-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-                              Kup teraz
+                              Dodaj do koszyka
                             </button>
                             <div v-if="!ifFollowed">
                               <button type="button"
