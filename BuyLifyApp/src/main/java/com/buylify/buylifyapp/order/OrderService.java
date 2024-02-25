@@ -65,8 +65,8 @@ public class OrderService {
     public void addNewOrder(CreateOrderDto createOrderDto, Long userId) {
 
         User user = userRepository.findById(userId).orElseThrow();
+        Address address = addressRepository.save(createOrderDto.getAddress());
         createOrderDto.getOrderInfo().forEach(orderInfo -> {
-            Address address = addressRepository.save(orderInfo.getAddress());
             DeliveryMethod deliveryMethod = deliveryMethodRepository.findById(orderInfo.getIdDeliveryMethod()).orElseThrow();
             PaymentMethod paymentMethod = paymentMethodRepository.findById(orderInfo.getIdPaymentMethod()).orElseThrow();
             OrderStatus orderStatus = orderStatusRepository.findById(1L).orElseThrow();

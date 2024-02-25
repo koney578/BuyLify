@@ -10,22 +10,12 @@ import java.util.List;
 @Data
 public class CreateOrderDto {
 
-//    @NotNull
-//    private Address address;
-//
-//    @NotNull
-//    private Long idPaymentMethod;
-//
-//    @NotNull
-//    private Long idDeliveryMethod;
-//
-//    @NotNull
-//    private Long idProduct;
-//
-//    @NotNull
-//    private int productQuantity;
-
+    @NotNull
     List<OrderProduct> products;
 
+    @NotNull
     List<OrderInfo> orderInfo;
+
+    @NotNull
+    private Address address;
 }
