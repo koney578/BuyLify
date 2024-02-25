@@ -11,9 +11,6 @@ public class OrderInfo {
     private Long sellerId;
 
     @NotNull
-    private Address address;
-
-    @NotNull
     private Long idPaymentMethod;
 
     @NotNull
