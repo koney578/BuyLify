@@ -27,25 +27,22 @@ export interface Address {
     postalCode: string;
 }
 
+export interface OrderProduct {
+    productId: number,
+    sellerId: number,
+    productQuantity: number,
+}
+
+export interface OrderInfo {
+    sellerId: number,
+    idPaymentMethod: number,
+    idDeliveryMethod: number,
+}
+
 export interface Order {
-    id: number;
-    address: Address;
-    paymentMethod: {
-        id: number;
-        name: string
-    };
-    product: Product;
-    productQuantity: number;
-    orderStatus: {
-        id: number;
-        name: string
-    };
-    totalValue: number;
-    createAt: string;
-    deliveryMethod: {
-        id: number;
-        name: string
-    };
+    products: OrderProduct[],
+    orderInfo: OrderInfo[],
+    address: Address | null
 }
 
 export interface OpinionModal {
@@ -91,8 +88,6 @@ export interface Product {
 export interface Methods {
     idPaymentMethod: number;
     idDeliveryMethod: number;
-    idProduct: number | undefined;
-    productQuantity: number | string;
 }
 
 export interface DeliveryMethod {
@@ -103,4 +98,21 @@ export interface DeliveryMethod {
 export interface PaymentMethod {
     id: number;
     name: string;
+}
+
+
+export interface CartItem {
+    product: Product;
+    quantity: number;
+}
+
+export interface SellerItem {
+    user: User;
+    deliveryMethod: DeliveryMethod;
+    paymentMethod: PaymentMethod;
+}
+
+export interface CartStoreState {
+    cartState: CartItem[];
+    sellerState: SellerItem[];
 }

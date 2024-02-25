@@ -1,30 +1,77 @@
 <script setup lang="ts">
+import type {Order, OrderProduct, OrderInfo} from "~/types"
 const auth = useAuthStore()
-const productStore = useProductStore()
-const product = productStore.product
+const cartStore = useCartStore()
 const orderStore = useOrderStore()
-orderStore.orderStage = 3
 
-const methods = orderStore.methods
-const address = orderStore.address
-
-const order = {
-  idPaymentMethod: methods?.idPaymentMethod,
-  idDeliveryMethod: methods?.idDeliveryMethod,
-  idProduct: methods?.idProduct,
-  productQuantity: methods?.productQuantity,
+const order: Order = {
+  products: [],
+  orderInfo: [],
   address: {
-    name: address?.name,
-    surname: address?.surname,
-    phoneNumber: address?.phoneNumber,
-    email: address?.email,
-    country: address?.country,
-    city: address?.city,
-    street: address?.street,
-    houseUnitNumber: address?.houseUnitNumber,
-    postalCode: address?.postalCode,
+    id: orderStore.address?.id || 0,
+    name: orderStore.address?.name || "",
+    surname: orderStore.address?.surname || "",
+    phoneNumber: orderStore.address?.phoneNumber || "",
+    email: orderStore.address?.phoneNumber || "",
+    country: orderStore.address?.country || "",
+    city: orderStore.address?.city || "",
+    street: orderStore.address?.street || "",
+    houseUnitNumber: orderStore.address?.houseUnitNumber || "",
+    postalCode: orderStore.address?.postalCode || "",
   },
 }
+
+for (let item of cartStore.cartState) {
+  let newItem = {
+    productId: item.product.id,
+    sellerId: item.product.user?.id,
+    productQuantity: item.quantity
+  }
+  order.products.push(<OrderProduct>newItem)
+}
+
+for (let item of cartStore.sellerState) {
+  let newItem = {
+    sellerId: item.user.id,
+    idPaymentMethod: item.paymentMethod.id,
+    idDeliveryMethod: item.deliveryMethod.id,
+  }
+  order.orderInfo.push(<OrderInfo>newItem)
+}
+
+console.log(order)
+
+const calculateTotalOrderCost = (): number => {
+  let sum = 0;
+  for (let item of cartStore.cartState) {
+    sum += item.product.price * item.quantity
+  }
+  return sum
+}
+
+const totalSum = calculateTotalOrderCost()
+
+
+// const methods = orderStore.methods
+// const address = orderStore.address
+//
+// const order = {
+//   idPaymentMethod: methods?.idPaymentMethod,
+//   idDeliveryMethod: methods?.idDeliveryMethod,
+//   idProduct: methods?.idProduct,
+//   productQuantity: methods?.productQuantity,
+//   address: {
+//     name: address?.name,
+//     surname: address?.surname,
+//     phoneNumber: address?.phoneNumber,
+//     email: address?.email,
+//     country: address?.country,
+//     city: address?.city,
+//     street: address?.street,
+//     houseUnitNumber: address?.houseUnitNumber,
+//     postalCode: address?.postalCode,
+//   },
+// }
 
 const buyProduct = async () => {
   await $fetch('http://localhost:8080/api/orders', {
@@ -36,10 +83,6 @@ const buyProduct = async () => {
   await router.push('/board')
 }
 
-const totalPrice = ref(0)
-watchEffect(() => {
-  totalPrice.value = (product?.price || 0) * (product?.count || 0)
-})
 
 // const formattedTime = ref('loading ...')
 //
@@ -87,39 +130,17 @@ watchEffect(() => {
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png" alt="BuyLify"/>
-      <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Jesteś krok od swojego produktu!</h1>
+      <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Potwierdź swoje zamówienie</h1>
     </div>
 
-    <div class="mt-2rem">
-      <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl">
-        <div class="w-full">
-          <img
-              :src="product?.photo"
-              alt="Główne zdjęcie"
-              class=" h-auto w-1/2"
-          />
-        </div>
-        <div class="w-full">
-
-
-          <div class="grid justify-items-center">
-            <p class="text-xl italic ml-1rem">Wybrano: {{ order?.productQuantity }}</p>
-            <div class="grid justify-items-center">
-              <p class="text-xl italic ml-1rem">Cena jednostkowa za produkt: {{ product?.price }} zł</p>
-              <p class="text-xl italic ml-1rem">Ilość produktu w ogłoszeniu: {{ product?.count }}</p>
-              <p class="text-2xl italic ml-1rem mt-1rem">Łączny koszt: {{ totalPrice.toFixed(2) }} zł</p>
-            </div>
-
-          </div>
-          <div class="grid justify-between mt-2rem">
-            <p class="text-2xl">Nazwa: {{ product?.name }}</p>
-            <p class="text-2xl mt-2">Opis: {{ product?.description }}</p>
-          </div>
-        </div>
-      </div>
+    <div class="text-2xl text-black mx-auto my-2rem">
+      <p class="">
+        Łączny koszt zamówienia: {{ totalSum }} zł
+      </p>
     </div>
 
-    <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+
+    <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <form @submit.prevent="buyProduct" class="space-y-6" action="#" method="POST">
         <submit-button />
       </form>
