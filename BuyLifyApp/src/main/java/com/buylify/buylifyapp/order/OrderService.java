@@ -61,14 +61,15 @@ public class OrderService {
 
                 OrdersProducts ordersProducts = new OrdersProducts();
                 ordersProducts.setProduct(product);
-                ordersProducts.setOrder(order);
                 ordersProducts.setProductQuantity(orderProduct.getProductQuantity());
                 order.setTotalValue(order.getTotalValue() + product.getPrice() * orderProduct.getProductQuantity());
+                orderRepository.save(order);
+                ordersProducts.setOrder(order);
                 ordersProducts.setSumPrice(product.getPrice() * orderProduct.getProductQuantity());
                 ordersProductsRepository.save(ordersProducts);
             });
 
-            orderRepository.save(order);
+
         });
     }
 
