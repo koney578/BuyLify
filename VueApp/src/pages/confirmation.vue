@@ -78,6 +78,8 @@ const buyProduct = async () => {
     method: 'POST',
     body: order,
     headers: {Authorization: 'Bearer ' + auth.token}
+  }).then(() => {
+    cartStore.clearCart()
   }).catch(err => console.error(err.data))
   const router = useRouter()
   await router.push('/board')
