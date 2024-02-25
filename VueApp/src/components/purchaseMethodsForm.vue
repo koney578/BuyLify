@@ -31,7 +31,6 @@ const addPurchaseMethods = () => {
     console.error('Wszystkie pola są wymagane')
     return
   }
-  console.log(purchaseMethods)
   cartStore.addSeller(purchaseMethods)
 }
 
