@@ -32,36 +32,6 @@ public class OrderService {
     private final UserRepository userRepository;
     private final OrderMapper orderMapper;
 
-//    public void addOrder(CreateOrderDto createOrderDto, Long userId) {
-//        Product product = productRepository.findById(createOrderDto.getIdProduct()).orElseThrow();
-//
-//        if (product.getCount() < createOrderDto.getProductQuantity()) {
-//            throw new RuntimeException("Not enough products");
-//        }
-//
-//        // Update product count
-//        product.setCount(product.getCount() - createOrderDto.getProductQuantity());
-//        productRepository.save(product);
-//
-//        User user = userRepository.findById(userId).orElseThrow();
-//        DeliveryMethod deliveryMethod = deliveryMethodRepository.findById(createOrderDto.getIdDeliveryMethod()).orElseThrow();
-//        PaymentMethod paymentMethod = paymentMethodRepository.findById(createOrderDto.getIdPaymentMethod()).orElseThrow();
-//        Address address = addressRepository.save(createOrderDto.getAddress());
-//        OrderStatus orderStatus = orderStatusRepository.findById(1L).orElseThrow();
-//        Order order = orderMapper.toEntity(createOrderDto);
-//        order.setAddress(address);
-//        order.setUser(user);
-//        order.setDeliveryMethod(deliveryMethod);
-//        order.setPaymentMethod(paymentMethod);
-//
-//        float totalValue = product.getPrice() * createOrderDto.getProductQuantity();
-//
-//        order.setTotalValue(totalValue);
-//
-//        order.setOrderStatus(orderStatus);
-//        orderRepository.save(order);
-//    }
-
     public void addNewOrder(CreateOrderDto createOrderDto, Long userId) {
 
         User user = userRepository.findById(userId).orElseThrow();
@@ -73,14 +43,11 @@ public class OrderService {
             Order order = new Order();
             order.setAddress(address);
             order.setUser(user);
-            order.setTotalValue(1);
-            order.setProductQuantity(1);
             order.setDeliveryMethod(deliveryMethod);
             order.setPaymentMethod(paymentMethod);
-            //order.setTotalValue(orderInfo.getTotalValue());
             order.setOrderStatus(orderStatus);
             order.setCreateAt(LocalDateTime.now());
-            orderRepository.save(order);
+            order.setTotalValue(0);
 
             createOrderDto.getProducts().stream().filter(orderProduct -> orderProduct.getSellerId().equals(orderInfo.getSellerId()))
                     .forEach(orderProduct -> {
@@ -96,9 +63,12 @@ public class OrderService {
                 ordersProducts.setProduct(product);
                 ordersProducts.setOrder(order);
                 ordersProducts.setProductQuantity(orderProduct.getProductQuantity());
+                order.setTotalValue(order.getTotalValue() + product.getPrice() * orderProduct.getProductQuantity());
                 ordersProducts.setSumPrice(product.getPrice() * orderProduct.getProductQuantity());
                 ordersProductsRepository.save(ordersProducts);
             });
+
+            orderRepository.save(order);
         });
     }
 
