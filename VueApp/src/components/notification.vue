@@ -30,7 +30,7 @@ const checkNotification = async () => {
   await $fetch('http://localhost:8080/api/notifications/check', {
     method: 'PUT',
     body: readNotification,
-    headers: {Authorization: 'Bearer ' + auth.token}
+    headers: {Authorization: 'Bearer ' + auth.token.token}
   }).catch(err => console.error(err.data))
 }
 

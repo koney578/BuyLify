@@ -48,7 +48,7 @@ ifSubscribed()
 const subscribe = async () => {
   const data = await $fetch('http://localhost:8080/api/users/type/premium', {
     method: 'PATCH',
-    headers: {Authorization: 'Bearer ' + auth.token}
+    headers: {Authorization: 'Bearer ' + auth.token.token}
   }).then(() => {
     auth.user.roles = [{
       authority: 'premium'
@@ -85,7 +85,7 @@ const editProfile = async () => {
   const data = await $fetch('http://localhost:8080/api/users', {
     method: 'PUT',
     body: user,
-    headers: {Authorization: 'Bearer ' + auth.token}
+    headers: {Authorization: 'Bearer ' + auth.token.token}
   }).then(() => {
 
     if (auth.user.username !== user.username) {

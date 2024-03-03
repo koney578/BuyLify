@@ -6,11 +6,11 @@ const cartStore = useCartStore()
 const props = defineProps<User>()
 
 const {data: deliveryMethods} = await useFetch<DeliveryMethod[]>('http://localhost:8080/api/delivery-methods', {
-  headers: {Authorization: 'Bearer ' + auth.token}
+  headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 
 const {data: paymentMethods} = await useFetch<PaymentMethod[]>('http://localhost:8080/api/payment-methods', {
-  headers: {Authorization: 'Bearer ' + auth.token}
+  headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 
 const purchaseMethods = reactive({

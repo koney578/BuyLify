@@ -12,7 +12,7 @@ const emptyUser: ComplexUser = {
 }
 
 export const useAuthStore = defineStore('auth', () => {
-    const token = useLocalStorage('auth: token', '')
+    const token = useLocalStorage('auth: token', {token: '', expiresDate: new Date().toISOString()})
     const user = useLocalStorage('auth: user', emptyUser)
 
     const login = async (username: string, password: string) => {
@@ -21,7 +21,16 @@ export const useAuthStore = defineStore('auth', () => {
             body: { username, password }
         })
         user.value = data.user
-        token.value = data.token
+
+        const currentDate = new Date();
+        const newDate = new Date(currentDate.getTime() + 2 * 60 * 60 * 1000) // two hours expires
+        token.value = {
+            token: data.token,
+            expiresDate: newDate.toISOString()
+        }
+        // console.log(currentDate.toISOString())
+        // console.log(token.value.expiresDate)
+        // console.log(currentDate.toISOString() < token.value.expiresDate)
     }
 
     const register = async (username: string, password: string, email: string) => {
@@ -32,19 +41,31 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     const logout = () => {
-        token.value = ''
+        token.value = {
+            token: '',
+            expiresDate: new Date().toISOString(),
+        }
         user.value = emptyUser
     }
 
-    const isLoggedIn = computed(() => token.value !== '')
+    const isLoggedIn = computed(() => token.value.token !== '')
+
+    const ifTokenExpired = () => {
+        if (token.value.token) {
+            if (new Date().toISOString() >= token.value.expiresDate) {
+                logout()
+            }
+        }
+    }
 
     return {
         login,
         logout,
         register,
         isLoggedIn,
+        ifTokenExpired,
         token,
-        user,
+        user
     }
 })
 

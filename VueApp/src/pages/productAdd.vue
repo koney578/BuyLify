@@ -6,7 +6,7 @@ import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
 
 const auth = useAuthStore()
 const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
-  headers: {Authorization: 'Bearer ' + auth.token}
+  headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 
 const noCategory: Category = {
@@ -131,7 +131,7 @@ const addProduct = async () => {
   await $fetch('http://localhost:8080/api/products', {
     method: 'POST',
     body: formData,
-    headers: {Authorization: 'Bearer ' + auth.token}
+    headers: {Authorization: 'Bearer ' + auth.token.token}
   }).catch(err => console.error(err.data))
 
   await router.push('/board')

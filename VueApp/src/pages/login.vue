@@ -54,7 +54,7 @@ const login = async () => {
           }
       )
 
-  if (auth.token) {
+  if (auth.token.token) {
     await router.push('/')
   }
 }

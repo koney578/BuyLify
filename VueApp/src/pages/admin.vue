@@ -29,7 +29,7 @@ const noNotification = {
 }
 
 const {data: notificationTypes} = await useFetch<notificationType[]>('http://localhost:8080/api/notification-types', {
-  headers: {Authorization: 'Bearer ' + auth.token}
+  headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 console.log(notificationTypes)
 
@@ -173,7 +173,7 @@ const addCategory = async () => {
   await $fetch('http://localhost:8080/api/categories', {
     method: 'POST',
     body: newCategory,
-    headers: {Authorization: 'Bearer ' + auth.token}
+    headers: {Authorization: 'Bearer ' + auth.token.token}
   }).catch(err => console.error(err.data))
 
   await router.push('')
@@ -190,7 +190,7 @@ const addPaymentMethod = async () => {
   await $fetch('http://localhost:8080/api/payment-methods', {
     method: 'POST',
     body: newPaymentMethod,
-    headers: {Authorization: 'Bearer ' + auth.token}
+    headers: {Authorization: 'Bearer ' + auth.token.token}
   }).catch(err => console.error(err.data))
 
   await router.push('')
@@ -205,7 +205,7 @@ const addDeliveryMethod = async () => {
   await $fetch('http://localhost:8080/api/delivery-methods', {
     method: 'POST',
     body: newDeliveryMethod,
-    headers: {Authorization: 'Bearer ' + auth.token}
+    headers: {Authorization: 'Bearer ' + auth.token.token}
   }).catch(err => console.error(err.data))
 
   const router = useRouter()
@@ -222,7 +222,7 @@ const sendNotification = async () => {
   await $fetch('http://localhost:8080/api/notifications', {
     method: 'POST',
     body: newNotification,
-    headers: {Authorization: 'Bearer ' + auth.token}
+    headers: {Authorization: 'Bearer ' + auth.token.token}
   }).catch(err => console.error(err.data))
 
   const router = useRouter()
@@ -238,7 +238,7 @@ const addNotificationType = async () => {
   await $fetch('http://localhost:8080/api/notification-types', {
     method: 'POST',
     body: newNotificationType,
-    headers: {Authorization: 'Bearer ' + auth.token}
+    headers: {Authorization: 'Bearer ' + auth.token.token}
   }).catch(err => console.error(err.data))
 
   const router = useRouter()
