@@ -3,7 +3,7 @@ import type { Category, Product } from "~/types"
 const auth = useAuthStore()
 const productStore = useProductStore()
 const {data: categories} = await useFetchAPI<Category[]>('/api/categories', {
-  headers: {Authorization: 'Bearer ' + auth.token.token}
+  headers: {Authorization: 'Bearer ' + auth.token}
 });
 
 const noCategory: Category = {
@@ -24,7 +24,7 @@ watch(selected, (newValue) => {
 });
 
 const {data: announcements} = await useFetchAPI<Product[]>('/api/followed-products', {
-  headers: {Authorization: 'Bearer ' + auth.token.token}
+  headers: {Authorization: 'Bearer ' + auth.token}
 });
 console.log(announcements)
 

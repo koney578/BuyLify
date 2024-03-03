@@ -31,7 +31,7 @@ const checkNotification = async () => {
   await $fetchAPI('/api/notifications/check', {
     method: 'PUT',
     body: readNotification,
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 }
 

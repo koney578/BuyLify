@@ -8,7 +8,7 @@ import {$fetchAPI} from "~/composables/$fetchApi";
 const auth = useAuthStore()
 const productStore = useProductStore()
 const {data: categories} = await useFetchAPI<Category[]>('/api/categories', {
-  headers: {Authorization: 'Bearer ' + auth.token.token}
+  headers: {Authorization: 'Bearer ' + auth.token}
 })
 
 const noCategory: Category = {
@@ -30,7 +30,7 @@ watch(selected, (newValue) => {
 });
 
 const {data: products} = await useFetchAPI<Product[]>('/api/products', {
-  headers: {Authorization: 'Bearer ' + auth.token.token}
+  headers: {Authorization: 'Bearer ' + auth.token}
 });
 
 const isProductDetailsOpen = ref(false)
@@ -53,7 +53,7 @@ const filterPosts = async () => { // TODO nie ma na backendzie
   await $fetchAPI('/api/products', {
     method: 'POST',
     body: searchRestriction,
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
 
