@@ -2,7 +2,7 @@
 import type { Order } from "~/types"
 
 const auth = useAuthStore()
-const {data: orders} = await useFetch<Order[]>('http://localhost:8080/api/orders', {
+const {data: orders} = await useFetchAPI<Order[]>('/api/orders', {
   headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 console.log(orders.value)

@@ -8,7 +8,7 @@ const uncheckedNotificationsCount = ref(0)
 
 const watchNotifications = async () => {
   if (auth.isLoggedIn) {
-    const {data: notifications} = await useFetch<Notification[]>('http://localhost:8080/api/notifications', {
+    const {data: notifications} = await useFetchAPI<Notification[]>('/api/notifications', {
       headers: {Authorization: 'Bearer ' + auth.token.token}
     });
 

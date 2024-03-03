@@ -2,6 +2,7 @@
 
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid";
+import {$fetchAPI} from "~/composables/$fetchApi";
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -28,7 +29,7 @@ const noNotification = {
   name: 'Brak powiadomień'
 }
 
-const {data: notificationTypes} = await useFetch<notificationType[]>('http://localhost:8080/api/notification-types', {
+const {data: notificationTypes} = await useFetchAPI<notificationType[]>('/api/notification-types', {
   headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 console.log(notificationTypes)
@@ -170,7 +171,7 @@ const addCategory = async () => {
 
   const router = useRouter()
 
-  await $fetch('http://localhost:8080/api/categories', {
+  await $fetchAPI('/api/categories', {
     method: 'POST',
     body: newCategory,
     headers: {Authorization: 'Bearer ' + auth.token.token}
@@ -187,7 +188,7 @@ const addPaymentMethod = async () => {
 
   const router = useRouter()
 
-  await $fetch('http://localhost:8080/api/payment-methods', {
+  await $fetchAPI('/api/payment-methods', {
     method: 'POST',
     body: newPaymentMethod,
     headers: {Authorization: 'Bearer ' + auth.token.token}
@@ -202,7 +203,7 @@ const addDeliveryMethod = async () => {
     return
   }
 
-  await $fetch('http://localhost:8080/api/delivery-methods', {
+  await $fetchAPI('/api/delivery-methods', {
     method: 'POST',
     body: newDeliveryMethod,
     headers: {Authorization: 'Bearer ' + auth.token.token}
@@ -219,7 +220,7 @@ const sendNotification = async () => {
     return
   }
 
-  await $fetch('http://localhost:8080/api/notifications', {
+  await $fetchAPI('/api/notifications', {
     method: 'POST',
     body: newNotification,
     headers: {Authorization: 'Bearer ' + auth.token.token}
@@ -235,7 +236,7 @@ const addNotificationType = async () => {
     return
   }
 
-  await $fetch('http://localhost:8080/api/notification-types', {
+  await $fetchAPI('/api/notification-types', {
     method: 'POST',
     body: newNotificationType,
     headers: {Authorization: 'Bearer ' + auth.token.token}

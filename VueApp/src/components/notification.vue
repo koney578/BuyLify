@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { Notification } from "~/types"
+import {$fetchAPI} from "~/composables/$fetchApi";
 
 const props = defineProps<Notification>()
 
@@ -27,7 +28,7 @@ const checkNotification = async () => {
   isChecked.value = !isChecked.value
   readNotification.isChecked = isChecked.value
 
-  await $fetch('http://localhost:8080/api/notifications/check', {
+  await $fetchAPI('/api/notifications/check', {
     method: 'PUT',
     body: readNotification,
     headers: {Authorization: 'Bearer ' + auth.token.token}

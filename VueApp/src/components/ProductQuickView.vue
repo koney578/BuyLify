@@ -7,6 +7,7 @@ import {
 } from '@headlessui/vue'
 
 import type { CloseProduct } from "~/types"
+import {$fetchAPI} from "~/composables/$fetchApi";
 
 const cartStore = useCartStore()
 const productStore = useProductStore()
@@ -33,7 +34,7 @@ const unFollowProduct = async () => {
     id: product?.id
   }
 
-  await $fetch('http://localhost:8080/api/followed-products/' + followProduct.id, {
+  await $fetchAPI('/api/followed-products/' + followProduct.id, {
     method: 'DELETE',
     headers: {Authorization: 'Bearer ' + auth.token.token}
   }).then(() => {
@@ -47,7 +48,7 @@ const followProduct = async () => {
     id: product?.id
   }
 
-  await $fetch('http://localhost:8080/api/followed-products', {
+  await $fetchAPI('/api/followed-products', {
     method: 'POST',
     body: followProduct,
     headers: {Authorization: 'Bearer ' + auth.token.token}

@@ -5,6 +5,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid";
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import type {Category} from "~/types"
+import {$fetchAPI} from "~/composables/$fetchApi";
 
 const editProductStore = useEditProductStore()
 const auth = useAuthStore()
@@ -19,7 +20,7 @@ const product = reactive({
   photo: editProductStore.product?.photo,
 })
 
-const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
+const {data: categories} = await useFetchAPI<Category[]>('/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 
@@ -72,7 +73,7 @@ const editProduct = async () => {
   const milliseconds = String(currentDate.getMilliseconds()).padStart(3, '0');
   changedProduct.modifiedAt = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`
 
-  await $fetch('http://localhost:8080/api/products/' + changedProduct.id, {
+  await $fetchAPI('/api/products/' + changedProduct.id, {
     method: 'PUT',
     body: changedProduct,
     headers: {Authorization: 'Bearer ' + auth.token.token}
@@ -101,7 +102,7 @@ const setDiscount = async () => {
   }
 
   const router = useRouter()
-  await $fetch('http://localhost:8080/api/discounts/' + changedProduct.id, {
+  await $fetchAPI('/api/discounts/' + changedProduct.id, {
     method: 'PATCH',
     body: discount,
     headers: {Authorization: 'Bearer ' + auth.token.token}

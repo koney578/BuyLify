@@ -1,4 +1,5 @@
 import type { ComplexUser } from "~/types";
+import {$fetchAPI} from "~/composables/$fetchApi";
 
 const emptyUser: ComplexUser = {
     id: null,
@@ -16,7 +17,7 @@ export const useAuthStore = defineStore('auth', () => {
     const user = useLocalStorage('auth: user', emptyUser)
 
     const login = async (username: string, password: string) => {
-        const data = await $fetch<{ token: string, user: ComplexUser }>('http://localhost:8080/api/login', {
+        const data = await $fetchAPI<{ token: string, user: ComplexUser }>('/api/login', {
             method: 'POST',
             body: { username, password }
         })
@@ -34,7 +35,7 @@ export const useAuthStore = defineStore('auth', () => {
     }
 
     const register = async (username: string, password: string, email: string) => {
-        await $fetch('http://localhost:8080/api/register', { // TODO register niech nie zwraca ani usera ani tokena
+        await $fetchAPI('/api/register', { // TODO register niech nie zwraca ani usera ani tokena
             method: 'POST',
             body: { username, password, email }
         })
