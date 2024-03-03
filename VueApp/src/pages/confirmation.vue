@@ -78,7 +78,7 @@ const buyProduct = async () => {
   await $fetchAPI('/api/orders', {
     method: 'POST',
     body: order,
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
     cartStore.clearCart()
   }).catch(err => console.error(err.data))

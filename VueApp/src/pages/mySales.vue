@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const auth = useAuthStore()
 const {data: postedProducts} = await useFetchAPI<any[]>('/api/products/posted', {
-  headers: {Authorization: 'Bearer ' + auth.token.token}
+  headers: {Authorization: 'Bearer ' + auth.token}
 });
 
 </script>

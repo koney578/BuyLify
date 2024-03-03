@@ -36,7 +36,7 @@ const unFollowProduct = async () => {
 
   await $fetchAPI('/api/followed-products/' + followProduct.id, {
     method: 'DELETE',
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
     props.closeModal()
   }).catch(err => console.error(err.data))
@@ -51,7 +51,7 @@ const followProduct = async () => {
   await $fetchAPI('/api/followed-products', {
     method: 'POST',
     body: followProduct,
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
     props.closeModal()
   }).catch(err => console.error(err.data))

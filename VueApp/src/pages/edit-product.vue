@@ -21,7 +21,7 @@ const product = reactive({
 })
 
 const {data: categories} = await useFetchAPI<Category[]>('/api/categories', {
-  headers: {Authorization: 'Bearer ' + auth.token.token}
+  headers: {Authorization: 'Bearer ' + auth.token}
 });
 
 const noCategory: Category = {
@@ -76,7 +76,7 @@ const editProduct = async () => {
   await $fetchAPI('/api/products/' + changedProduct.id, {
     method: 'PUT',
     body: changedProduct,
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
   const router = useRouter()
@@ -105,7 +105,7 @@ const setDiscount = async () => {
   await $fetchAPI('/api/discounts/' + changedProduct.id, {
     method: 'PATCH',
     body: discount,
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
     router.push('/mySales')
   }).catch(err => console.error(err.data))

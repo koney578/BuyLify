@@ -30,7 +30,7 @@ const noNotification = {
 }
 
 const {data: notificationTypes} = await useFetchAPI<notificationType[]>('/api/notification-types', {
-  headers: {Authorization: 'Bearer ' + auth.token.token}
+  headers: {Authorization: 'Bearer ' + auth.token}
 });
 console.log(notificationTypes)
 
@@ -174,7 +174,7 @@ const addCategory = async () => {
   await $fetchAPI('/api/categories', {
     method: 'POST',
     body: newCategory,
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
   await router.push('')
@@ -191,7 +191,7 @@ const addPaymentMethod = async () => {
   await $fetchAPI('/api/payment-methods', {
     method: 'POST',
     body: newPaymentMethod,
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
   await router.push('')
@@ -206,7 +206,7 @@ const addDeliveryMethod = async () => {
   await $fetchAPI('/api/delivery-methods', {
     method: 'POST',
     body: newDeliveryMethod,
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
   const router = useRouter()
@@ -223,7 +223,7 @@ const sendNotification = async () => {
   await $fetchAPI('/api/notifications', {
     method: 'POST',
     body: newNotification,
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
   const router = useRouter()
@@ -239,7 +239,7 @@ const addNotificationType = async () => {
   await $fetchAPI('/api/notification-types', {
     method: 'POST',
     body: newNotificationType,
-    headers: {Authorization: 'Bearer ' + auth.token.token}
+    headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
   const router = useRouter()

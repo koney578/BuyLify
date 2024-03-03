@@ -9,7 +9,7 @@ const uncheckedNotificationsCount = ref(0)
 const watchNotifications = async () => {
   if (auth.isLoggedIn) {
     const {data: notifications} = await useFetchAPI<Notification[]>('/api/notifications', {
-      headers: {Authorization: 'Bearer ' + auth.token.token}
+      headers: {Authorization: 'Bearer ' + auth.token}
     });
 
     const uncheckedNotifications = (notifications.value ?? []).filter(notification => !notification.checked)
@@ -20,11 +20,11 @@ const watchNotifications = async () => {
 
 onMounted(() => {
   watchNotifications();
-  auth.ifTokenExpired();
+  // auth.ifTokenExpired();
 
   const intervalId = setInterval(() => {
     watchNotifications();
-    auth.ifTokenExpired();
+    // auth.ifTokenExpired();
   }, 60000);  // check notifications every minute
 
   onUnmounted(() => {

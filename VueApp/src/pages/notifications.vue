@@ -2,7 +2,7 @@
 import type { Notification } from "~/types"
 const auth = useAuthStore()
 const {data: notifications} = await useFetchAPI<Notification[]>('/api/notifications', {
-  headers: {Authorization: 'Bearer ' + auth.token.token}
+  headers: {Authorization: 'Bearer ' + auth.token}
 });
 
 
