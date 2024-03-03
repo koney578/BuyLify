@@ -24,7 +24,7 @@ const addOpinion = async () => {
   await $fetch('http://localhost:8080/api/opinions', {
     method: 'POST',
     body: opinion,
-    headers: {Authorization: 'Bearer ' + auth.token}
+    headers: {Authorization: 'Bearer ' + auth.token.token}
   }).catch(err => console.error(err.data))
 
   props.closeModal()

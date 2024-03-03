@@ -7,7 +7,7 @@ import type { Category, Product } from "~/types"
 const auth = useAuthStore()
 const productStore = useProductStore()
 const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
-  headers: {Authorization: 'Bearer ' + auth.token}
+  headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 
 const noCategory: Category = {
@@ -29,7 +29,7 @@ watch(selected, (newValue) => {
 });
 
 const {data: products} = await useFetch<Product[]>('http://localhost:8080/api/products', {
-  headers: {Authorization: 'Bearer ' + auth.token}
+  headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 
 const isProductDetailsOpen = ref(false)
@@ -52,7 +52,7 @@ const filterPosts = async () => { // TODO nie ma na backendzie
   await $fetch('http://localhost:8080/api/products', {
     method: 'POST',
     body: searchRestriction,
-    headers: {Authorization: 'Bearer ' + auth.token}
+    headers: {Authorization: 'Bearer ' + auth.token.token}
   }).catch(err => console.error(err.data))
 
 

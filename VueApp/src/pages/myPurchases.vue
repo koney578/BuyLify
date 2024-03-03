@@ -3,7 +3,7 @@ import type { Order } from "~/types"
 
 const auth = useAuthStore()
 const {data: orders} = await useFetch<Order[]>('http://localhost:8080/api/orders', {
-  headers: {Authorization: 'Bearer ' + auth.token}
+  headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 console.log(orders.value)
 </script>
@@ -15,6 +15,7 @@ console.log(orders.value)
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Moje kupione produkty</h1>
     </div>
     <div class="sm:mx-auto sm:w-full sm:max-w-6xl">
+      <p class="text-2xl text-black">Nie dziala</p>
 <!--      <single-order v-for="order in orders"-->
 <!--                    :key="order.id"-->
 <!--                    :id="order.id"-->
