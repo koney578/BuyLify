@@ -2,7 +2,7 @@
 import type { Category, Product } from "~/types"
 const auth = useAuthStore()
 const productStore = useProductStore()
-const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
+const {data: categories} = await useFetchAPI<Category[]>('/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 
@@ -23,9 +23,10 @@ watch(selected, (newValue) => {
   searchRestriction.categoryId = newValue.id;
 });
 
-const {data: announcements} = await useFetch<Product[]>('http://localhost:8080/api/followed-products', {
+const {data: announcements} = await useFetchAPI<Product[]>('/api/followed-products', {
   headers: {Authorization: 'Bearer ' + auth.token.token}
 });
+console.log(announcements)
 
 const isProductDetailsOpen = ref(false)
 const averageStars = ref(0)
@@ -75,6 +76,7 @@ const closeProductDetails = () => {
                    :description="announcement.description"
                    :photo="announcement.photo"
                    :created-at="announcement.createdAt"
+                   :user="announcement.user"
                    @click="showProductDetails(announcement)"
       />
       <ProductQuickView v-if="isProductDetailsOpen"

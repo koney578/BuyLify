@@ -1,6 +1,6 @@
 <script setup lang="ts">
 const auth = useAuthStore()
-const {data: postedProducts} = await useFetch<any[]>('http://localhost:8080/api/products/posted', {
+const {data: postedProducts} = await useFetchAPI<any[]>('/api/products/posted', {
   headers: {Authorization: 'Bearer ' + auth.token.token}
 });
 
