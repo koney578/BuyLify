@@ -30,7 +30,7 @@ const resetPassword = async () => {
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form @submit.prevent="resetPassword" class="space-y-6" action="" method="POST">
+      <form @submit.prevent="reset" class="space-y-6" action="" method="POST">
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Adres email</label>
           <div class="mt-2">

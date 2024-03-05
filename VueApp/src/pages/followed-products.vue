@@ -79,7 +79,7 @@ const closeProductDetails = () => {
                    :user="announcement.user"
                    @click="showProductDetails(announcement)"
       />
-      <ProductQuickView v-if="isProductDetailsOpen"
+      <product-quick-view v-if="isProductDetailsOpen"
                         @close="closeProductDetails"
                         :closeModal="closeProductDetails"
                         :averageStars="averageStars"

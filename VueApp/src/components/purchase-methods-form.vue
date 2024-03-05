@@ -6,7 +6,7 @@ const cartStore = useCartStore()
 const props = defineProps<User>()
 
 const {data: deliveryMethods} = await useFetchAPI<DeliveryMethod[]>('/api/delivery-methods', {
-  headers: {Authorization: 'Bearer ' + auth.token.}
+  headers: {Authorization: 'Bearer ' + auth.token}
 });
 
 const {data: paymentMethods} = await useFetchAPI<PaymentMethod[]>('/api/payment-methods', {
