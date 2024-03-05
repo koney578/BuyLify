@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { CartItem } from "~/types"
+import RemoveCartProduct from "~/components/remove-cart-product.vue";
 
 const cartStore = useCartStore()
 const props = defineProps<CartItem>()
@@ -20,7 +21,7 @@ const changeQuantityButtonClicked = () => {
 </script>
 
 <template>
-  <div class="mt-2rem">
+  <div class="mt-2rem flex">
     <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl">
       <div class="w-1/2">
         <img
@@ -87,5 +88,6 @@ const changeQuantityButtonClicked = () => {
 
       </div>
     </div>
+    <remove-cart-product class="mt-1rem" :id="props.product.id"/>
   </div>
 </template>
