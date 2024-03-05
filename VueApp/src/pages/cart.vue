@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import RemoveCartProduct from "~/components/remove-cart-product.vue";
+
 const cartStore = useCartStore()
 cartStore.sortCartByUserId()
 
