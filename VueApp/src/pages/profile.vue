@@ -46,7 +46,7 @@ ifSubscribed()
 
 
 const subscribe = async () => {
-  const data = await $fetch('http://localhost:8080/api/users/type/premium', {
+  await $fetchAPI('/api/users/type/premium', {
     method: 'PATCH',
     headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
@@ -82,7 +82,7 @@ const editProfile = async () => {
 
   const router = useRouter()
 
-  const data = await $fetch('http://localhost:8080/api/users', {
+  await $fetchAPI('/api/users', {
     method: 'PUT',
     body: user,
     headers: {Authorization: 'Bearer ' + auth.token}

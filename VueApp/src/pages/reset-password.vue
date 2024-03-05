@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import {$fetchAPI} from "~/composables/$fetchApi";
+
 const email = ref('')
 
 const resetPassword = async () => {
@@ -10,7 +12,7 @@ const resetPassword = async () => {
   // TODO Gdy nie ma maila w bazie danych wywalic blad
 
   const router = useRouter()
-  await $fetch('http://localhost:8080/api/resetPassword', {
+  await $fetchAPI('/api/resetPassword', {
     method: 'POST',
     body: email.value
   }).catch(err => console.error(err.data))
@@ -28,7 +30,7 @@ const resetPassword = async () => {
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form @submit.prevent="resetPassword" class="space-y-6" action="" method="POST">
+      <form @submit.prevent="reset" class="space-y-6" action="" method="POST">
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Adres email</label>
           <div class="mt-2">

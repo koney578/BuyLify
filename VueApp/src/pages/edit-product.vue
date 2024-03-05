@@ -5,6 +5,7 @@ import '@vuepic/vue-datepicker/dist/main.css'
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid";
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import type {Category} from "~/types"
+import {$fetchAPI} from "~/composables/$fetchApi";
 
 const editProductStore = useEditProductStore()
 const auth = useAuthStore()
@@ -19,7 +20,7 @@ const product = reactive({
   photo: editProductStore.product?.photo,
 })
 
-const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
+const {data: categories} = await useFetchAPI<Category[]>('/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
@@ -72,14 +73,14 @@ const editProduct = async () => {
   const milliseconds = String(currentDate.getMilliseconds()).padStart(3, '0');
   changedProduct.modifiedAt = `${year}-${month}-${day}T${hours}:${minutes}:${seconds}.${milliseconds}`
 
-  await $fetch('http://localhost:8080/api/products/' + changedProduct.id, {
+  await $fetchAPI('/api/products/' + changedProduct.id, {
     method: 'PUT',
     body: changedProduct,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).catch(err => console.error(err.data))
 
   const router = useRouter()
-  await router.push('/mySales')
+  await router.push('/my-sales')
 }
 
 
@@ -101,12 +102,12 @@ const setDiscount = async () => {
   }
 
   const router = useRouter()
-  await $fetch('http://localhost:8080/api/discounts/' + changedProduct.id, {
+  await $fetchAPI('/api/discounts/' + changedProduct.id, {
     method: 'PATCH',
     body: discount,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
-    router.push('/mySales')
+    router.push('/my-sales')
   }).catch(err => console.error(err.data))
 
 }
@@ -282,7 +283,7 @@ const discountButtonClicked = () => {
                   Chcesz porzucić edycję?
                   {{ ' ' }}
                   <NuxtLink
-                      to="/mySales" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij
+                      to="/my-sales" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij
                     tutaj
                     by wrócić!
                   </NuxtLink>

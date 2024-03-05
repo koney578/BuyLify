@@ -77,7 +77,7 @@ const closeOrderDetails = () => {
               Oceń produkt
             </button>
         </div>
-        <opinionModal v-if="isOpinionModalOpen"
+        <opinion-modal v-if="isOpinionModalOpen"
                       @close="closeOrderDetails"
                       :order="props"
                       :closeModal="closeOrderDetails"

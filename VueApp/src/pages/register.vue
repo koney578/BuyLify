@@ -84,7 +84,6 @@ watch(user, () => {
 });
 
 const register = async () => {
-
   if (!user.username || !user.email || !user.password || !user.password2) {
     console.error('Wszystkie pola są wymagane')
     return

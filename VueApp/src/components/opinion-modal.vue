@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Dialog, DialogPanel, DialogTitle, TransitionChild, TransitionRoot } from '@headlessui/vue'
 import type { OpinionModal } from "~/types"
+import {$fetchAPI} from "~/composables/$fetchApi";
 
 const props = defineProps<OpinionModal>()
 const auth = useAuthStore()
@@ -21,7 +22,7 @@ const addOpinion = async () => {
     return
   }
 
-  await $fetch('http://localhost:8080/api/opinions', {
+  await $fetchAPI('/api/opinions', {
     method: 'POST',
     body: opinion,
     headers: {Authorization: 'Bearer ' + auth.token}

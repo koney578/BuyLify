@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { Notification } from "~/types"
 const auth = useAuthStore()
-const {data: notifications} = await useFetch<Notification[]>('http://localhost:8080/api/notifications', {
+const {data: notifications} = await useFetchAPI<Notification[]>('/api/notifications', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
