@@ -87,7 +87,7 @@ const increaseStage = () => {
 
     <div v-else-if="orderStore.orderStage === 2">
       <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-        <addressForm/>
+        <address-form/>
         <div class="mt-10 text-center text-sm text-gray-500">
           Chcesz zmienić ustawienia zakupu?
           {{ ' ' }}

@@ -80,7 +80,7 @@ const editProduct = async () => {
   }).catch(err => console.error(err.data))
 
   const router = useRouter()
-  await router.push('/mySales')
+  await router.push('/my-sales')
 }
 
 
@@ -107,7 +107,7 @@ const setDiscount = async () => {
     body: discount,
     headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
-    router.push('/mySales')
+    router.push('/my-sales')
   }).catch(err => console.error(err.data))
 
 }
@@ -283,7 +283,7 @@ const discountButtonClicked = () => {
                   Chcesz porzucić edycję?
                   {{ ' ' }}
                   <NuxtLink
-                      to="/mySales" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij
+                      to="/my-sales" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij
                     tutaj
                     by wrócić!
                   </NuxtLink>
