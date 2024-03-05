@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import type {Notification} from "~/types"
+import type {Notification, Product} from "~/types"
 
 const auth = useAuthStore()
 const menuStore = useSlideMenuStore()
 const cartStore = useCartStore()
+const followedProductsStore = useFollowedProducts()
 const uncheckedNotificationsCount = ref(0)
 
 const watchNotifications = async () => {
@@ -20,11 +21,10 @@ const watchNotifications = async () => {
 
 onMounted(() => {
   watchNotifications();
-  // auth.ifTokenExpired();
+  followedProductsStore.fetchFollowedProducts();
 
   const intervalId = setInterval(() => {
     watchNotifications();
-    // auth.ifTokenExpired();
   }, 60000);  // check notifications every minute
 
   onUnmounted(() => {

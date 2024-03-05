@@ -7,8 +7,8 @@ import {
 } from '@headlessui/vue'
 
 import type { CloseProduct } from "~/types"
-import {$fetchAPI} from "~/composables/$fetchApi";
 
+const followedProductsStore = useFollowedProducts()
 const cartStore = useCartStore()
 const productStore = useProductStore()
 const props = defineProps<CloseProduct>()
@@ -16,12 +16,12 @@ const props = defineProps<CloseProduct>()
 
 const product = productStore.product;
 const route = useRoute()
-const isFollowedProducts = route.path.includes('/followed-products')
+// const isFollowedProducts = route.path.includes('/followed-products')
+const isFollowedProducts = followedProductsStore.followedProducts.some(element => element.id === product?.id)
 const ifFollowed = ref(isFollowedProducts)
 
 
 const routeToBuyProduct = () => {
-  // router.push('/buyProduct')
   if (product) {
     cartStore.addProductToCart(product)
   }
@@ -29,32 +29,15 @@ const routeToBuyProduct = () => {
 }
 
 const unFollowProduct = async () => {
-  const auth = useAuthStore()
-  const followProduct = {
-    id: product?.id
+  if (product?.id) {
+    await followedProductsStore.unfollowProduct({id: product?.id}).then(() => {props.closeModal()})
   }
-
-  await $fetchAPI('/api/followed-products/' + followProduct.id, {
-    method: 'DELETE',
-    headers: {Authorization: 'Bearer ' + auth.token}
-  }).then(() => {
-    props.closeModal()
-  }).catch(err => console.error(err.data))
 }
 
 const followProduct = async () => {
-  const auth = useAuthStore()
-  const followProduct = {
-    id: product?.id
+  if (product?.id) {
+    await followedProductsStore.followProduct({id: product?.id, product: product}).then(() => {props.closeModal()})
   }
-
-  await $fetchAPI('/api/followed-products', {
-    method: 'POST',
-    body: followProduct,
-    headers: {Authorization: 'Bearer ' + auth.token}
-  }).then(() => {
-    props.closeModal()
-  }).catch(err => console.error(err.data))
 }
 </script>
 
