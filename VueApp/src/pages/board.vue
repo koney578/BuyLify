@@ -3,12 +3,13 @@
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import {CheckIcon} from "@heroicons/vue/20/solid";
 import type { Category, Product } from "~/types"
+import {$fetchAPI} from "~/composables/$fetchApi";
 
 const auth = useAuthStore()
 const productStore = useProductStore()
-const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
+const {data: categories} = await useFetchAPI<Category[]>('/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token}
-});
+})
 
 const noCategory: Category = {
   id: -1,
@@ -28,7 +29,7 @@ watch(selected, (newValue) => {
   searchRestriction.categoryId = newValue.id;
 });
 
-const {data: products} = await useFetch<Product[]>('http://localhost:8080/api/products', {
+const {data: products} = await useFetchAPI<Product[]>('/api/products', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
@@ -49,7 +50,7 @@ const closeProductDetails = () => {
 
 const filterPosts = async () => { // TODO nie ma na backendzie
   const router = useRouter()
-  await $fetch('http://localhost:8080/api/products', {
+  await $fetchAPI('/api/products', {
     method: 'POST',
     body: searchRestriction,
     headers: {Authorization: 'Bearer ' + auth.token}
@@ -155,7 +156,7 @@ const filterPosts = async () => { // TODO nie ma na backendzie
                    :user="product.user"
                    @click="showProductDetails(product)"
       />
-      <ProductQuickView v-if="isProductDetailsOpen"
+      <product-quick-view v-if="isProductDetailsOpen"
                         @close="closeProductDetails"
                         :closeModal="closeProductDetails"
                         :averageStars="averageStars"

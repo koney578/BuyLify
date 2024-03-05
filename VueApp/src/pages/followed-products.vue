@@ -2,7 +2,8 @@
 import type { Category, Product } from "~/types"
 const auth = useAuthStore()
 const productStore = useProductStore()
-const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
+const followedProductsStore = useFollowedProducts()
+const {data: categories} = await useFetchAPI<Category[]>('/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
@@ -23,9 +24,9 @@ watch(selected, (newValue) => {
   searchRestriction.categoryId = newValue.id;
 });
 
-const {data: announcements} = await useFetch<Product[]>('http://localhost:8080/api/followed-products', {
-  headers: {Authorization: 'Bearer ' + auth.token}
-});
+watchEffect(() => {
+  followedProductsStore.fetchFollowedProducts()
+})
 
 const isProductDetailsOpen = ref(false)
 const averageStars = ref(0)
@@ -65,7 +66,7 @@ const closeProductDetails = () => {
         </div>
     </div>
     <div class="sm:mx-auto sm:w-full sm:max-w-3xl">
-      <single-post v-for="announcement in announcements"
+      <single-post v-for="announcement in followedProductsStore.followedProducts || []"
                    :key="announcement.id"
                    :id="announcement.id"
                    :name="announcement.name"
@@ -75,9 +76,10 @@ const closeProductDetails = () => {
                    :description="announcement.description"
                    :photo="announcement.photo"
                    :created-at="announcement.createdAt"
+                   :user="announcement.user"
                    @click="showProductDetails(announcement)"
       />
-      <ProductQuickView v-if="isProductDetailsOpen"
+      <product-quick-view v-if="isProductDetailsOpen"
                         @close="closeProductDetails"
                         :closeModal="closeProductDetails"
                         :averageStars="averageStars"

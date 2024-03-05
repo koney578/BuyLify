@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import RemoveCartProduct from "~/components/remove-cart-product.vue";
+
 const cartStore = useCartStore()
 cartStore.sortCartByUserId()
 
@@ -17,13 +19,16 @@ cartStore.sortCartByUserId()
                            :quantity="product.quantity"
       />
       <div class="w-1/3 mx-auto mt-1rem">
-        <div>
-          <NuxtLink to="/buyProduct">
+        <div v-if="cartStore.cartState.length">
+          <NuxtLink to="/buy-product">
             <button type="submit"
                     class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
               Kup teraz
             </button>
           </NuxtLink>
+        </div>
+        <div v-else>
+          <other-product-label />
         </div>
       </div>
     </div>

@@ -81,7 +81,7 @@ const login = async () => {
           <div class="flex items-center justify-between">
             <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Hasło</label>
             <div class="text-sm">
-              <NuxtLink to="/resetPassword" class="font-semibold text-indigo-600 hover:text-indigo-500">
+              <NuxtLink to="/reset-password" class="font-semibold text-indigo-600 hover:text-indigo-500">
                 Zapomniałeś hasła?
               </NuxtLink>
             </div>

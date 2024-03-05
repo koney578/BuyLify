@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type {Order, OrderProduct, OrderInfo} from "~/types"
+import {$fetchAPI} from "~/composables/$fetchApi";
 const auth = useAuthStore()
 const cartStore = useCartStore()
 const orderStore = useOrderStore()
@@ -74,7 +75,7 @@ const totalSum = calculateTotalOrderCost()
 // }
 
 const buyProduct = async () => {
-  await $fetch('http://localhost:8080/api/orders', {
+  await $fetchAPI('/api/orders', {
     method: 'POST',
     body: order,
     headers: {Authorization: 'Bearer ' + auth.token}

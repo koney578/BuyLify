@@ -3,9 +3,10 @@ import type { Category } from "~/types"
 import {PhotoIcon} from "@heroicons/vue/24/solid";
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from '@headlessui/vue'
 import {CheckIcon, ChevronUpDownIcon} from '@heroicons/vue/20/solid'
+import {$fetchAPI} from "~/composables/$fetchApi";
 
 const auth = useAuthStore()
-const {data: categories} = await useFetch<Category[]>('http://localhost:8080/api/categories', {
+const {data: categories} = await useFetchAPI<Category[]>('/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
@@ -128,7 +129,7 @@ const addProduct = async () => {
   const formData = new FormData();
   formData.append('post', blob);
   formData.append('file', product.photos);
-  await $fetch('http://localhost:8080/api/products', {
+  await $fetchAPI('/api/products', {
     method: 'POST',
     body: formData,
     headers: {Authorization: 'Bearer ' + auth.token}

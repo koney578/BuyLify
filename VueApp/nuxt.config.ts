@@ -11,10 +11,16 @@ export default defineNuxtConfig({
       '@vueuse/nuxt',
     ],
 
+    runtimeConfig: {
+      public: {
+          NUXT_APP_BASE_URL: process.env.BASEURL
+      }
+    },
+
     pinia: {
         autoImports: [
             'defineStore',
-            'acceptHMRUpdate'
+            'acceptHMRUpdate',
         ]
     },
 })

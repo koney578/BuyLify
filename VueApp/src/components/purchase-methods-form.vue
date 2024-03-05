@@ -5,11 +5,11 @@ const auth = useAuthStore()
 const cartStore = useCartStore()
 const props = defineProps<User>()
 
-const {data: deliveryMethods} = await useFetch<DeliveryMethod[]>('http://localhost:8080/api/delivery-methods', {
+const {data: deliveryMethods} = await useFetchAPI<DeliveryMethod[]>('/api/delivery-methods', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
-const {data: paymentMethods} = await useFetch<PaymentMethod[]>('http://localhost:8080/api/payment-methods', {
+const {data: paymentMethods} = await useFetchAPI<PaymentMethod[]>('/api/payment-methods', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
 
