@@ -49,4 +49,10 @@ public class ProductController {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         productService.updateProduct(id, post, userId);
     }
+
+    @PutMapping("/{id}/deactivate")
+    public void deactivateProduct(@PathVariable Long id, Authentication authentication){
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        productService.deactivateProduct(id, userId);
+    }
 }
