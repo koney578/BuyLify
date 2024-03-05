@@ -9,11 +9,8 @@ import com.buylify.buylifyapp.opinion.OpinionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneOffset;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -87,5 +84,14 @@ public class ProductService {
         product.setCategory(categoryRepository.getReferenceById(post.getCategoryId()));
         product.setCount(post.getCount());
         productRepository.save(product);
+    }
+
+    public void deactivateProduct(Long id, Long userId) {
+        Product product = productRepository.findById(id).orElseThrow();
+        if (product.getUser().getId().equals(userId)){
+            product.setActive(false);
+            productRepository.save(product);
+        }
+
     }
 }
