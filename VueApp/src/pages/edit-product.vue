@@ -83,28 +83,10 @@ const editProduct = async () => {
   await router.push('/my-sales')
 }
 
-
-const discount = reactive({
-  discountPercent: 0,
-  days: 0,
-})
-
-const setDiscount = async () => {
-  if (discount.discountPercent > 1 && discount.discountPercent < 100) {
-    discount.discountPercent = discount.discountPercent / 100
-  }
-
-  if (discount.discountPercent < 0 && discount.discountPercent > 1) {
-    return
-  }
-  if (discount.days < 0) {
-    return
-  }
-
+const deleteProduct = async () => {
   const router = useRouter()
-  await $fetchAPI('/api/discounts/' + changedProduct.id, {
-    method: 'PATCH',
-    body: discount,
+  await $fetchAPI('/api/products/' + changedProduct.id + '/deactivate', {
+    method: 'PUT',
     headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
     router.push('/my-sales')
@@ -112,9 +94,9 @@ const setDiscount = async () => {
 
 }
 
-const discountVisible = ref(false)
-const discountButtonClicked = () => {
-  discountVisible.value = !discountVisible.value
+const deleteVisible = ref(false)
+const deleteButtonClicked = () => {
+  deleteVisible.value = !deleteVisible.value
 }
 </script>
 
@@ -129,52 +111,31 @@ const discountButtonClicked = () => {
     <div class="mt-2rem">
       <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl">
         <div class="w-2/3">
-          <img
-              :src="product?.photo"
-              alt="Główne zdjęcie"
-              class="h-auto w-1/2"
-          />
-          <div class="my-1rem">
-            <button type="button" @click="discountButtonClicked"
-                    class="flex justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-              Ustawienia promocji
-            </button>
-          </div>
+          <div class="w-1/2">
+            <img
+                :src="product?.photo"
+                alt="Główne zdjęcie"
+                class="h-auto"
+            />
+            <div class="my-2rem">
+              <button type="button" @click="deleteButtonClicked"
+                      class="flex justify-center rounded-md bg-rose-600 px-3 py-1.5 sm:mx-auto sm:w-full sm:max-w-sm text-sm font-semibold leading-6 text-white shadow-sm hover:bg-rose-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                Usuń ogłoszenie
+              </button>
+            </div>
 
-
-          <div v-if="discountVisible" class="mt-2rem">
-            <form @submit.prevent="setDiscount">
-              <label for="discount-percent" class="block text-sm font-medium leading-6 text-gray-900">
-                Zniżka w procentach (wpisać samą liczbę!):
-              </label>
-              <div class="mt-2">
-                <input v-model="discount.discountPercent" id="discount-percent" name="discount-percent" type="text"
-                       autocomplete="discount-percent"
-                       required
-                       placeholder="40"
-                       class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
-              </div>
-
-              <label for="discount-days" class="block text-sm font-medium leading-6 text-gray-900">
-                Czas trwania zniżki (w dniach)
-              </label>
-              <div class="mt-2">
-                <input v-model="discount.days" id="discount-days" name="discount-days" type="text"
-                       autocomplete="discount-days"
-                       required
-                       placeholder="3"
-                       class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
-              </div>
-
-              <div class="mt-2rem">
+            <div v-if="deleteVisible" class="mt-2rem">
+              <form @submit.prevent="deleteProduct">
                 <button type="submit"
-                        class="flex justify-center rounded-md bg-indigo-600  px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                  Ustaw zniżkę
+                        class="flex justify-center rounded-md bg-rose-700 sm:mx-auto sm:w-full sm:max-w-xs px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-rose-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                  Potwierdź
                 </button>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
+
+
         <form @submit.prevent="editProduct" method="POST" class="w-1/2">
           <div class="w-full">
             <div class="justify-between mt-2rem">
