@@ -14,7 +14,7 @@
     "@unocss/nuxt": "^0.58.5",
     "@vueuse/nuxt": "^10.9.0",
     "nuxt": "^3.10.3",
-    "typescript": "^5.3.3",
+    "typescript": "^5.4.2",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0"
   },

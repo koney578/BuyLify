@@ -20,6 +20,16 @@ yarn install
 bun install
 ```
 
+## Config
+
+Create `.env` file in VueApp/ then paste this code below:
+
+```bash
+# VueApp/.env
+
+BASEURL="http://localhost:8080"
+```
+
 ## Development Server
 
 Start the development server on `http://localhost:3000`:
