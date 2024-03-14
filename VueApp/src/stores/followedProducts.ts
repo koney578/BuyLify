@@ -1,7 +1,6 @@
 import type {Product} from "~/types";
 import {$fetchAPI} from "~/composables/$fetchApi";
 
-const auth = useAuthStore()
 export const useFollowedProducts = defineStore({
     id: 'followedProductsStore',
     state: () => ({
@@ -9,6 +8,7 @@ export const useFollowedProducts = defineStore({
     }),
     actions: {
         async fetchFollowedProducts() {
+            const auth = useAuthStore()
             if (auth.isLoggedIn) {
                 let fetchedProducts: Product[] = []
                 try {
@@ -25,6 +25,7 @@ export const useFollowedProducts = defineStore({
         },
 
         async followProduct(followProduct: {id: number; product: Product}) {
+            const auth = useAuthStore()
             await $fetchAPI('/api/followed-products', {
                 method: 'POST',
                 body: followProduct,
@@ -35,6 +36,7 @@ export const useFollowedProducts = defineStore({
         },
 
         async unfollowProduct(followProduct: {id: number}) {
+            const auth = useAuthStore()
             await $fetchAPI('/api/followed-products/' + followProduct.id, {
                 method: 'DELETE',
                 headers: {Authorization: 'Bearer ' + auth.token}
