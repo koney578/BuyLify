@@ -1,7 +1,7 @@
 type useFetchType = typeof useFetch
-const auth = useAuthStore()
 
 export const useFetchAPI: useFetchType = (path, options = {}) => {
+    const auth = useAuthStore()
     const url = useRuntimeConfig().public.NUXT_APP_BASE_URL + path
     const headers = {
         ...options.headers,

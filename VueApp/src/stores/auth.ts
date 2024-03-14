@@ -1,5 +1,5 @@
 import type { ComplexUser } from "~/types";
-import {$fetchAPI} from "~/composables/$fetchApi";
+// import {$fetchAPI} from "~/composables/$fetchApi";
 
 const emptyUser: ComplexUser = {
     id: null,
