@@ -41,7 +41,7 @@ public class ProductService {
     }
 
     public List<ProductDto> getAllProducts() {
-        return productRepository.findAll()
+        return productRepository.findProductsByCountGreaterThan(0)
                 .stream()
                 .map(product -> {
                     ProductDto productDto = mapper.toProductDto(product);
