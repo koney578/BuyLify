@@ -65,7 +65,7 @@ public class OrderService {
                         if (product.getCount() - orderProduct.getProductQuantity() == 0) {
                             Notification notification = new Notification();
                             notification.setMessage("Product " + product.getName() + " is out of stock");
-                            notification.setUser(user);
+                            notification.setUser(product.getUser());
                             notification.setChecked(false);
 
                             NotificationType notificationType = notificationTypeRepository.findById(1L).orElseThrow();
