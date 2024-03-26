@@ -7,6 +7,10 @@ import com.buylify.buylifyapp.authentication.UserRepository;
 import com.buylify.buylifyapp.deliveryMethod.DeliveryMethod;
 import com.buylify.buylifyapp.deliveryMethod.DeliveryMethodRepository;
 import com.buylify.buylifyapp.mappers.OrderMapper;
+import com.buylify.buylifyapp.notification.Notification;
+import com.buylify.buylifyapp.notification.NotificationRepository;
+import com.buylify.buylifyapp.notificationType.NotificationType;
+import com.buylify.buylifyapp.notificationType.NotificationTypeRepository;
 import com.buylify.buylifyapp.orderStatus.OrderStatus;
 import com.buylify.buylifyapp.orderStatus.OrderStatusRepository;
 import com.buylify.buylifyapp.paymentMethod.PaymentMethod;
@@ -29,6 +33,8 @@ public class OrderService {
     private final OrdersProductsRepository ordersProductsRepository;
     private final DeliveryMethodRepository deliveryMethodRepository;
     private final PaymentMethodRepository paymentMethodRepository;
+    private final NotificationTypeRepository notificationTypeRepository;
+    private final NotificationRepository notificationRepository;
     private final UserRepository userRepository;
     private final OrderMapper orderMapper;
 
@@ -56,6 +62,16 @@ public class OrderService {
                     throw new RuntimeException("Not enough products");
                 }
                 // Update product count
+                        if (product.getCount() - orderProduct.getProductQuantity() == 0) {
+                            Notification notification = new Notification();
+                            notification.setMessage("Product " + product.getName() + " is out of stock");
+                            notification.setUser(product.getUser());
+                            notification.setChecked(false);
+
+                            NotificationType notificationType = notificationTypeRepository.findById(1L).orElseThrow();
+                            notification.setNotificationType(notificationType);
+                            notificationRepository.save(notification);
+                        }
                 product.setCount(product.getCount() - orderProduct.getProductQuantity());
                 productRepository.save(product);
 
