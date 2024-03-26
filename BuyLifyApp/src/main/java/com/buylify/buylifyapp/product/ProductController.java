@@ -29,8 +29,10 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductDto> getAllProducts() {
-        return productService.getAllProducts();
+    public List<ProductDto> getAllProducts(
+            @RequestParam(value = "category", required = false) Long categoryId
+    ) {
+        return productService.getAllProducts(categoryId);
     }
 
     @GetMapping("/{id}")
@@ -55,4 +57,6 @@ public class ProductController {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         productService.deactivateProduct(id, userId);
     }
+
+
 }
