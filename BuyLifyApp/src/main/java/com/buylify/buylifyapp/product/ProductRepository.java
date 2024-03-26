@@ -17,7 +17,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findProductsByCountGreaterThan(Integer count);
 
-    @Query("SELECT p FROM Product p WHERE (:categoryId IS NULL OR p.category.id = :categoryId) AND p.count > :count")
+    @Query("SELECT p FROM Product p WHERE (:categoryId IS NULL OR p.category.id = :categoryId) AND p.count > :count AND p.isActive = true")
     List<Product> findProductsFilteredByCountAndCategory(@Param("categoryId") Long categoryId, @Param("count") Integer count);
 
 }
