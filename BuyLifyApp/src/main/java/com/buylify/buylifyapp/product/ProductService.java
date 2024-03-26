@@ -40,8 +40,8 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public List<ProductDto> getAllProducts() {
-        return productRepository.findProductsByCountGreaterThan(0)
+    public List<ProductDto> getAllProducts(Long categoryId) {
+        return productRepository.findProductsFilteredByCountAndCategory(categoryId, 0)
                 .stream()
                 .map(product -> {
                     ProductDto productDto = mapper.toProductDto(product);
