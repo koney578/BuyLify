@@ -5,7 +5,7 @@ export const useBoardProductsStore = defineStore("boardProducts", () => {
     const boardProducts = ref<Product[]>([])
     const category = ref(0)
 
-    const fetchBoardProducts = async () => {
+    const fetchBoardProducts = async () => { // TODO ZROBIC REFACTOR DO JEDNEGO ZAPYTANIA
         if (!category.value) {
             const {data: products} = await useFetchAPI<Product[]>('/api/products', {
                 headers: {Authorization: 'Bearer ' + auth.token}
@@ -16,7 +16,6 @@ export const useBoardProductsStore = defineStore("boardProducts", () => {
         }
 
         else {
-            console.log('dupa')
             const {data: filteredProducts} = await useFetchAPI<Product[]>('/api/products', {
                 headers: {Authorization: 'Bearer ' + auth.token},
                 query: {category: category.value}
