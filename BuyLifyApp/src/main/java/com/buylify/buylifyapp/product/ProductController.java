@@ -46,6 +46,12 @@ public class ProductController {
         return productService.getProductsByLoggedUser(userId);
     }
 
+    @GetMapping("/purchased")
+    public List<ProductOrderDto> getPurchasedProducts(Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        return productService.getPurchasedProducts(userId);
+    }
+
     @PutMapping("/{id}")
     public void updateProduct(@PathVariable Long id, @RequestBody CreateProductDto post, Authentication authentication) {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
