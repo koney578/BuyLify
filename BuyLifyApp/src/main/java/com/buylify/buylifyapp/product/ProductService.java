@@ -50,8 +50,8 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public List<ProductDto> getAllProducts(Long categoryId, Float minPrice, Float maxPrice) {
-        return productRepository.findProductsFiltered(categoryId, minPrice, maxPrice, 0)
+    public List<ProductDto> getAllProducts(Long categoryId, String name, Float minPrice, Float maxPrice) {
+        return productRepository.findProductsFiltered(categoryId, name, minPrice, maxPrice, 0)
                 .stream()
                 .map(product -> {
                     ProductDto productDto = mapper.toProductDto(product);
