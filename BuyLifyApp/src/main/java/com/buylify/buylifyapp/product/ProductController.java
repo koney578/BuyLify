@@ -31,10 +31,11 @@ public class ProductController {
     @GetMapping
     public List<ProductDto> getAllProducts(
             @RequestParam(value = "category", required = false) Long categoryId,
+            @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "minPrice", required = false) Float minPrice,
             @RequestParam(value = "maxPrice", required = false) Float maxPrice
     ) {
-        return productService.getAllProducts(categoryId, minPrice, maxPrice);
+        return productService.getAllProducts(categoryId, name, minPrice, maxPrice);
     }
 
     @GetMapping("/{id}")
