@@ -117,7 +117,7 @@ const followProduct = async () => {
                             </div>
                             <div v-else class="flex w-full">
                               <button type="button"
-                                      class="mt-6 flex w-full ml-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+                                      class="mt-6 flex w-full ml-1rem items-center justify-center rounded-md border border-transparent bg-rose-600 px-8 py-3 text-base font-medium text-white hover:bg-rose-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                                       @click="unFollowProduct()" ref="cancelButtonRef">Usuń z obserwowanych
                               </button>
                             </div>
