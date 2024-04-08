@@ -8,7 +8,8 @@ import java.util.List;
 
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
-    @Query("SELECT p FROM Product p WHERE p.user.id = :userId")
+    @Query("SELECT p FROM Product p WHERE p.user.id = :userId " +
+            "AND p.isActive = true")
     List<Product> findProductsByUserId(@Param("userId") Long userId);
 
     List<Product> findProductsByCountGreaterThan(Integer count);

@@ -64,7 +64,7 @@ public class OrderService {
                 // Update product count
                         if (product.getCount() - orderProduct.getProductQuantity() == 0) {
                             Notification notification = new Notification();
-                            notification.setMessage("Product " + product.getName() + " is out of stock");
+                            notification.setMessage("Produkt " + product.getName() + "(" + product.getId() + ")" + " został wyprzedany!");
                             notification.setUser(product.getUser());
                             notification.setChecked(false);
 
