@@ -64,8 +64,8 @@ function validatePassword() {
 
 function validateUsername() {
   if (user.username !== "") {
-    if (user.username.length < 5) {
-      usernameError = "Nazwa musi składać się przynajmniej z 5 znaków";
+    if (user.username.length < 8) {
+      usernameError = "Nazwa musi składać się przynajmniej z 8 znaków";
       return false;
     } else {
       usernameError = "";
