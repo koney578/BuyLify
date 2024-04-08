@@ -121,7 +121,7 @@ const editProfile = async () => {
                 <div
                     class="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
                   <span class="flex select-none items-center px-2 text-gray-500 sm:text-sm">buylify.com/</span>
-                  <input v-model="user.username" type="text" name="username" id="username" autocomplete="username"
+                  <input v-model="user.username" type="text" name="username" id="username"
                          class="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6 bg-white"
                          :placeholder=auth.user.username />
                 </div>
@@ -148,7 +148,7 @@ const editProfile = async () => {
             <div class="sm:col-span-3">
               <label for="first-name" class="block text-sm font-medium leading-6 text-gray-900">Imię</label>
               <div class="mt-2">
-                <input v-model="user.name" type="text" name="first-name" id="first-name" autocomplete="name"
+                <input v-model="user.name" type="text" name="first-name" id="first-name"
                        class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
                       :placeholder="auth.user.name"
                 />
@@ -158,7 +158,7 @@ const editProfile = async () => {
             <div class="sm:col-span-3">
               <label for="surname" class="block text-sm font-medium leading-6 text-gray-900">Nazwisko</label>
               <div class="mt-2">
-                <input v-model="user.surname" type="text" name="surname" id="surname" autocomplete="surname"
+                <input v-model="user.surname" type="text" name="surname" id="surname"
                        class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
                       :placeholder="auth.user.surname"
                 />
@@ -168,7 +168,7 @@ const editProfile = async () => {
             <div class="sm:col-span-3">
               <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Adres email</label>
               <div class="mt-2">
-                <input v-model="user.email" id="email" name="email" type="email" autocomplete="email"
+                <input v-model="user.email" id="email" name="email" type="email"
                        class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
                        :placeholder="auth.user.email"
                 />
@@ -178,7 +178,7 @@ const editProfile = async () => {
             <div class="sm:col-span-3">
               <label for="phoneNumber" class="block text-sm font-medium leading-6 text-gray-900">Numer telefonu</label>
               <div class="mt-2">
-                <input v-model="user.phoneNumber" type="text" name="phoneNumber" id="phoneNumber" autocomplete="phoneNumber"
+                <input v-model="user.phoneNumber" type="text" name="phoneNumber" id="phoneNumber"
                        class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
                        :placeholder="auth.user.phoneNumber"
                 />
