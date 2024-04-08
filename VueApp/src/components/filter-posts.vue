@@ -48,7 +48,7 @@ const filterPosts = async () => {
                    name="name"
                    type="text"
                    class="block bg-white color-black p-1rem max-w-2xl w-full mt-2rem rounded-3xl shadow-2xl"
-                   placeholder="Wpisz cos sobie byku">
+                   placeholder="Wpisz frazę ...">
           </label>
           <search-button />
         </div>
