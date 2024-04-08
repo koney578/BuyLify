@@ -5,22 +5,22 @@ const user = reactive({
   password: '',
 })
 
-let passwordError = ''
-let loginError = ref('')
+const passwordError = ref('')
+const loginError = ref('')
 
 function validatePassword() {
   if (user.password !== "") {
     if (user.password.length < 8) {
-      passwordError = "Hasło musi mieć co najmniej 8 znaków.";
+      passwordError.value = "Hasło musi mieć co najmniej 8 znaków.";
       return false;
     } else if (!/[A-Z]/.test(user.password)) {
-      passwordError = "Hasło musi zawierać co najmniej jedną dużą literę.";
+      passwordError.value = "Hasło musi zawierać co najmniej jedną dużą literę.";
       return false;
     } else if (!/\d/.test(user.password)) {
-      passwordError = "Hasło musi zawierać co najmniej jedną cyfrę.";
+      passwordError.value = "Hasło musi zawierać co najmniej jedną cyfrę.";
       return false;
     } else {
-      passwordError = "";
+      passwordError.value = "";
       return true;
     }
   }
@@ -49,7 +49,7 @@ const login = async () => {
             console.error(err.data)
             loginError.value = 'Nie udana próba logowania! Spróbuj ponownie!'
             const errorTime = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-            await errorTime(3000)
+            await errorTime(2000)
             loginError.value = ''
           }
       )
