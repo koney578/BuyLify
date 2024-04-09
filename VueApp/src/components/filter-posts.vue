@@ -33,6 +33,9 @@ watch(selected, (newValue) => {
 
 const filterPosts = async () => {
   boardProductStore.category = searchRestriction.categoryId
+  boardProductStore.minPrice = searchRestriction.priceMin
+  boardProductStore.maxPrice = searchRestriction.priceMax
+  boardProductStore.name = searchRestriction.filterName
   await boardProductStore.fetchBoardProducts()
 }
 </script>
