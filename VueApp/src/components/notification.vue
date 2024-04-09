@@ -63,14 +63,14 @@ const checkNotification = async () => {
           </button>
         </div>
 
-        <div v-else class="w-full flex mt-2rem justify-center">
-          <button type="button"
-                  class="flex w-1/4 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  @click="checkNotification"
-          >
-            Odznacz
-          </button>
-        </div>
+<!--        <div v-else class="w-full flex mt-2rem justify-center"> TODO zakomentowałem, można to usunąć jak uznamy, że na pewno tego nie chcemy-->
+<!--          <button type="button"-->
+<!--                  class="flex w-1/4 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"-->
+<!--                  @click="checkNotification"-->
+<!--          >-->
+<!--            Odznacz-->
+<!--          </button>-->
+<!--        </div>-->
 
       </div>
     </div>
