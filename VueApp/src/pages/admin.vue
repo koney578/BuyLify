@@ -380,7 +380,7 @@ const addNotificationType = async () => {
           </div>
 
 
-          <div>
+          <div class="mt-1rem">
             <label for="notification-user" class="block text-sm font-medium leading-6 text-gray-900">
               Wpisz id usera do którego ma dotrzeć powiadomienie
             </label>

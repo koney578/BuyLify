@@ -11,6 +11,7 @@ import type { CloseProduct } from "~/types"
 const followedProductsStore = useFollowedProducts()
 const cartStore = useCartStore()
 const productStore = useProductStore()
+const auth = useAuthStore()
 const props = defineProps<CloseProduct>()
 
 
@@ -104,7 +105,7 @@ const followProduct = async () => {
                         </div>
 
                         <div class="flex w-full">
-                          <div class="flex w-full">
+                          <div v-if="product?.user?.username !== auth.user.username" class="flex w-full">
                             <button type="submit"
                                     class="mt-6 flex w-1/2 mr-1rem items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
                               Dodaj do koszyka

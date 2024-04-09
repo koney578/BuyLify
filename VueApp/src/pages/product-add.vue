@@ -222,21 +222,12 @@ const handleFileChange = (event: any) => {
           </div>
           <div class="relative mt-2 rounded-md shadow-sm">
             <div class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
-              <span class="text-gray-500 sm:text-sm">$</span>
+              <span class="text-gray-500 sm:text-sm">PLN</span>
             </div>
             <input v-model="product.price" type="text" name="price" id="price"
-                   class="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
+                   class="block w-full rounded-md border-0 py-1.5 pl-3rem pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"
                    placeholder="0.00"
             />
-            <div class="absolute inset-y-0 right-0 flex items-center">
-              <label for="currency" class="sr-only">waluta</label>
-              <select id="currency" name="currency"
-                      class="h-full rounded-md border-0 bg-transparent py-0 pl-2 pr-7 text-gray-500 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm">
-                <option>PLN</option>
-                <option>USD</option>
-                <option>EUR</option>
-              </select>
-            </div>
           </div>
         </div>
 
@@ -272,9 +263,12 @@ const handleFileChange = (event: any) => {
                 <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF do 10MB</p>
               </div>
             </div>
+
           </div>
         </div>
-
+        <div v-if="!!product.photos" class="flex">
+          <p class="mx-auto font-bold text-indigo-600">Zdjęcie {{ product.photos?.name }} zostało wgrane prawidłowo</p>
+        </div>
         <submit-button/>
 
       </form>
