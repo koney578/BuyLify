@@ -15,7 +15,7 @@ const {data: notifications} = await useFetchAPI<Notification[]>('/api/notificati
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Powiadomienia</h1>
     </div>
     <div class="sm:mx-auto sm:w-full sm:max-w-6xl">
-      <notification v-for="notification in notifications"
+      <notification v-for="notification in notifications?.toReversed()"
                     :key="notification.id"
                     :id="notification.id"
                     :message="notification.message"
