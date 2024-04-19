@@ -14,7 +14,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     List<Product> findProductsByCountGreaterThan(Integer count);
 
-    @Query("SELECT p FROM Product p WHERE (:categoryId IS NULL OR p.category.id = :categoryId) " +
+    @Query("SELECT p FROM Product p WHERE (:categoryId IS NULL OR (:categoryId = 0 AND p.category.id = p.category.id) OR p.category.id = :categoryId) " +
             "AND (:minPrice IS NULL OR p.price >= :minPrice) " +
             "AND (:maxPrice IS NULL OR p.price <= :maxPrice) " +
             "AND (:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) " +
