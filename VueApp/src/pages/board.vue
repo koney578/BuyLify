@@ -24,6 +24,12 @@ const closeProductDetails = () => {
   isProductDetailsOpen.value = false
 }
 
+const page = ref(1)
+const items = ref(Array(55))
+
+watchEffect(() => {
+  console.log(page.value)
+})
 
 </script>
 
@@ -49,6 +55,9 @@ const closeProductDetails = () => {
                         :closeModal="closeProductDetails"
                         :averageStars="averageStars"
       />
+    </div>
+    <div class="mx-auto mt-5%">
+      <UPagination v-model="page" :page-count="5" :total="items.length" />
     </div>
   </div>
 </template>
