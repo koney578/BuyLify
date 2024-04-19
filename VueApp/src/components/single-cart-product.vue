@@ -4,13 +4,33 @@ import RemoveCartProduct from "~/components/remove-cart-product.vue";
 
 const cartStore = useCartStore()
 const props = defineProps<CartItem>()
-const quantity = ref(props.quantity.toString())
+const quantity = ref('')
+
+const quantityRange = ref(props.quantity)
+const quantityInput = ref(props.quantity.toString())
+const countPattern = /^[0-9]+$/;
+
+watch(() => quantityInput.value, (newValue) => {
+  if (quantityInput.value === '') {
+    quantityInput.value = '0'
+  } else {
+    if (!countPattern.test(quantityInput.value)) {
+      quantityInput.value = '0'
+    }
+    quantityRange.value = parseInt(newValue)
+  }
+})
+
+watch(() => quantityRange.value, (newValue) => {
+  quantityInput.value = newValue.toString()
+})
 
 const quantityError = ref('')
 
 
-const countPattern = /^[0-9]+$/;
+
 const setQuantity = async () => {
+  quantity.value = quantityRange.value.toString()
   if (!countPattern.test(quantity.value) || parseInt(quantity.value) > props.product.count) {
     quantityError.value = "Podana ilość jest nieprawidłowa."
     const errorTime = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -85,12 +105,13 @@ const changeQuantityButtonClicked = () => {
               Wybierz ilość produktu
             </label>
             <div class="mt-2">
-              <input v-model="quantity" id="quantity" name="quantity" type="text"
+              <input v-model="quantityInput" id="quantity" name="quantity" type="text"
                      autocomplete="quantity"
                      required
                      placeholder="1"
                      class="block rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white p-0.5rem"/>
             </div>
+            <URange :min="0" :max="props.product.count" v-model="quantityRange" color="indigo" class="my-1rem"/>
 
             <div class="mt-1rem">
               <button type="submit"
