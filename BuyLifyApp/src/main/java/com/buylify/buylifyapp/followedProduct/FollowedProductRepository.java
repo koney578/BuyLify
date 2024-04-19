@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface FollowedProductRepository extends JpaRepository<FollowedProduct, Long> {
-    @Query("SELECT fp FROM FollowedProduct fp WHERE fp.user.id = :userId AND fp.product.isActive = true")
+    @Query("SELECT fp FROM FollowedProduct fp WHERE fp.user.id = :userId AND fp.product.isActive = true AND fp.product.count > 0")
     List<FollowedProduct> findByUserId(@Param("userId") Long userId);
 
     @Query("SELECT fp FROM FollowedProduct fp WHERE fp.user.id = :userId AND fp.product.id = :productId")
