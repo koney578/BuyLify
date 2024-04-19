@@ -9,16 +9,29 @@ const boardProductStore = useBoardProductsStore()
 onBeforeRouteLeave(() => {
   boardProductStore.category = 0
 })
+
 const noCategory: Category = {
   id: -1,
   name: 'Brak kategorii',
+}
+
+const defaultCategory: Category = {
+  id: 0,
+  name: 'Wszystko',
 }
 
 const {data: categories} = await useFetchAPI<Category[]>('/api/categories', {
   headers: {Authorization: 'Bearer ' + auth.token}
 })
 
-const selected = ref<Category>(categories.value?.[0] ?? noCategory)
+let allCategories: Category[] = []
+if (!auth.isLoggedIn) {
+  allCategories = [noCategory]
+} else {
+  allCategories = [defaultCategory, ...categories.value ?? []]
+}
+
+const selected = ref<Category>(allCategories[0])
 
 const searchRestriction = reactive({
   filterName: '',
@@ -100,7 +113,7 @@ const filterPosts = async () => {
                         leave-to-class="opacity-0">
               <ListboxOptions
                   class="z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                <ListboxOption as="template" v-for="category in categories" :key="category.id" :value="category"
+                <ListboxOption as="template" v-for="category in allCategories" :key="category.id" :value="category"
                                v-slot="{ active, selected }">
                   <li :class="[active ? 'bg-indigo-600 text-white' : 'text-gray-900', 'relative cursor-default select-none py-2 pl-3 pr-9']">
                     <div class="flex items-center">
