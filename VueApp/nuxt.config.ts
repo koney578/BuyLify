@@ -4,17 +4,18 @@ export default defineNuxtConfig({
     ssr: false,
     devtools: {enabled: true},
     modules: [
-      '@unocss/nuxt',
-      '@nuxt/ui',
-      '@tailwindcss/forms',
-      '@pinia/nuxt',
-      '@vueuse/nuxt',
+        '@unocss/nuxt',
+        '@nuxt/ui',
+        '@tailwindcss/forms',
+        '@pinia/nuxt',
+        '@vueuse/nuxt',
+        'nuxt-primevue',
     ],
 
     runtimeConfig: {
-      public: {
-          NUXT_APP_BASE_URL: process.env.BASEURL
-      }
+        public: {
+            NUXT_APP_BASE_URL: process.env.BASEURL
+        }
     },
 
     pinia: {

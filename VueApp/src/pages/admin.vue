@@ -2,7 +2,6 @@
 
 import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} from "@headlessui/vue";
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid";
-import {$fetchAPI} from "~/composables/$fetchApi";
 
 const auth = useAuthStore()
 const router = useRouter()
@@ -363,7 +362,7 @@ const addNotificationType = async () => {
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
 
-      <form @submit.prevent="sendNotification" class="space-y-6" action="#" method="POST">
+      <form @submit.prevent="sendNotification" class="space-y-6" method="POST">
         <div>
           <label for="notification-message" class="block text-sm font-medium leading-6 text-gray-900">
             Wpisz treść powiadomienia

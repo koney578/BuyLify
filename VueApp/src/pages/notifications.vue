@@ -1,9 +1,12 @@
 <script setup lang="ts">
-import type { Notification } from "~/types"
-const auth = useAuthStore()
-const {data: notifications} = await useFetchAPI<Notification[]>('/api/notifications', {
-  headers: {Authorization: 'Bearer ' + auth.token}
-});
+// import type { Notification } from "~/types"
+// const auth = useAuthStore()
+// const {data: notifications} = await useFetchAPI<Notification[]>('/api/notifications', {
+//   headers: {Authorization: 'Bearer ' + auth.token}
+// });
+
+const notificationStore = useNotificationStore()
+notificationStore.fetchNotifications()
 
 
 </script>
@@ -15,7 +18,7 @@ const {data: notifications} = await useFetchAPI<Notification[]>('/api/notificati
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Powiadomienia</h1>
     </div>
     <div class="sm:mx-auto sm:w-full sm:max-w-6xl">
-      <notification v-for="notification in notifications?.toReversed()"
+      <notification v-for="notification in notificationStore.notificationsList"
                     :key="notification.id"
                     :id="notification.id"
                     :message="notification.message"
