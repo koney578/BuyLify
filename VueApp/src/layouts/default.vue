@@ -1,21 +1,15 @@
 <script setup lang="ts">
-import type {Notification, Product} from "~/types"
-
 const auth = useAuthStore()
 const menuStore = useSlideMenuStore()
 const cartStore = useCartStore()
+const notificationStore = useNotificationStore()
 const followedProductsStore = useFollowedProducts()
-const uncheckedNotificationsCount = ref(0)
+
+
 
 const watchNotifications = async () => {
   if (auth.isLoggedIn) {
-    const {data: notifications} = await useFetchAPI<Notification[]>('/api/notifications', {
-      headers: {Authorization: 'Bearer ' + auth.token}
-    });
-
-    const uncheckedNotifications = (notifications.value ?? []).filter(notification => !notification.checked)
-    uncheckedNotificationsCount.value = uncheckedNotifications.length
-    return uncheckedNotificationsCount.value
+    await notificationStore.fetchNotifications()
   }
 }
 
@@ -47,7 +41,7 @@ onMounted(() => {
           <li class="color-black p-4 md:mx-1rem text-lg hover:text-gray-500">
             <NuxtLink to="/cart">
               <div class="w-full h-auto relative">
-                <Icon name="ic:outline-shopping-cart-checkout" :uncheckedNotificationCount="uncheckedNotificationsCount"
+                <Icon name="ic:outline-shopping-cart-checkout" :uncheckedNotificationCount="notificationStore.uncheckedNotificationsCount"
                       class="relative inline-flex items-center text-2rem text-black hover:text-gray-500"/>
                 <div v-if="cartStore.cartState.length"
                      class="absolute -right-4 -top-4 inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full dark:border-gray-900">
@@ -60,11 +54,11 @@ onMounted(() => {
           <li class="color-black p-4 md:mx-1rem text-lg hover:text-gray-500">
             <NuxtLink to="/notifications">
               <div class="w-full h-auto relative">
-                <Icon name="mdi:bell-ring-outline" :uncheckedNotificationCount="uncheckedNotificationsCount"
+                <Icon name="mdi:bell-ring-outline" :uncheckedNotificationCount="notificationStore.uncheckedNotificationsCount"
                       class="relative inline-flex items-center text-2rem text-black hover:text-gray-500"/>
-                <div v-if="uncheckedNotificationsCount"
+                <div v-if="notificationStore.uncheckedNotificationsCount"
                      class="absolute -right-4 -top-4 inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full dark:border-gray-900">
-                  {{ uncheckedNotificationsCount }}
+                  {{ notificationStore.uncheckedNotificationsCount }}
                 </div>
               </div>
             </NuxtLink>
@@ -78,7 +72,7 @@ onMounted(() => {
 
           <li class="color-black p-4 md:mx-1rem text-lg hover:text-gray-500">
             <NuxtLink to="/logout">
-              <Icon name="mdi:logout" class="text-2rem"/>
+              <Icon name="mdi:logout" class="text-2rem" />
             </NuxtLink>
           </li>
         </div>
@@ -93,6 +87,7 @@ onMounted(() => {
       </ul>
     </nav>
   </header>
+
   <slide-menu class=""/>
   <section class="min-h-screen flex flex-col">
     <nuxt-page/>
