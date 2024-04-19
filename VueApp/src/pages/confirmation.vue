@@ -74,7 +74,9 @@ const totalSum = calculateTotalOrderCost()
 //   },
 // }
 
+const confirmPurchase = ref(false)
 const buyProduct = async () => {
+  confirmPurchase.value = true
   await $fetchAPI('/api/orders', {
     method: 'POST',
     body: order,
@@ -83,7 +85,7 @@ const buyProduct = async () => {
     cartStore.clearCart()
   }).catch(err => console.error(err.data))
   const router = useRouter()
-  await router.push('/board')
+  await router.push('/shopping-compleated')
 }
 
 
@@ -130,6 +132,7 @@ const buyProduct = async () => {
 </script>
 
 <template>
+  <UProgress animation="carousel" v-if="confirmPurchase"/>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png" alt="BuyLify"/>

@@ -16,8 +16,6 @@ const props = defineProps<CloseProduct>()
 
 
 const product = productStore.product;
-const route = useRoute()
-// const isFollowedProducts = route.path.includes('/followed-products')
 const isFollowedProducts = followedProductsStore.followedProducts.some(element => element.id === product?.id)
 const ifFollowed = ref(isFollowedProducts)
 
