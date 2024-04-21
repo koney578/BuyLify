@@ -10,6 +10,8 @@ import com.buylify.buylifyapp.opinion.OpinionRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.sql.Date;
@@ -50,17 +52,16 @@ public class ProductService {
         productRepository.save(product);
     }
 
-    public List<ProductDto> getAllProducts(Long categoryId, String name, Float minPrice, Float maxPrice) {
-        return productRepository.findProductsFiltered(categoryId, name, minPrice, maxPrice, 0)
-                .stream()
-                .map(product -> {
-                    ProductDto productDto = mapper.toProductDto(product);
+    public Page<ProductDto> getAllProducts(Long categoryId, String name, Float minPrice, Float maxPrice, Integer page, Integer size) {
+        PageRequest pageRequest = PageRequest.of(page, size);
+        Page<Product> products = productRepository.findProductsFiltered(categoryId, name, minPrice, maxPrice, 0, pageRequest);
+        return products.map(product -> {
+            ProductDto productDto = mapper.toProductDto(product);
 
-                    Float averageUserStars = opinionRepository.getUserAverageStars(product.getUser().getId());
-                    productDto.getUser().setAverageStars(averageUserStars);
-                    return productDto;
-                })
-                .toList();
+            Float averageUserStars = opinionRepository.getUserAverageStars(product.getUser().getId());
+            productDto.getUser().setAverageStars(averageUserStars);
+            return productDto;
+        });
     }
 
     public ProductDto getProductById(Long id) {
