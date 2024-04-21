@@ -1,5 +1,7 @@
 package com.buylify.buylifyapp.product;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,10 +21,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
             "AND (:maxPrice IS NULL OR p.price <= :maxPrice) " +
             "AND (:name IS NULL OR LOWER(p.name) LIKE LOWER(CONCAT('%', :name, '%'))) " +
             "AND p.count > :count AND p.isActive = true ")
-    List<Product> findProductsFiltered(@Param("categoryId") Long categoryId,
+    Page<Product> findProductsFiltered(@Param("categoryId") Long categoryId,
                                        @Param("name") String name,
                                        @Param("minPrice") Float minPrice,
                                        @Param("maxPrice") Float maxPrice,
-                                       @Param("count") Integer count);
+                                       @Param("count") Integer count,
+                                       Pageable pageable);
 
 }
