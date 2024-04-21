@@ -3,6 +3,7 @@ package com.buylify.buylifyapp.product;
 import com.buylify.buylifyapp.firebase.FirebaseFileService;
 import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
@@ -29,13 +30,15 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<ProductDto> getAllProducts(
+    public Page<ProductDto> getAllProducts(
             @RequestParam(value = "category", required = false) Long categoryId,
             @RequestParam(value = "name", required = false) String name,
             @RequestParam(value = "minPrice", required = false) Float minPrice,
-            @RequestParam(value = "maxPrice", required = false) Float maxPrice
+            @RequestParam(value = "maxPrice", required = false) Float maxPrice,
+            @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
+            @RequestParam(value = "size", required = false, defaultValue = "10") Integer size
     ) {
-        return productService.getAllProducts(categoryId, name, minPrice, maxPrice);
+        return productService.getAllProducts(categoryId, name, minPrice, maxPrice, page, size);
     }
 
     @GetMapping("/{id}")
