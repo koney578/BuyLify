@@ -24,14 +24,14 @@ public class AuctionService {
 
     private final AuctionMapper mapper;
 
-    public void addAction(CreateAuctionDto post, Long userId) {
+    public void addAction(CreateAuctionDto post, String fileName, Long userId) {
         Auction auction = mapper.toEntity(post);
-        // String imageUrl = IMAGE_PREFIX + fileName + MEDIA_PARAM + fileName;
+        String imageUrl = IMAGE_PREFIX + fileName + MEDIA_PARAM + fileName;
 
         Category category = categoryRepository.getReferenceById(post.getCategoryId());
         User owner = userRepository.getReferenceById(userId);
 
-        // auction.setPhoto(imageUrl);
+        auction.setPhoto(imageUrl);
         auction.setCategory(category);
         auction.setCurrentPrice(auction.getStartPrice());
         auction.setActive(true);
