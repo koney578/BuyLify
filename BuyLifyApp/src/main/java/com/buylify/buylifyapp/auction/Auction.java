@@ -32,9 +32,6 @@ public class Auction {
     private float currentPrice;
 
     @NotNull
-    private int count;
-
-    @NotNull
     private String description;
 
     private String photo;
