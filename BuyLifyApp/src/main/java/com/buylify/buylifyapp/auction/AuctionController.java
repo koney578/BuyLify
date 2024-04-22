@@ -5,6 +5,7 @@ import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
@@ -19,12 +20,11 @@ public class AuctionController {
 
     @PostMapping
     public void addAuction(@RequestBody CreateAuctionDto post,
-                           // @RequestPart("file") MultipartFile file,
+                           @RequestPart("file") MultipartFile file,
                            Authentication authentication) throws IOException {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
-        // String fileName = firebaseFileService.saveTest(file);
-        // auctionService.addAction(post, fileName, userId);
-        auctionService.addAction(post, userId);
+        String fileName = firebaseFileService.saveTest(file);
+        auctionService.addAction(post, fileName, userId);
     }
 
     @GetMapping
