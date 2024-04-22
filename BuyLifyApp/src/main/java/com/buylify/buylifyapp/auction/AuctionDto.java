@@ -14,7 +14,6 @@ public class AuctionDto {
     private String name;
     private float startPrice;
     private float currentPrice;
-    private int count;
     private String description;
     private String photo;
     private Category category;

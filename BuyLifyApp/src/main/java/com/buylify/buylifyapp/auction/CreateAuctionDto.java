@@ -15,9 +15,6 @@ public class CreateAuctionDto {
     private float startPrice;
 
     @NotNull
-    private int count;
-
-    @NotNull
     private String description;
 
     @NotNull
