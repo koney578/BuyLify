@@ -7,6 +7,9 @@ export const useBoardProductsStore = defineStore("boardProducts", () => {
     const minPrice = ref('')
     const maxPrice = ref('')
     const name = ref('')
+    const page = ref(1)
+    const size = ref(1)
+    const totalElements = ref(0)
 
     const fetchBoardProducts = async () => {
         const {data: filteredProducts} = await useFetchAPI<Product[]>('/api/products', {
@@ -15,11 +18,14 @@ export const useBoardProductsStore = defineStore("boardProducts", () => {
                 category: category.value,
                 minPrice: minPrice.value,
                 maxPrice: maxPrice.value,
-                name: name.value
-            }
+                name: name.value,
+                page: page.value,
+                size: size.value
+            },
         });
         if (filteredProducts.value) {
-            boardProducts.value = filteredProducts.value
+            totalElements.value = filteredProducts.value.totalElements
+            boardProducts.value = filteredProducts.value.content
         }
 
     }
@@ -31,7 +37,10 @@ export const useBoardProductsStore = defineStore("boardProducts", () => {
         fetchBoardProducts,
         minPrice,
         maxPrice,
-        name
+        name,
+        page,
+        size,
+        totalElements
     }
 
 });

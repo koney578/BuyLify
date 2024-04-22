@@ -25,7 +25,6 @@ const {data: auctions} = await useFetchAPI<Auction[]>('/api/auctions', {
                     :category="auction.category"
                     :description="auction.description"
                     :owner="auction.owner"
-                    :count="auction.count"
                     :end-date="auction.endDate"
                     :last-bid-date="auction.lastBidDate"
                     :start-price="auction.startPrice"

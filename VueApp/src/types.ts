@@ -122,7 +122,6 @@ export interface Auction {
     name: string;
     startPrice: number;
     currentPrice: number;
-    count: number; // TODO USUNAC!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     description: string;
     photo: string;
     category: Category;
@@ -130,5 +129,5 @@ export interface Auction {
     winner: User | null;
     createdAt: string;
     endDate: string;
-    lastBidDate: string;
+    lastBidDate: string | null;
 }
