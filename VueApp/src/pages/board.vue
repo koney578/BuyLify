@@ -25,10 +25,10 @@ const closeProductDetails = () => {
 }
 
 const page = ref(1)
-const items = ref(Array(55))
 
 watchEffect(() => {
-  console.log(page.value)
+  boardProductStore.page = page.value
+  boardProductStore.fetchBoardProducts()
 })
 
 </script>
@@ -57,7 +57,7 @@ watchEffect(() => {
       />
     </div>
     <div class="mx-auto mt-5%">
-      <UPagination v-model="page" :page-count="5" :total="items.length" />
+      <UPagination v-model="page" :page-count="boardProductStore.size" :total="boardProductStore.totalElements" />
     </div>
   </div>
 </template>

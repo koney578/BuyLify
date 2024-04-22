@@ -40,8 +40,6 @@ for (let item of cartStore.sellerState) {
   order.orderInfo.push(<OrderInfo>newItem)
 }
 
-console.log(order)
-
 const calculateTotalOrderCost = (): number => {
   let sum = 0;
   for (let item of cartStore.cartState) {
@@ -51,30 +49,8 @@ const calculateTotalOrderCost = (): number => {
 }
 
 const totalSum = calculateTotalOrderCost()
-
-
-// const methods = orderStore.methods
-// const address = orderStore.address
-//
-// const order = {
-//   idPaymentMethod: methods?.idPaymentMethod,
-//   idDeliveryMethod: methods?.idDeliveryMethod,
-//   idProduct: methods?.idProduct,
-//   productQuantity: methods?.productQuantity,
-//   address: {
-//     name: address?.name,
-//     surname: address?.surname,
-//     phoneNumber: address?.phoneNumber,
-//     email: address?.email,
-//     country: address?.country,
-//     city: address?.city,
-//     street: address?.street,
-//     houseUnitNumber: address?.houseUnitNumber,
-//     postalCode: address?.postalCode,
-//   },
-// }
-
 const confirmPurchase = ref(false)
+
 const buyProduct = async () => {
   confirmPurchase.value = true
   await $fetchAPI('/api/orders', {
@@ -87,48 +63,6 @@ const buyProduct = async () => {
   const router = useRouter()
   await router.push('/shopping-compleated')
 }
-
-
-// const formattedTime = ref('loading ...')
-//
-// const calculateAuctionTime = () => { // TODO wykorzystac przy robieniu aukcji od nowa
-//   if (product?.auctionEndsAt) {
-//     const auctionEndTime = Date.parse(product.auctionEndsAt); // Parsowanie daty z product.auctionEndsAt
-//     const currentTime = Date.now(); // Aktualny czas w milisekundach
-//     const auctionTime = auctionEndTime - currentTime;
-//     if (auctionTime < 0) {
-//       return "Aukcja zakończona"
-//     }
-//     return formatTimeDifference(auctionTime);
-//   }
-//   return 0;
-// }
-//
-// const formatTimeDifference = (milliseconds: number) => {
-//   const seconds = Math.floor(milliseconds / 1000);
-//   const minutes = Math.floor(seconds / 60);
-//   const hours = Math.floor(minutes / 60);
-//   const days = Math.floor(hours / 24);
-//
-//   const remainingHours = hours % 24;
-//   const remainingMinutes = minutes % 60;
-//   const remainingSeconds = seconds % 60;
-//
-//   formattedTime.value = `${days}d ${remainingHours}h ${remainingMinutes}m ${remainingSeconds}s`;
-//   return formattedTime;
-// };
-//
-// onMounted(() => {
-//   calculateAuctionTime();
-//
-//   const intervalId = setInterval(() => {
-//     calculateAuctionTime();
-//   }, 1000);
-//
-//   onUnmounted(() => {
-//     clearInterval(intervalId);
-//   });
-// });
 </script>
 
 <template>
