@@ -53,6 +53,9 @@ public class ProductService {
     }
 
     public Page<ProductDto> getAllProducts(Long categoryId, String name, Float minPrice, Float maxPrice, Integer page, Integer size) {
+        if (page > 0) {
+            page--;
+        }
         PageRequest pageRequest = PageRequest.of(page, size);
         Page<Product> products = productRepository.findProductsFiltered(categoryId, name, minPrice, maxPrice, 0, pageRequest);
         return products.map(product -> {
