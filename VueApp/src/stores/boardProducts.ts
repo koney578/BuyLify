@@ -8,7 +8,7 @@ export const useBoardProductsStore = defineStore("boardProducts", () => {
     const maxPrice = ref('')
     const name = ref('')
     const page = ref(1)
-    const size = ref(1)
+    const size = ref(1) // elements on page
     const totalElements = ref(0)
 
     const fetchBoardProducts = async () => {
