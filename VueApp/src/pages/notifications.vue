@@ -1,14 +1,6 @@
 <script setup lang="ts">
-// import type { Notification } from "~/types"
-// const auth = useAuthStore()
-// const {data: notifications} = await useFetchAPI<Notification[]>('/api/notifications', {
-//   headers: {Authorization: 'Bearer ' + auth.token}
-// });
-
 const notificationStore = useNotificationStore()
 notificationStore.fetchNotifications()
-
-
 </script>
 
 <template>
@@ -28,6 +20,4 @@ notificationStore.fetchNotifications()
       />
     </div>
   </div>
-
-
 </template>
