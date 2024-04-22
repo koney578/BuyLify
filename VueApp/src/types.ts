@@ -116,3 +116,18 @@ export interface CartStoreState {
     cartState: CartItem[];
     sellerState: SellerItem[];
 }
+
+export interface Auction {
+    id: number;
+    name: string;
+    startPrice: number;
+    currentPrice: number;
+    description: string;
+    photo: string;
+    category: Category;
+    owner: User;
+    winner: User | null;
+    createdAt: string;
+    endDate: string;
+    lastBidDate: string | null;
+}
