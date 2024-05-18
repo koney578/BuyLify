@@ -50,6 +50,13 @@ onMounted(() => {
         <div class="flex mt-2rem justify-between">
           <p class="text-xl italic mr-1rem">{{ props.description }}</p>
         </div>
+
+        <button type="button"
+                class="inline-flex w-full justify-center rounded-md bg-indigo-600 mt-1rem px-12 py-4 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 sm:w-auto"
+                @click="">Przejdź do aukcji
+        </button>
+
+
       </div>
     </div>
   </div>
