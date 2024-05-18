@@ -80,7 +80,7 @@ const editProduct = async () => {
   }).catch(err => console.error(err.data))
 
   const router = useRouter()
-  await router.push('/my-profile/sales')
+  await router.push('/my/sales')
 }
 
 const deleteProduct = async () => {
@@ -89,7 +89,7 @@ const deleteProduct = async () => {
     method: 'PUT',
     headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
-    router.push('/my-profile/sales')
+    router.push('/my/sales')
   }).catch(err => console.error(err.data))
 
 }
@@ -244,7 +244,7 @@ const deleteButtonClicked = () => {
                   Chcesz porzucić edycję?
                   {{ ' ' }}
                   <NuxtLink
-                      to="/my-profile/sales" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij
+                      to="/my/sales" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij
                     tutaj
                     by wrócić!
                   </NuxtLink>
