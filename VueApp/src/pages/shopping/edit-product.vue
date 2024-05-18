@@ -80,7 +80,7 @@ const editProduct = async () => {
   }).catch(err => console.error(err.data))
 
   const router = useRouter()
-  await router.push('/my-sales')
+  await router.push('/my-profile/sales')
 }
 
 const deleteProduct = async () => {
@@ -89,7 +89,7 @@ const deleteProduct = async () => {
     method: 'PUT',
     headers: {Authorization: 'Bearer ' + auth.token}
   }).then(() => {
-    router.push('/my-sales')
+    router.push('/my-profile/sales')
   }).catch(err => console.error(err.data))
 
 }
@@ -103,7 +103,7 @@ const deleteButtonClicked = () => {
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png" alt="BuyLify"/>
+      <img class="mx-auto h-auto w-1/2" src="~/images/logo-text.png" alt="BuyLify"/>
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Możesz edytować swoje
         ogłoszenie.</h1>
     </div>
@@ -244,7 +244,7 @@ const deleteButtonClicked = () => {
                   Chcesz porzucić edycję?
                   {{ ' ' }}
                   <NuxtLink
-                      to="/my-sales" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij
+                      to="/my-profile/sales" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij
                     tutaj
                     by wrócić!
                   </NuxtLink>

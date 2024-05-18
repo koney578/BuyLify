@@ -16,7 +16,7 @@ const resetPassword = async () => {
     method: 'POST',
     body: email.value
   }).catch(err => console.error(err.data))
-  await router.push('/login')
+  await router.push('/auth/login')
 }
 </script>
 
@@ -24,13 +24,13 @@ const resetPassword = async () => {
 
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png"
+      <img class="mx-auto h-auto w-1/2" src="../../images/logo-text.png"
            alt="BuyLify"/>
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Zresetuj hasło</h1>
     </div>
 
     <div class="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-      <form @submit.prevent="reset" class="space-y-6" action="" method="POST">
+      <form @submit.prevent="resetPassword" class="space-y-6" action="" method="POST">
         <div>
           <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Adres email</label>
           <div class="mt-2">
@@ -49,12 +49,12 @@ const resetPassword = async () => {
       <p class="mt-10 text-center text-sm text-gray-500">
         Przypomniałeś sobie hasło?
         {{ ' ' }}
-        <NuxtLink to="/login" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zaloguj się</NuxtLink>
+        <NuxtLink to="/auth/login" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zaloguj się</NuxtLink>
       </p>
       <p class="mt-10 text-center text-sm text-gray-500">
         Nie masz Konta?
         {{ ' ' }}
-        <NuxtLink to="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Załóż konto</NuxtLink>
+        <NuxtLink to="/auth/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Załóż konto</NuxtLink>
       </p>
     </div>
   </div>

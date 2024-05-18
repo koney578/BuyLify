@@ -33,7 +33,7 @@ const addAddress = () => {
 
   orderStore.address = address
   const router = useRouter()
-  router.push('/confirmation')
+  router.push('/shopping/confirmation')
 }
 
 </script>
