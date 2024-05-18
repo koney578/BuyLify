@@ -3,12 +3,14 @@ package com.buylify.buylifyapp.auction;
 import com.buylify.buylifyapp.firebase.FirebaseFileService;
 import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/auctions")
@@ -25,6 +27,12 @@ public class AuctionController {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         String fileName = firebaseFileService.saveTest(file);
         auctionService.addAction(post, fileName, userId);
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<AuctionDto> getAuction(@PathVariable Long id) {
+        Optional<AuctionDto> auctionDto = auctionService.getAuction(id);
+        return ResponseEntity.of(auctionDto);
     }
 
     @GetMapping
