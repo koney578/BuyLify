@@ -91,7 +91,7 @@ onMounted(() => {
 
   <slide-menu class=""/>
   <section class="min-h-screen flex flex-col">
-    <nuxt-page/>
+    <NuxtPage />
   </section>
   <footer class="bg-gray-50 p-2rem shadow-2xl">
     <!--    <p class="color-black">bla bla bla</p>-->
