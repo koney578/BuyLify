@@ -57,7 +57,7 @@ const filterPosts = async () => {
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
       <form @submit.prevent="filterPosts" class="space-y-6" action="#" method="POST">
         <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png" alt="BuyLify"/>
+          <text-logo />
           <label for="name" class="">
             <input v-model="searchRestriction.filterName"
                    id="name"
