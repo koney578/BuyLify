@@ -44,10 +44,10 @@ const auth = useAuthStore();
                           <NuxtLink to="/shopping/followed-products">Zapisane</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-                          <NuxtLink to="/my-profile/purchases">Kupione</NuxtLink>
+                          <NuxtLink to="/my/purchases">Kupione</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
-                          <NuxtLink to="/my-profile/sales">Wystawione</NuxtLink>
+                          <NuxtLink to="/my/sales">Wystawione</NuxtLink>
                         </li>
                       </div>
 
