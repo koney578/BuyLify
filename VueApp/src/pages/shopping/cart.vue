@@ -9,7 +9,7 @@ cartStore.sortCartByUserId()
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
 
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png" alt="BuyLify"/>
+      <img class="mx-auto h-auto w-1/2" src="../../images/logo-text.png" alt="BuyLify"/>
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Mój koszyk</h1>
     </div>
 
@@ -21,7 +21,7 @@ cartStore.sortCartByUserId()
 
     <div class="w-1/3 mx-auto mt-1rem">
       <div v-if="cartStore.cartState.length">
-        <NuxtLink to="/buy-product">
+        <NuxtLink to="/shopping/purchase">
           <button type="submit"
                   class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
             Kup teraz

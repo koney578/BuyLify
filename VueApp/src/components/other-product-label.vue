@@ -7,7 +7,7 @@
     Chcesz wybrać coś innego?
     {{ ' ' }}
     <NuxtLink
-        to="/board" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij tutaj by wrócić!
+        to="/shopping" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij tutaj by wrócić!
     </NuxtLink>
   </p>
 </template>
