@@ -63,7 +63,7 @@ const login = async () => {
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png" alt="BuyLify"/>
+      <img class="mx-auto h-auto w-1/2" src="../../images/logo-text.png" alt="BuyLify"/>
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Zaloguj się</h1>
     </div>
 
@@ -81,7 +81,7 @@ const login = async () => {
           <div class="flex items-center justify-between">
             <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Hasło</label>
             <div class="text-sm">
-              <NuxtLink to="/reset-password" class="font-semibold text-indigo-600 hover:text-indigo-500">
+              <NuxtLink to="/auth/reset-password" class="font-semibold text-indigo-600 hover:text-indigo-500">
                 Zapomniałeś hasła?
               </NuxtLink>
             </div>
@@ -111,7 +111,7 @@ const login = async () => {
         Nie masz konta?
         {{ ' ' }}
         <NuxtLink
-            to="/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zarejestruj się
+            to="/auth/register" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zarejestruj się
         </NuxtLink>
       </p>
     </div>

@@ -32,31 +32,31 @@ const auth = useAuthStore();
                       </li>
                       <div v-if="auth.isLoggedIn">
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-                          <NuxtLink to="/product-add">Dodaj ogłoszenie</NuxtLink>
+                          <NuxtLink to="/shopping/new">Dodaj ogłoszenie</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
-                          <NuxtLink to="/board">Tablica ogłoszeń</NuxtLink>
+                          <NuxtLink to="/shopping">Tablica ogłoszeń</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
                           <NuxtLink to="/auctions">Aukcje</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-                          <NuxtLink to="/followed-products">Zapisane</NuxtLink>
+                          <NuxtLink to="/shopping/followed-products">Zapisane</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-                          <NuxtLink to="/my-purchases">Kupione</NuxtLink>
+                          <NuxtLink to="/my-profile/purchases">Kupione</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
-                          <NuxtLink to="/my-sales">Wystawione</NuxtLink>
+                          <NuxtLink to="/my-profile/sales">Wystawione</NuxtLink>
                         </li>
                       </div>
 
                       <div v-else>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-                          <NuxtLink to="/login">Zaloguj się</NuxtLink>
+                          <NuxtLink to="/auth/login">Zaloguj się</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-                          <NuxtLink to="/register">Załóż Konto</NuxtLink>
+                          <NuxtLink to="/auth/register">Załóż Konto</NuxtLink>
                         </li>
                       </div>
                     </ul>
