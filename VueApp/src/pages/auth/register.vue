@@ -120,7 +120,7 @@ const register = async () => {
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png"
+      <img class="mx-auto h-auto w-1/2" src="../../images/logo-text.png"
            alt="BuyLify"/>
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Zarejestruj się</h1>
     </div>
@@ -188,7 +188,7 @@ const register = async () => {
       <p class="mt-10 text-center text-sm text-gray-500">
         Posiadasz konto?
         {{ ' ' }}
-        <NuxtLink to="/login" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zaloguj się</NuxtLink>
+        <NuxtLink to="/auth/login" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Zaloguj się</NuxtLink>
       </p>
     </div>
   </div>

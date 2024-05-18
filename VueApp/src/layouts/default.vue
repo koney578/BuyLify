@@ -39,7 +39,7 @@ onMounted(() => {
       <ul class="ml-auto flex">
         <div v-if="auth.isLoggedIn" class="flex">
           <li class="color-black p-4 md:mx-1rem text-lg hover:text-gray-500">
-            <NuxtLink to="/cart">
+            <NuxtLink to="/shopping/cart">
               <div class="w-full h-auto relative">
                 <Icon name="ic:outline-shopping-cart-checkout" :uncheckedNotificationCount="notificationStore.uncheckedNotificationsCount"
                       class="relative inline-flex items-center text-2rem text-black hover:text-gray-500"/>
@@ -52,7 +52,7 @@ onMounted(() => {
           </li>
 
           <li class="color-black p-4 md:mx-1rem text-lg hover:text-gray-500">
-            <NuxtLink to="/notifications">
+            <NuxtLink to="/my-profile/notifications">
               <div class="w-full h-auto relative">
                 <Icon name="mdi:bell-ring-outline" :uncheckedNotificationCount="notificationStore.uncheckedNotificationsCount"
                       class="relative inline-flex items-center text-2rem text-black hover:text-gray-500"/>
@@ -65,13 +65,13 @@ onMounted(() => {
           </li>
 
           <li class="color-black p-4 md:mx-1rem text-lg hover:text-gray-500">
-            <NuxtLink to="/profile">
+            <NuxtLink to="/my-profile">
               <Icon name="mdi:account-settings-variant" class="text-2rem"/>
             </NuxtLink>
           </li>
 
           <li class="color-black p-4 md:mx-1rem text-lg hover:text-gray-500">
-            <NuxtLink to="/logout">
+            <NuxtLink to="/auth/logout">
               <Icon name="mdi:logout" class="text-2rem" />
             </NuxtLink>
           </li>

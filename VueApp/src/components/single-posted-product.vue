@@ -20,7 +20,7 @@ const router = useRouter()
 
 const editProduct = () => {
   editProductStore.setEditProduct(props)
-  router.push('/edit-product')
+  router.push('/shopping/edit-product')
 }
 </script>
 

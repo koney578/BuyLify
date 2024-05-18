@@ -12,7 +12,7 @@ const {data: auctions} = await useFetchAPI<Auction[]>('/api/auctions', {
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
 
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <img class="mx-auto h-auto w-1/2" src="../images/logo-text.png" alt="BuyLify"/>
+      <img class="mx-auto h-auto w-1/2" src="../../images/logo-text.png" alt="BuyLify"/>
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Aukcje</h1>
     </div>
     <single-auction v-for="auction in auctions"
