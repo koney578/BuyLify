@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Auction } from "~/types"
+import type {Auction} from "~/types"
 import {calculateAuctionTime, calculateAuctionTimeExpired} from "~/utils";
 
 const props = defineProps<Auction>()
@@ -17,6 +17,11 @@ onMounted(() => {
     clearInterval(intervalId);
   });
 });
+
+const routeToAuction = () => {
+  const router = useRouter()
+  router.push(`/auctions/${props.id}`)
+}
 </script>
 
 <template>
@@ -35,16 +40,19 @@ onMounted(() => {
         </div>
         <div class="flex mt-2rem justify-between">
           <p class="text-xl italic mr-1rem">Aktualna cena: {{ props.currentPrice || props.startPrice }} zł</p>
-          <p>Koniec aukcji: {{ formattedDate || 'Loading . . .'}}</p>
+          <p>Do końca aukcji: {{ formattedDate || 'Loading . . .' }}</p>
         </div>
         <div class="flex mt-2rem justify-between">
           <p class="text-xl italic mr-1rem">Kategoria aukcji: {{ props.category.name }}</p>
-          <p>Aukcjoner: {{ props.owner.username}}</p>
+          <p>Aukcjoner: {{ props.owner.username }}</p>
         </div>
         <div class="flex mt-2rem justify-between">
-          <p class="text-xl italic mr-1rem" v-if="calculateAuctionTimeExpired(props.endDate) > 0 && props.winner?.id">W aukcji prowadzi: {{ props.winner?.username }}</p>
-          <p class="text-xl italic mr-1rem" v-else-if="calculateAuctionTimeExpired(props.endDate) > 0">Nikt nie licytuje tej aukcji, bądź pierwszy!</p>
-          <p class="text-xl italic mr-1rem" v-else-if="props.winner?.id">Aukcje wygrał: {{ props.winner?.username }} !</p>
+          <p class="text-xl italic mr-1rem" v-if="calculateAuctionTimeExpired(props.endDate) > 0 && props.winner?.id">W
+            aukcji prowadzi: {{ props.winner?.username }}</p>
+          <p class="text-xl italic mr-1rem" v-else-if="calculateAuctionTimeExpired(props.endDate) > 0">Nikt nie licytuje
+            tej aukcji, bądź pierwszy!</p>
+          <p class="text-xl italic mr-1rem" v-else-if="props.winner?.id">Aukcje wygrał: {{ props.winner?.username }}
+            !</p>
           <p class="text-xl italic mr-1rem" v-else>Aukcja Zakończona, nie wyłoniono zwycięzcy!</p>
         </div>
         <div class="flex mt-2rem justify-between">
@@ -52,8 +60,9 @@ onMounted(() => {
         </div>
 
         <button type="button"
-                class="inline-flex w-full justify-center rounded-md bg-indigo-600 mt-1rem px-12 py-4 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 sm:w-auto"
-                @click="">Przejdź do aukcji
+                @click="routeToAuction"
+                class="inline-flex w-full justify-center rounded-md bg-indigo-600 mt-1rem px-12 py-4 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 sm:w-auto">
+          Przejdź do aukcji
         </button>
 
 
