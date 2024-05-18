@@ -53,7 +53,7 @@ onMounted(() => {
           </li>
 
           <li class="color-black p-4 md:mx-1rem text-lg hover:text-gray-500">
-            <NuxtLink to="/profile/notifications">
+            <NuxtLink to="/my/notifications">
               <div class="w-full h-auto relative">
                 <Icon name="mdi:bell-ring-outline" :uncheckedNotificationCount="notificationStore.uncheckedNotificationsCount"
                       class="relative inline-flex items-center text-2rem text-black hover:text-gray-500"/>
@@ -66,7 +66,7 @@ onMounted(() => {
           </li>
 
           <li class="color-black p-4 md:mx-1rem text-lg hover:text-gray-500">
-            <NuxtLink to="/profile">
+            <NuxtLink to="/my/profile">
               <Icon name="mdi:account-settings-variant" class="text-2rem"/>
             </NuxtLink>
           </li>
