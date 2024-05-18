@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 const auth = useAuthStore()
 const menuStore = useSlideMenuStore()
 const cartStore = useCartStore()
@@ -33,7 +34,7 @@ onMounted(() => {
   <header class="bg-white p-4 shadow-2xl relative z-[1000]">
     <nav class="items-center flex">
       <NuxtLink to="/">
-        <img src="../images/logo.png" alt="logo" class="color-fuchsia w-16"/>
+        <logo />
       </NuxtLink>
 
       <ul class="ml-auto flex">
