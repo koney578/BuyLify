@@ -21,7 +21,7 @@ public class AuctionController {
     private final FirebaseFileService firebaseFileService;
 
     @PostMapping
-    public void addAuction(@RequestBody CreateAuctionDto post,
+    public void addAuction(@RequestPart CreateAuctionDto post,
                            @RequestPart("file") MultipartFile file,
                            Authentication authentication) throws IOException {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
