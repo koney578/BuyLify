@@ -24,4 +24,7 @@ export default defineNuxtConfig({
             'acceptHMRUpdate',
         ]
     },
+    build: {
+        transpile: ['@vuepic/vue-datepicker']
+    }
 })

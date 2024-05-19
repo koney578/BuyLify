@@ -4,19 +4,7 @@ import {Listbox, ListboxButton, ListboxLabel, ListboxOption, ListboxOptions} fro
 import {CheckIcon, ChevronUpDownIcon} from "@heroicons/vue/20/solid";
 
 const auth = useAuthStore()
-const router = useRouter()
 
-if (auth.user.roles) {
-  const adminRole = { authority: "administrator" }
-  const ifAdmin = auth.user.roles.some((item: { authority: string; }) => item.authority === adminRole.authority)
-
-  if (!ifAdmin) {
-    router.push('/')
-  }
-}
-else {
-  router.push('/')
-}
 
 interface notificationType {
   id: number;
