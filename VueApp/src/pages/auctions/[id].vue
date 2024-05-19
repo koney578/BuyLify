@@ -4,10 +4,6 @@ import {calculateAuctionTime, calculateAuctionTimeExpired, formatDateTime} from 
 import {$fetchAPI} from "~/composables/$fetchApi";
 
 const auth = useAuthStore()
-if (!auth.isLoggedIn) {
-  const router = useRouter()
-  router.push('/')
-}
 const route = useRoute()
 
 const {data: auction} = await useFetchAPI<Auction>('/api/auctions/' + route.params.id, {
@@ -91,7 +87,9 @@ onMounted(() => {
 
           <div class="flex mt-1rem justify-between">
             <p class="text-xl italic mr-1rem font-bold text-amber-600"
-               v-if="calculateAuctionTimeExpired(auction?.endDate || '') > 0 && auction?.winner?.id">W
+               v-if="calculateAuctionTimeExpired(auction?.endDate || '') > 0 && auction?.winner?.username === auth.user.username">Prowadzisz w tej aukcji!</p>
+            <p class="text-xl italic mr-1rem font-bold text-amber-600"
+               v-else-if="calculateAuctionTimeExpired(auction?.endDate || '') > 0 && auction?.winner?.id">W
               aukcji prowadzi: {{ auction.winner?.username }}</p>
             <p class="text-xl italic mr-1rem font-bold text-amber-600"
                v-else-if="calculateAuctionTimeExpired(auction?.endDate || '') > 0">Nikt nie licytuje
@@ -100,13 +98,13 @@ onMounted(() => {
               {{ auction?.winner?.username }} !</p>
             <p class="text-xl italic mr-1rem font-bold text-amber-600" v-else>Aukcja Zakończona, nie wyłoniono
               zwycięzcy!</p>
-            <div class="text-xl flex ml-2rem">Ostatnie podbicie: <p class="italic ml-1">
-              {{ formatDateTime(auction?.lastBidDate || '') }}</p></div>
+            <p class="text-xl font-bold">Do końca aukcji: {{ formattedDate || 'Loading . . .' }}</p>
           </div>
 
           <div class="flex mt-1rem justify-between">
             <div/>
-            <p class="text-xl font-bold">Do końca aukcji: {{ formattedDate || 'Loading . . .' }}</p>
+            <div v-if="auction?.lastBidDate" class="text-xl flex ml-2rem">Ostatnie podbicie: <p class="italic ml-1">
+              {{ formatDateTime(auction?.lastBidDate || '') }}</p></div>
           </div>
 
           <div class="flex mt-2rem mb-3rem justify-between">
