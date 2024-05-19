@@ -3,7 +3,7 @@ const auth = useAuthStore()
 
 const user = reactive({
   username: '',
-  // description: '',  TODO obecnie user nie posiada opisu, mozna dodac w przyszlosci, bo jest juz template
+  // description: '',  TODO nie zaimplementowane na backendzie
   name: '',
   surname: '',
   email: '',
@@ -100,8 +100,6 @@ const editProfile = async () => {
   }).catch(err => console.error(err.data))
 
   await router.push('/')
-
-
 }
 
 </script>
@@ -128,14 +126,14 @@ const editProfile = async () => {
               </div>
             </div>
 
-            <div class="col-span-full">
-              <label for="about" class="block text-sm font-medium leading-6 text-gray-900">Opis</label>
-              <div class="mt-2">
-              <textarea id="about" name="about" rows="3" placeholder="To nie działa, tylko na pokaz, mozna w przyszlosci podłączyć"
-                        class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>
-              </div>
-              <p class="mt-3 text-sm leading-6 text-gray-600">Napisz kilka zdań o sobie.</p>
-            </div>
+<!--            <div class="col-span-full"> TODO nie zaimplementowane na backendzie -->
+<!--              <label for="about" class="block text-sm font-medium leading-6 text-gray-900">Opis</label>-->
+<!--              <div class="mt-2">-->
+<!--              <textarea id="about" name="about" rows="3" placeholder="To nie działa, tylko na pokaz, mozna w przyszlosci podłączyć"-->
+<!--                        class="block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6 bg-white"/>-->
+<!--              </div>-->
+<!--              <p class="mt-3 text-sm leading-6 text-gray-600">Napisz kilka zdań o sobie.</p>-->
+<!--            </div>-->
 
           </div>
         </div>
