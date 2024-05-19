@@ -27,15 +27,18 @@ const auth = useAuthStore();
                   </div>
                   <div class="relative mt-6 flex-1 px-4 sm:px-6">
                     <ul class="items-center w-full">
-                      <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-                        <NuxtLink to="/">Strona Główna</NuxtLink>
-                      </li>
                       <div v-if="auth.isLoggedIn">
+                        <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+                          <NuxtLink to="/">Strona Główna</NuxtLink>
+                        </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
                           <NuxtLink to="/shopping/new">Dodaj ogłoszenie</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
                           <NuxtLink to="/shopping">Tablica ogłoszeń</NuxtLink>
+                        </li>
+                        <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+                          <NuxtLink to="/auctions/new">Dodaj aukcje</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
                           <NuxtLink to="/auctions">Aukcje</NuxtLink>
