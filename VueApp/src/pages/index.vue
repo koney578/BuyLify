@@ -1,13 +1,9 @@
 <script setup lang="ts">
-const toast = useToast()
-
-const actions = ref([{
-  label: 'Action 1',
-  click: () => alert('Action 1 clicked!')
-}, {
-  label: 'Action 2',
-  click: () => alert('Action 2 clicked!')
-}])
+const auth = useAuthStore()
+if (!auth.isLoggedIn) {
+  const router = useRouter()
+  router.push('/auth/login')
+}
 </script>
 
 <template>
