@@ -29,7 +29,5 @@ public class ProductDto {
 
     private UserProductDto user;
 
-    private LocalDateTime auctionEndsAt;
-
 
 }
