@@ -1,3 +1,5 @@
+import type {Order, Product, SortedOrder} from "~/types";
+
 export const formatDateTime = (dateTimeString: string) => {
     const options: Intl.DateTimeFormatOptions = {
         year: 'numeric',
@@ -41,4 +43,25 @@ export const calculateAuctionTimeExpired = (auctionEndsAt: string) => {
         return auctionEndTime - currentTime;
     }
     return 0;
+}
+
+export function sortAndGroupOrders(orders: Order[]): SortedOrder[] {
+    // Sort orders by orderId
+    orders.sort((a, b) => a.orderId - b.orderId);
+
+    // Group orders by orderId
+    const groupedOrders: Record<number, Product[]> = {};
+
+    orders.forEach(order => {
+        if (!groupedOrders[order.orderId]) {
+            groupedOrders[order.orderId] = [];
+        }
+        groupedOrders[order.orderId].push(order.product);
+    });
+
+    // Convert the grouped orders to an array of SortedOrders
+    return Object.keys(groupedOrders).map(orderId => ({
+        orderId: parseInt(orderId, 10),
+        products: groupedOrders[orderId]
+    }));
 }

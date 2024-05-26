@@ -17,13 +17,13 @@ const formatDateTime = (dateTimeString: string) => {
 </script>
 
 <template>
-  <div class="mt-2rem">
-    <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl">
-      <div class="w-full">
+  <div class="mt-2rem w-full">
+    <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl w-full">
+      <div class="w-full flex">
         <img
             :src="props.photo"
             alt="Główne zdjęcie"
-            class=" h-auto w-1/2"
+            class="object-cover h-64 w-64"
         />
       </div>
       <div class="w-full">
