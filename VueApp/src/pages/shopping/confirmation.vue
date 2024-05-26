@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type {Order, OrderProduct, OrderInfo} from "~/types"
+import type {ComplexOrder, OrderProduct, OrderInfo} from "~/types"
 import {$fetchAPI} from "~/composables/$fetchApi";
 const auth = useAuthStore()
 const cartStore = useCartStore()
 const orderStore = useOrderStore()
 
-const order: Order = {
+const order: ComplexOrder = {
   products: [],
   orderInfo: [],
   address: {
