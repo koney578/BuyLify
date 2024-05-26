@@ -39,7 +39,7 @@ export interface OrderInfo {
     idDeliveryMethod: number,
 }
 
-export interface Order {
+export interface ComplexOrder {
     products: OrderProduct[],
     orderInfo: OrderInfo[],
     address: Address | null
@@ -47,7 +47,7 @@ export interface Order {
 
 export interface OpinionModal {
     closeModal: Function;
-    order: Order;
+    order: ComplexOrder;
 }
 
 export interface CloseProduct {
@@ -130,4 +130,14 @@ export interface Auction {
     createdAt: string;
     endDate: string;
     lastBidDate: string | null;
+}
+
+export interface Order {
+    product: Product;
+    orderId: number;
+}
+
+export interface SortedOrder {
+    orderId: number;
+    products: Product[];
 }

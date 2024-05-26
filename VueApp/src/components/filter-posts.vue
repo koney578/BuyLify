@@ -66,7 +66,12 @@ const filterPosts = async () => {
                    class="block bg-white color-black p-1rem max-w-2xl w-full mt-2rem rounded-3xl shadow-2xl"
                    placeholder="Wpisz frazę ...">
           </label>
-          <search-button />
+          <div class="max-w-2xl w-full">
+            <button type="submit"
+                    class="flex justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 mt-0.5rem ml-auto">
+              Wyszukaj
+            </button>
+          </div>
         </div>
         <div class="text-center mt-2">
           <h2 class="block text-sm font-medium leading-6 text-gray-900">Przedział cenowy</h2>

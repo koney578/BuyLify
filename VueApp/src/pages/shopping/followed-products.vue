@@ -65,7 +65,7 @@ const closeProductDetails = () => {
           <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Twoje zapisane produkty</h1>
         </div>
     </div>
-    <div class="sm:mx-auto sm:w-full sm:max-w-3xl">
+    <div class="sm:mx-auto sm:w-full sm:max-w-5xl">
       <single-post v-for="announcement in followedProductsStore.followedProducts || []"
                    :key="announcement.id"
                    :id="announcement.id"
