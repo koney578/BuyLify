@@ -45,9 +45,17 @@ export interface ComplexOrder {
     address: Address | null
 }
 
+// export interface OpinionModal {
+//     closeModal: Function;
+//     order: ComplexOrder;
+// }
+
 export interface OpinionModal {
     closeModal: Function;
-    order: ComplexOrder;
+    userId: number;
+    productId: number;
+    productName: string;
+    stars: number;
 }
 
 export interface CloseProduct {

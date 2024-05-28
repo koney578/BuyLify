@@ -5,11 +5,11 @@ import {$fetchAPI} from "~/composables/$fetchApi";
 
 const props = defineProps<OpinionModal>()
 const auth = useAuthStore()
-const opinion = reactive({
+const opinion = reactive({ // TODO JESLI CHCEMY OCENIAĆ PRODUKT W ZAMOWIENIU A NIE PRODUKT TO TRZEBA PRZESYLAC ORDERID JESZCZE
   description: '',
-  stars: 0,
-  receiverId: props.order.product.user?.id,
-  productId: props.order.product.id
+  stars: props.stars,
+  receiverId: props.userId,
+  productId: props.productId
 })
 
 const setRating = (rating: number) => {
@@ -57,7 +57,7 @@ const addOpinion = async () => {
                   </div>
                   <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
                     <DialogTitle as="h3" class="text-base font-semibold leading-6 text-gray-900">Oceń produkt
-                      {{ props.order.product.name }}
+                      {{ props.productName }}
                     </DialogTitle>
                     <div class="mt-2">
                       <p class="text-sm text-gray-500">Twoja opinia będzie publiczna i widoczna dla sprzedającego i
