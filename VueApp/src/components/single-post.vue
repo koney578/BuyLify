@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { Product } from "~/types"
+import type {Product} from "~/types"
 
 const props = defineProps<Product>()
 
@@ -14,6 +14,19 @@ const formatDateTime = (dateTimeString: string) => {
   const dateTime = new Date(dateTimeString);
   return dateTime.toLocaleString('pl-PL', options);
 };
+
+const isOpinionModalOpen = ref(false)
+
+const showOpinionModal = () => {
+  isOpinionModalOpen.value = true
+}
+
+const closeOrderDetails = () => {
+  isOpinionModalOpen.value = false
+}
+
+const route = useRoute()
+const isMyPurchases = computed(() => route.path.includes('my/purchases'))
 </script>
 
 <template>
@@ -34,7 +47,24 @@ const formatDateTime = (dateTimeString: string) => {
           <p class="text-xl italic mr-1rem">{{ props.price }} zł</p>
           <p>Data dodania: {{ formatDateTime(props.createdAt) }}</p>
         </div>
+
+        <div v-if="isMyPurchases" class="w-full flex mt-2rem justify-center">
+          <button type="submit"
+                  class="w-1/2 justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  @click="showOpinionModal()"
+          >
+            Oceń produkt
+          </button>
+        </div>
       </div>
     </div>
+    <opinion-modal v-if="isOpinionModalOpen"
+                   @close="closeOrderDetails"
+                   :closeModal="closeOrderDetails"
+                   :userId="props.user?.id || 0"
+                   :productId="props.id"
+                   :productName="props.name"
+                   :stars="0"
+    />
   </div>
 </template>
