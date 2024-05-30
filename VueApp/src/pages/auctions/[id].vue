@@ -39,7 +39,7 @@ const bidAuction = async () => {
 
 onMounted(() => {
   formattedDate.value = calculateAuctionTime(auction.value?.endDate || '');
-  if (formattedDate.value === 'Aukcja zakończona') {
+  if (formattedDate.value === 'Aukcja zakończona`') {
     const router = useRouter()
     router.push('/auctions')
   }
