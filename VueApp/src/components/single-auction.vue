@@ -40,11 +40,11 @@ const routeToAuction = () => {
         </div>
         <div class="flex mt-2rem justify-between">
           <p class="text-xl italic mr-1rem">Aktualna cena: {{ props.currentPrice || props.startPrice }} zł</p>
-          <p>Do końca aukcji: {{ formattedDate || 'Loading . . .' }}</p>
+          <p class="text-xl font-bold">Do końca aukcji: {{ formattedDate || 'Loading . . .' }}</p>
         </div>
         <div class="flex mt-2rem justify-between">
           <p class="text-xl italic mr-1rem">Kategoria aukcji: {{ props.category.name }}</p>
-          <p>Aukcjoner: {{ props.owner.username }}</p>
+          <p class="text-xl italic">Aukcjoner: {{ props.owner.username }}</p>
         </div>
         <div class="flex mt-2rem justify-between">
           <p class="text-xl italic mr-1rem" v-if="calculateAuctionTimeExpired(props.endDate) > 0 && props.winner?.id">W
@@ -59,7 +59,8 @@ const routeToAuction = () => {
           <p class="text-xl italic mr-1rem">{{ props.description }}</p>
         </div>
 
-        <button type="button"
+        <button v-if="formattedDate !== 'Aukcja zakończona'"
+                type="button"
                 @click="routeToAuction"
                 class="inline-flex w-full justify-center rounded-md bg-indigo-600 mt-1rem px-12 py-4 text-lg font-semibold text-white shadow-sm hover:bg-indigo-500 sm:w-auto">
           Przejdź do aukcji

@@ -39,6 +39,10 @@ const bidAuction = async () => {
 
 onMounted(() => {
   formattedDate.value = calculateAuctionTime(auction.value?.endDate || '');
+  if (formattedDate.value === 'Aukcja zakończona') {
+    const router = useRouter()
+    router.push('/auctions')
+  }
 
   const intervalId = setInterval(() => {
     formattedDate.value = calculateAuctionTime(auction.value?.endDate || '');
@@ -48,6 +52,9 @@ onMounted(() => {
     clearInterval(intervalId);
   });
 });
+
+
+
 </script>
 
 <template>
