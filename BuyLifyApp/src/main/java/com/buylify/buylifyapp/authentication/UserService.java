@@ -73,4 +73,14 @@ public class UserService {
         user.setUserType(basicUserType);
         userRepository.save(user);
     }
+
+    public void resetPassword(Long userId, ResetPasswordDto resetPasswordDto) {
+        User user = userRepository.findById(userId).orElseThrow();
+        if (passwordEncoder.matches(resetPasswordDto.getOldPassword(), user.getPassword())) {
+            user.setPassword(passwordEncoder.encode(resetPasswordDto.getNewPassword()));
+            userRepository.save(user);
+        } else {
+            throw new RuntimeException("Old password is incorrect");
+        }
+    }
 }
