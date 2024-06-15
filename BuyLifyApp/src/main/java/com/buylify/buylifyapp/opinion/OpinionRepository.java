@@ -23,4 +23,7 @@ public interface OpinionRepository extends JpaRepository<Opinion, Long> {
 
     @Query("SELECT o FROM Opinion o WHERE o.userReceiver.id = :userId")
     List<Opinion> findOpinionsByReceiverId(@Param("userId") Long userId);
+
+    @Query("SELECT o FROM Opinion o WHERE o.product.id = :productId")
+    List<Opinion> findOpinionsByProductId(@Param("productId") Long productId);
 }
