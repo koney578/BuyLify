@@ -34,4 +34,10 @@ public class UserController {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         userService.setBasicUserType(userId);
     }
+
+    @PostMapping("/password-reset")
+    public void resetPassword(@RequestBody @Validated ResetPasswordDto resetPasswordDto, Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        userService.resetPassword(userId, resetPasswordDto);
+    }
 }
