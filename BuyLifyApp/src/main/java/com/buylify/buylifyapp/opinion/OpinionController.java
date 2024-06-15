@@ -35,4 +35,10 @@ public class OpinionController {
     public List<OpinionDto> getOpinionsByUserId(@PathVariable Long userId){
         return opinionService.getOpinionsByUserId(userId);
     }
+
+    @GetMapping("/product/{productId}")
+    public List<OpinionDto> getOpinionsByProductId(@PathVariable Long productId){
+        return opinionService.getOpinionsByProductId(productId);
+    }
+
 }
