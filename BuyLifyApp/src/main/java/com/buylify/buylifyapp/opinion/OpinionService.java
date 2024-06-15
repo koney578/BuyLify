@@ -60,4 +60,15 @@ public class OpinionService {
                 })
                 .toList();
     }
+
+    public List<OpinionDto> getOpinionsByProductId(Long productId) {
+        return opinionRepository.findOpinionsByProductId(productId).stream()
+                .map(opinion -> {
+                    String username = userRepository.findById(opinion.getUserSender().getId()).orElseThrow().getUsername();
+                    OpinionDto opinionDto = opinionMapper.toDto(opinion);
+                    opinionDto.setUsername(username);
+                    return opinionDto;
+                })
+                .toList();
+    }
 }
