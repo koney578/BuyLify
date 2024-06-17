@@ -2,6 +2,7 @@
 const auth = useAuthStore()
 const router = useRouter()
 if (auth.user.roles) {
+  console.log(auth.user)
   const adminRole = { authority: "administrator" }
   const ifAdmin = auth.user.roles.some((item: { authority: string; }) => item.authority === adminRole.authority)
 
