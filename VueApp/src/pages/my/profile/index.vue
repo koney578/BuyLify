@@ -191,17 +191,17 @@ const editProfile = async () => {
 
           </div>
         </div>
-        <div v-if="!ifSubscribedVariable" class="border-b border-gray-900/10 pb-12">
-          <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-            <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Subskrypcja</h1>
-          </div>
-          <div class="">
-            <button type="button" @click="subscribe"
-                    class="flex w-full mt-2rem justify-center rounded-md bg-indigo-600 px-6 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-              Kup premium
-            </button>
-          </div>
-        </div>
+<!--        <div v-if="!ifSubscribedVariable" class="border-b border-gray-900/10 pb-12"> TODO: Subskrypcja, przy rozwinieciu funkcjalnosci subskrypcji mozna uzyc -->
+<!--          <div class="sm:mx-auto sm:w-full sm:max-w-sm">-->
+<!--            <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Subskrypcja</h1>-->
+<!--          </div>-->
+<!--          <div class="">-->
+<!--            <button type="button" @click="subscribe"-->
+<!--                    class="flex w-full mt-2rem justify-center rounded-md bg-indigo-600 px-6 py-3 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">-->
+<!--              Kup premium-->
+<!--            </button>-->
+<!--          </div>-->
+<!--        </div>-->
       </div>
 
       <div class="mt-6 flex items-center justify-end gap-x-6 mb-2rem">

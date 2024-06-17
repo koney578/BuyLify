@@ -13,11 +13,13 @@ cartStore.sortCartByUserId()
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Mój koszyk</h1>
     </div>
 
-    <single-cart-product v-for="product in cartStore.cartState"
-                         :key="product.product.id"
-                         :product="product.product"
-                         :quantity="product.quantity"
-    />
+    <div class="sm:mx-auto sm:w-full sm:max-w-5xl">
+      <single-cart-product v-for="product in cartStore.cartState"
+                           :key="product.product.id"
+                           :product="product.product"
+                           :quantity="product.quantity"
+      />
+    </div>
 
     <div class="w-1/3 mx-auto mt-1rem">
       <div v-if="cartStore.cartState.length">

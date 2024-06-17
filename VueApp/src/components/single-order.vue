@@ -9,8 +9,8 @@ const props = defineProps<SortedOrder>()
   <div class="mt-2rem">
     <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-orange-200 shadow-xl w-full">
       <div class="text-2xl color-black w-full">
-        <p class="text-2xl my-1rem">Numer zamówienia: {{ props.orderId }}</p>
-        <p class="text-2xl my-1rem">Sprzedawca {{ props.products[0].user?.username }}</p>
+        <p class="text-2xl my-1rem">Numer zamówienia: {{ props.orderId }}</p> <!-- TODO: NAPRAWIC -->
+        <p class="text-2xl my-1rem">Sprzedawca {{ props.products[0].user?.username }}</p> <!-- TODO: NAPRAWIC -->
         <p class="text-2xl my-1rem">Status: </p>
         <single-post v-for="product in props.products" :key="product.id"
                      :id="product.id"

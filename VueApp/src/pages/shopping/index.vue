@@ -15,6 +15,8 @@ const averageStars = ref(0)
 const showProductDetails = (product: Product) => {
   if (product.user?.averageStars) {
     averageStars.value = product.user?.averageStars
+  } else {
+    averageStars.value = 0
   }
   productStore.setProduct(product)
   isProductDetailsOpen.value = true
