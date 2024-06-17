@@ -3,6 +3,7 @@ package com.buylify.buylifyapp.opinion;
 import com.buylify.buylifyapp.authentication.User;
 import com.buylify.buylifyapp.authentication.UserRepository;
 import com.buylify.buylifyapp.mappers.OpinionMapper;
+import com.buylify.buylifyapp.mappers.ProductMapper;
 import com.buylify.buylifyapp.product.Product;
 import com.buylify.buylifyapp.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ public class OpinionService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
     private final OpinionMapper opinionMapper;
+    private final ProductMapper productMapper;
 
     public List<Opinion> getAllOpinions() {
         return opinionRepository.findAll();
@@ -55,6 +57,8 @@ public class OpinionService {
                 .map(opinion -> {
                     String username = userRepository.findById(opinion.getUserSender().getId()).orElseThrow().getUsername();
                     OpinionDto opinionDto = opinionMapper.toDto(opinion);
+                    opinionDto.setProduct(productMapper.toProductDto(opinion.getProduct()));
+                    opinionDto.setUserId(opinion.getUserSender().getId());
                     opinionDto.setUsername(username);
                     return opinionDto;
                 })
