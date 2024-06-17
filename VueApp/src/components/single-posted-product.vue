@@ -54,9 +54,9 @@ const editProduct = () => {
           <div class="text-xl flex">Opis: <p class="italic ml-1 text-justify">{{ props.description }}</p></div>
         </div>
 
-        <div class="flex mt-2rem justify-between">
-          <p class="text-xl italic mr-1rem">Ocena: {{ props.user?.averageStars }} </p>
-        </div>
+<!--        <div class="flex mt-2rem justify-between"> TODO: Można przesyłać średnią ocenę produktu, bo sprzedawcy bez sensu -->
+<!--          <p class="text-xl italic mr-1rem">Ocena: {{ props.user?.averageStars }} </p>-->
+<!--        </div>-->
 
 
         <div class="w-full flex mt-2rem justify-center">

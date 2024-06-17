@@ -28,7 +28,6 @@ watch(() => quantityRange.value, (newValue) => {
 const quantityError = ref('')
 
 
-
 const setQuantity = async () => {
   quantity.value = quantityRange.value.toString()
   if (!countPattern.test(quantity.value) || parseInt(quantity.value) > props.product.count) {
@@ -48,43 +47,34 @@ const changeQuantityButtonClicked = () => {
 </script>
 
 <template>
-  <div class="mt-2rem flex w-full">
-
-
-    <div class="flex mx-auto mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl">
-      <div>
+  <div class="mt-2rem w-full">
+    <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-gray-100 shadow-xl w-full">
+      <div class="w-full flex">
         <img
             :src="props.product.photo"
             alt="Główne zdjęcie"
-            class="h-auto w-[240px] mt-4"
+            class="object-cover h-64 w-64"
         />
       </div>
-      <div class="w-full px-2rem">
-
+      <div class="w-full">
         <div class="grid justify-items-center">
           <p class="text-3xl">{{ props.product.name }}</p>
         </div>
-
         <div class="flex mt-1rem justify-between">
           <div class="text-xl flex">Cena: <p class="italic ml-1">{{ props.product.price }} zł</p></div>
-          <div class="text-xl flex">Ocena: <p class="italic ml-1">{{ props.product.user?.averageStars || "brak" }}</p>
-          </div>
+          <div class="text-xl flex">Ocena: <p class="italic ml-1">{{ props.product.user?.averageStars || "brak" }}</p></div>
         </div>
-
         <div class="flex mt-2rem justify-between">
           <div class="text-xl flex">Kategoria: <p class="italic ml-1">{{ props.product.category.name }}</p></div>
           <div class="text-xl flex">sprzedawca: <p class="italic ml-1">{{ props.product.user?.username }}</p></div>
         </div>
-
         <div class="flex mt-1rem justify-between">
           <div class="text-xl flex">Opis: <p class="italic ml-1 text-justify">{{ props.product.description }}</p></div>
         </div>
-
         <div class="flex mt-2rem justify-between">
           <div class="text-xl flex">Wybrano: <p class="italic ml-1">{{ props.quantity }}</p></div>
           <div class="text-xl flex">Ilość: <p class="italic ml-1">{{ props.product.count }}</p></div>
         </div>
-
 
         <div class="my-1rem">
           <button type="button" @click="changeQuantityButtonClicked"
