@@ -71,4 +71,12 @@ public class AuctionService {
 
         auctionRepository.save(auction);
     }
+
+    public List<AuctionDto> getUserWinningAuctions(Long userId) {
+
+        return auctionRepository.findAllByWinnerId(userId)
+                .stream()
+                .map(mapper::toAuctionDto)
+                .toList();
+    }
 }
