@@ -46,7 +46,10 @@ const showProductDetails = (announcement: Product) => {
   })
   if (announcement.user?.averageStars) {
     averageStars.value = announcement.user?.averageStars
+  } else {
+    averageStars.value = 0
   }
+
   productStore.setProduct(product)
   isProductDetailsOpen.value = true
 }
