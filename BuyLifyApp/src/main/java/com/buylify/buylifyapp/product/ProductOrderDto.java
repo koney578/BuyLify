@@ -1,5 +1,6 @@
 package com.buylify.buylifyapp.product;
 
+import com.buylify.buylifyapp.address.AddressDto;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -9,4 +10,5 @@ public class ProductOrderDto {
 
     private ProductDto product;
     private Long orderId;
+    private AddressDto address;
 }
