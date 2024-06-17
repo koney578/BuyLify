@@ -11,6 +11,7 @@ public class ProductOrderDto {
 
     private ProductDto product;
     private Long orderId;
+    private String sellerName;
     private AddressDto address;
     private Long statusId;
 }
