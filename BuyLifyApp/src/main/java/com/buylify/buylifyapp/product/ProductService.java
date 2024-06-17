@@ -1,10 +1,13 @@
 package com.buylify.buylifyapp.product;
 
+import com.buylify.buylifyapp.address.AddressDto;
+import com.buylify.buylifyapp.address.AddressRepository;
 import com.buylify.buylifyapp.authentication.User;
 import com.buylify.buylifyapp.authentication.UserProductDto;
 import com.buylify.buylifyapp.authentication.UserRepository;
 import com.buylify.buylifyapp.category.Category;
 import com.buylify.buylifyapp.category.CategoryRepository;
+import com.buylify.buylifyapp.mappers.AddressMapper;
 import com.buylify.buylifyapp.mappers.ProductMapper;
 import com.buylify.buylifyapp.opinion.OpinionRepository;
 import jakarta.persistence.EntityManager;
@@ -33,7 +36,9 @@ public class ProductService {
     private final CategoryRepository categoryRepository;
     private final UserRepository userRepository;
     private final OpinionRepository opinionRepository;
+    private final AddressRepository addressRepository;
     private final ProductMapper mapper;
+    private final AddressMapper addressMapper;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -157,6 +162,59 @@ public class ProductService {
 
         return productOrders;
 
+    }
+
+    public List<ProductOrderDto> getSoldProducts(Long userId) {
+        String sql = "SELECT p.*, op.id_order AS orderId, o.id_address " +
+                "FROM products p " +
+                "JOIN orders_products op ON p.id = op.id_product " +
+                "JOIN orders o ON op.id_order = o.id " +
+                "WHERE p.id_user = :userId";
+
+        List<Object[]> resultList = entityManager.createNativeQuery(sql)
+                .setParameter("userId", userId)
+                .getResultList();
+
+        List<ProductOrderDto> productOrders = new ArrayList<>();
+        for (Object[] result : resultList) {
+            ProductDto productDto = new ProductDto();
+            productDto.setId(((Number) result[0]).longValue());
+            productDto.setCount((Integer) result[1]);
+
+            Timestamp timestamp = (Timestamp) result[2];
+            LocalDateTime localDateTime = timestamp.toLocalDateTime();
+            productDto.setCreatedAt(localDateTime);
+
+            productDto.setDescription((String) result[3]);
+            productDto.setName((String) result[6]);
+            productDto.setPhoto((String) result[7]);
+            productDto.setPrice((Float) result[8]);
+
+            Long categoryId = ((Number) result[10]).longValue();
+            Category category = categoryRepository.findById(categoryId).orElseThrow();
+            productDto.setCategory(category);
+
+            Long idUser = ((Number) result[11]).longValue();
+            User user = userRepository.findById(idUser).orElseThrow();
+            UserProductDto userProductDto = new UserProductDto();
+            userProductDto.setId(user.getId());
+            productDto.setUser(userProductDto);
+
+            Long orderId = ((Number) result[12]).longValue();
+
+            ProductOrderDto productOrderDto = new ProductOrderDto();
+            productOrderDto.setProduct(productDto);
+            productOrderDto.setOrderId(orderId);
+
+            Long addressId = ((Number) result[13]).longValue();
+            AddressDto addressDto = addressMapper.toAddressDto(addressRepository.findById(addressId).orElseThrow());
+            productOrderDto.setAddress(addressDto);
+
+            productOrders.add(productOrderDto);
+        }
+
+
+        return productOrders;
     }
 }
 
