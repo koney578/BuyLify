@@ -117,7 +117,7 @@ public class ProductService {
     }
 
     public List<ProductOrderDto> getPurchasedProducts(Long userId) {
-        String sql = "SELECT p.*, op.id_order AS orderId " +
+        String sql = "SELECT p.*, op.id_order AS orderId, o.id_order_status, p.id_user " +
                         "FROM products p " +
                         "JOIN orders_products op ON p.id = op.id_product " +
                         "JOIN orders o ON op.id_order = o.id " +
@@ -157,6 +157,13 @@ public class ProductService {
             ProductOrderDto productOrderDto = new ProductOrderDto();
             productOrderDto.setProduct(productDto);
             productOrderDto.setOrderId(orderId);
+
+            Long orderStatusId = ((Number) result[13]).longValue();
+            productOrderDto.setStatusId(orderStatusId);
+
+            Long sellerId = ((Number) result[14]).longValue();
+            User seller = userRepository.findById(sellerId).orElseThrow();
+            productOrderDto.setSellerName(seller.getUsername());
 
             productOrders.add(productOrderDto);
         }
