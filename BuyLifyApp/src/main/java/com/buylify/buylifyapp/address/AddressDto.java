@@ -21,6 +21,8 @@ public class AddressDto {
 
     private String city;
 
+    private String street;
+
     private String houseUnitNumber;
 
     private String postalCode;
