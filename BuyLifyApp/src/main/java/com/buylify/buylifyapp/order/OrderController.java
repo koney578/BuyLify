@@ -1,5 +1,6 @@
 package com.buylify.buylifyapp.order;
 
+import com.buylify.buylifyapp.orderStatus.OrderStatus;
 import com.buylify.buylifyapp.security.SecurityUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
@@ -33,5 +34,11 @@ public class OrderController {
     public List<OrderDto> getOrdersByLoggedUser(Authentication authentication) {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         return orderService.getOrdersByLoggedUser(userId);
+    }
+
+    @PutMapping("/{id}/status")
+    public void changeOrderStatus(@PathVariable("id") Long id, @RequestBody Long statusId, Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        orderService.changeOrderStatus(id, statusId, userId);
     }
 }

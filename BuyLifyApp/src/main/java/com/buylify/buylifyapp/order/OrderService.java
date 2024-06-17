@@ -97,4 +97,11 @@ public class OrderService {
     public List<OrderDto> getOrdersByLoggedUser(Long userId) {
         return orderRepository.findOrdersByUserId(userId).stream().map(orderMapper::toDto).toList();
     }
+
+    public void changeOrderStatus(Long id, Long statusId, Long userId) {
+        Order order = orderRepository.findById(id).orElseThrow();
+        // TODO: check if user is seller
+        order.setOrderStatus(orderStatusRepository.getReferenceById(statusId));
+        orderRepository.save(order);
+    }
 }
