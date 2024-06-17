@@ -10,6 +10,7 @@ import com.buylify.buylifyapp.category.CategoryRepository;
 import com.buylify.buylifyapp.mappers.AddressMapper;
 import com.buylify.buylifyapp.mappers.ProductMapper;
 import com.buylify.buylifyapp.opinion.OpinionRepository;
+import com.buylify.buylifyapp.orderStatus.OrderStatusRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +38,7 @@ public class ProductService {
     private final UserRepository userRepository;
     private final OpinionRepository opinionRepository;
     private final AddressRepository addressRepository;
+    private final OrderStatusRepository orderStatusRepository;
     private final ProductMapper mapper;
     private final AddressMapper addressMapper;
 
@@ -165,7 +167,7 @@ public class ProductService {
     }
 
     public List<ProductOrderDto> getSoldProducts(Long userId) {
-        String sql = "SELECT p.*, op.id_order AS orderId, o.id_address " +
+        String sql = "SELECT p.*, op.id_order AS orderId, o.id_address, o.id_order_status " +
                 "FROM products p " +
                 "JOIN orders_products op ON p.id = op.id_product " +
                 "JOIN orders o ON op.id_order = o.id " +
@@ -209,6 +211,9 @@ public class ProductService {
             Long addressId = ((Number) result[13]).longValue();
             AddressDto addressDto = addressMapper.toAddressDto(addressRepository.findById(addressId).orElseThrow());
             productOrderDto.setAddress(addressDto);
+
+            Long orderStatusId = ((Number) result[14]).longValue();
+            productOrderDto.setStatusId(orderStatusId);
 
             productOrders.add(productOrderDto);
         }
