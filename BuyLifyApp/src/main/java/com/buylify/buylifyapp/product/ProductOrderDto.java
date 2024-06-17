@@ -14,4 +14,5 @@ public class ProductOrderDto {
     private String sellerName;
     private AddressDto address;
     private Long statusId;
+    private String statusName;
 }

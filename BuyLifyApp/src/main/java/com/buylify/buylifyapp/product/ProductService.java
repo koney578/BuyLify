@@ -159,7 +159,9 @@ public class ProductService {
             productOrderDto.setOrderId(orderId);
 
             Long orderStatusId = ((Number) result[13]).longValue();
+            String orderStatusName = orderStatusRepository.findById(orderStatusId).orElseThrow().getName();
             productOrderDto.setStatusId(orderStatusId);
+            productOrderDto.setStatusName(orderStatusName);
 
             Long sellerId = ((Number) result[14]).longValue();
             User seller = userRepository.findById(sellerId).orElseThrow();
@@ -220,7 +222,9 @@ public class ProductService {
             productOrderDto.setAddress(addressDto);
 
             Long orderStatusId = ((Number) result[14]).longValue();
+            String orderStatusName = orderStatusRepository.findById(orderStatusId).orElseThrow().getName();
             productOrderDto.setStatusId(orderStatusId);
+            productOrderDto.setStatusName(orderStatusName);
 
             productOrders.add(productOrderDto);
         }
