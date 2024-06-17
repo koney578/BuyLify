@@ -46,4 +46,10 @@ public class AuctionController {
         auctionService.placeBid(id, body, userId);
     }
 
+    @GetMapping("/user")
+    public List<AuctionDto> getUserWinningAuctions(Authentication authentication) {
+        Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
+        return auctionService.getUserWinningAuctions(userId);
+    }
+
 }
