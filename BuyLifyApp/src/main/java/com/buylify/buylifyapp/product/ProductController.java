@@ -38,6 +38,7 @@ public class ProductController {
             @RequestParam(value = "page", required = false, defaultValue = "0") Integer page,
             @RequestParam(value = "size", required = false, defaultValue = "10") Integer size
     ) {
+        productService.getSoldProducts(1L);
         return productService.getAllProducts(categoryId, name, minPrice, maxPrice, page, size);
     }
 
@@ -75,6 +76,5 @@ public class ProductController {
         Long userId = ((SecurityUser) authentication.getPrincipal()).getId();
         productService.deactivateProduct(id, userId);
     }
-
 
 }
