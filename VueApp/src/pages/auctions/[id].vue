@@ -83,7 +83,7 @@ onMounted(() => {
           <div class="flex mt-1rem justify-between">
             <div class="text-xl mr-2rem flex">Aktualana cena: <p class="italic ml-1">{{ auction?.currentPrice }} zł</p>
             </div>
-            <div class="text-xl ml-2rem flex">Sprzedawca: <p class="italic ml-1">{{ auction?.owner.username }}</p></div>
+            <div class="text-xl ml-2rem flex">Aukcjoner: <NuxtLink :to="`/profile/` + auction?.owner.id"><p class="italic ml-1">{{ auction?.owner.username }}</p></NuxtLink></div>
           </div>
 
           <div class="flex mt-1rem justify-between">
@@ -97,12 +97,12 @@ onMounted(() => {
                v-if="calculateAuctionTimeExpired(auction?.endDate || '') > 0 && auction?.winner?.username === auth.user.username">Prowadzisz w tej aukcji!</p>
             <p class="text-xl italic mr-1rem font-bold text-amber-600"
                v-else-if="calculateAuctionTimeExpired(auction?.endDate || '') > 0 && auction?.winner?.id">W
-              aukcji prowadzi: {{ auction.winner?.username }}</p>
+              aukcji prowadzi: <NuxtLink :to="`/profile/` + auction.winner.id">{{ auction.winner?.username }}</NuxtLink></p>
             <p class="text-xl italic mr-1rem font-bold text-amber-600"
                v-else-if="calculateAuctionTimeExpired(auction?.endDate || '') > 0">Nikt nie licytuje
               tej aukcji, bądź pierwszy!</p>
             <p class="text-xl italic mr-1rem font-bold text-amber-600" v-else-if="auction?.winner?.id">Aukcje wygrał:
-              {{ auction?.winner?.username }} !</p>
+              <NuxtLink :to="`/profile/` + auction.winner.id">{{ auction?.winner?.username }}</NuxtLink> !</p>
             <p class="text-xl italic mr-1rem font-bold text-amber-600" v-else>Aukcja Zakończona, nie wyłoniono
               zwycięzcy!</p>
             <p class="text-xl font-bold">Do końca aukcji: {{ formattedDate || 'Loading . . .' }}</p>

@@ -103,7 +103,7 @@ const deleteButtonClicked = () => {
 <template>
   <div class="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
     <div class="sm:mx-auto sm:w-full sm:max-w-sm">
-      <text-logo />
+      <text-logo/>
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Możesz edytować swoje
         ogłoszenie.</h1>
     </div>
@@ -243,10 +243,9 @@ const deleteButtonClicked = () => {
                 <p class="mt-10 text-center text-sm text-gray-500">
                   Chcesz porzucić edycję?
                   {{ ' ' }}
-                  <NuxtLink
-                      to="/my/sales" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Kliknij
-                    tutaj
-                    by wrócić!
+                  <NuxtLink to="/my/sales"
+                            class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+                    Kliknij tutaj by wrócić!
                   </NuxtLink>
                 </p>
               </div>

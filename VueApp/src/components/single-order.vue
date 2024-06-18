@@ -9,9 +9,17 @@ const props = defineProps<SortedOrder>()
   <div class="mt-2rem">
     <div class="flex mt-1rem text-gray-900 px-8 py-4 bg-orange-200 shadow-xl w-full">
       <div class="text-2xl color-black w-full">
-        <p class="text-2xl my-1rem flex">Numer zamówienia: <div class="italic ml-1">{{ props.orderId }}</div></p>
-        <p class="text-2xl my-1rem flex">Sprzedawca: <div class="italic ml-1">{{ props.sellerName }}</div></p>
-        <p class="text-2xl my-1rem flex">Status: <div class="italic ml-1">{{ props.statusName }}</div></p>
+        <p class="text-2xl my-1rem flex">Numer zamówienia:
+          <div class="italic ml-1">{{ props.orderId }}</div>
+        </p>
+        <p class="text-2xl my-1rem flex">Sprzedawca:
+          <NuxtLink :to="`/profile/` + props.products[0].user?.id">
+            <div class="italic ml-1">{{ props.sellerName }}</div>
+          </NuxtLink>
+        </p>
+        <p class="text-2xl my-1rem flex">Status:
+          <div class="italic ml-1">{{ props.statusName }}</div>
+        </p>
         <single-post v-for="product in props.products" :key="product.id"
                      :id="product.id"
                      :name="product.name"
@@ -26,8 +34,6 @@ const props = defineProps<SortedOrder>()
         />
 
       </div>
-
-
     </div>
   </div>
 </template>

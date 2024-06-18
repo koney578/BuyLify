@@ -2,20 +2,6 @@
 import type {OrderStatus, SoldProduct, SortedSoldProduct} from "~/types";
 
 const props = defineProps<SortedSoldProduct>()
-// const orderStatuses = [{
-//   id: 1,
-//   name: 'Zamówienie przyjęte'
-// }, {
-//   id: 2,
-//   name: 'Wysłane'
-// }, {
-//   id: 3,
-//   name: 'Dostarczone'
-// }, {
-//   id: 4,
-//   name: 'Zwrócone'
-//
-// }]
 
 const auth = useAuthStore()
 const selected = ref()
@@ -28,7 +14,6 @@ watchEffect(() => {
   if (orderStatuses.value) {
     selected.value = props.statusId
   }
-
 })
 
 const changeOrderStatus = async () => {
@@ -40,7 +25,6 @@ const changeOrderStatus = async () => {
     }
   })
 }
-
 </script>
 
 <template>
@@ -64,10 +48,12 @@ const changeOrderStatus = async () => {
           <p class="mx-auto font-bold">Dane do wysyłki</p>
         </div>
         <div>
-          <div class="flex">
-            <p>Kupujący:</p>
-            <p class="ml-1 italic">{{ props.address.name }} {{ props.address.surname }}</p>
-          </div>
+          <NuxtLink :to="`/profile/` + props.address.id">
+            <div class="flex">
+              <p>Kupujący:</p>
+              <p class="ml-1 italic">{{ props.address.name }} {{ props.address.surname }}</p>
+            </div>
+          </NuxtLink>
           <p class="flex">Kraj: <div class="ml-1 italic">{{ props.address.country }}</div></p>
           <p class="flex">Miasto: <div class="ml-1 italic">{{ props.address.city }}</div></p>
           <p class="flex">Kod pocztowy: <div class="ml-1 italic">{{ props.address.postalCode }}</div></p>

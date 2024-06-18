@@ -94,6 +94,15 @@ const followProduct = async () => {
                           </div>
                         </div>
 
+                        <div class="mt-10">
+                          <div class="items-center justify-between">
+                            <h4 class="text-sm font-medium text-gray-900">Sprzedający: </h4>
+                            <NuxtLink :to="`/profile/` + product?.user?.id">
+                              <p class="text-2xl text-gray-900">{{ product?.user?.username }}</p>
+                            </NuxtLink>
+                          </div>
+                        </div>
+
                         <div class="mt-2rem">
                           <h4 class="text-sm font-medium text-gray-900">Ocena sprzedającego: </h4>
                           <div class="flex mt-1rem">
