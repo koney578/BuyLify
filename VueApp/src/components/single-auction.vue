@@ -44,14 +44,14 @@ const routeToAuction = () => {
         </div>
         <div class="flex mt-2rem justify-between">
           <p class="text-xl italic mr-1rem">Kategoria aukcji: {{ props.category.name }}</p>
-          <p class="text-xl italic">Aukcjoner: {{ props.owner.username }}</p>
+          <p class="text-xl italic">Aukcjoner: <NuxtLink :to="`/profile/`+ props.owner.id">{{ props.owner.username }}</NuxtLink></p>
         </div>
         <div class="flex mt-2rem justify-between">
           <p class="text-xl italic mr-1rem" v-if="calculateAuctionTimeExpired(props.endDate) > 0 && props.winner?.id">W
-            aukcji prowadzi: {{ props.winner?.username }}</p>
+            aukcji prowadzi: <NuxtLink :to="`/profile/` + props.winner.id">{{ props.winner?.username }}</NuxtLink></p>
           <p class="text-xl italic mr-1rem" v-else-if="calculateAuctionTimeExpired(props.endDate) > 0">Nikt nie licytuje
             tej aukcji, bądź pierwszy!</p>
-          <p class="text-xl italic mr-1rem" v-else-if="props.winner?.id">Aukcje wygrał: {{ props.winner?.username }}
+          <p class="text-xl italic mr-1rem" v-else-if="props.winner?.id">Aukcje wygrał:<NuxtLink :to="`/profile/` + props.winner.id"> {{ props.winner?.username }}</NuxtLink>
             !</p>
           <p class="text-xl italic mr-1rem" v-else>Aukcja Zakończona, nie wyłoniono zwycięzcy!</p>
         </div>

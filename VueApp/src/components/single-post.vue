@@ -27,6 +27,7 @@ const closeOrderDetails = () => {
 
 const route = useRoute()
 const isMyPurchases = computed(() => route.path.includes('my/purchases'))
+const isMySold = computed(() => route.path.includes('my/sold'))
 </script>
 
 <template>
@@ -43,10 +44,12 @@ const isMyPurchases = computed(() => route.path.includes('my/purchases'))
         <div class="grid justify-items-center">
           <p class="text-2xl">{{ props.name }}</p>
         </div>
-        <div class="flex mt-2rem justify-between">
+        <div v-if="!isMySold" class="flex mt-2rem justify-between">
           <p class="text-xl italic mr-1rem">{{ props.price }} zł</p>
           <p>Data dodania: {{ formatDateTime(props.createdAt) }}</p>
         </div>
+        <p v-if="isMySold" class="text-xl mt-2rem">Kupiona ilość: {{ props.count }}</p>
+        <p v-if="isMySold" class="text-xl mt-2rem">Łączna cena: {{ props.price }} zł</p>
 
         <div v-if="isMyPurchases" class="w-full flex mt-2rem justify-center">
           <button type="submit"
