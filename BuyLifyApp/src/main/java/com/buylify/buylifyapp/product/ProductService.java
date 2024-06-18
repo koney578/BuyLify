@@ -117,7 +117,7 @@ public class ProductService {
     }
 
     public List<ProductOrderDto> getPurchasedProducts(Long userId) {
-        String sql = "SELECT p.*, op.id_order AS orderId, o.id_order_status, p.id_user, op.sum_price " +
+        String sql = "SELECT p.*, op.id_order AS orderId, o.id_order_status, p.id_user, op.sum_price, op.product_quantity " +
                         "FROM products p " +
                         "JOIN orders_products op ON p.id = op.id_product " +
                         "JOIN orders o ON op.id_order = o.id " +
@@ -168,7 +168,9 @@ public class ProductService {
             productOrderDto.setSellerName(seller.getUsername());
 
             float sumPrice = (Float) result[15];
-            productOrderDto.setSumPrice(sumPrice);
+            int productQuantity = (Integer) result[16];
+            productOrderDto.getSumQuantity().setSumPrice(sumPrice);
+            productOrderDto.getSumQuantity().setProductQuantity(productQuantity);
 
             productOrders.add(productOrderDto);
         }
@@ -179,7 +181,7 @@ public class ProductService {
     }
 
     public List<ProductOrderDto> getSoldProducts(Long userId) {
-        String sql = "SELECT p.*, op.id_order AS orderId, o.id_address, o.id_order_status, op.sum_price " +
+        String sql = "SELECT p.*, op.id_order AS orderId, o.id_address, o.id_order_status, op.sum_price, op.product_quantity " +
                 "FROM products p " +
                 "JOIN orders_products op ON p.id = op.id_product " +
                 "JOIN orders o ON op.id_order = o.id " +
@@ -229,8 +231,11 @@ public class ProductService {
             productOrderDto.setStatusId(orderStatusId);
             productOrderDto.setStatusName(orderStatusName);
 
+            productOrderDto.setSumQuantity(new SumQuantity());
             float sumPrice = (Float) result[15];
-            productOrderDto.setSumPrice(sumPrice);
+            int productQuantity = (Integer) result[16];
+            productOrderDto.getSumQuantity().setSumPrice(sumPrice);
+            productOrderDto.getSumQuantity().setProductQuantity(productQuantity);
 
             productOrders.add(productOrderDto);
         }
