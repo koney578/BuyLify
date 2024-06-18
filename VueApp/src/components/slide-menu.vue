@@ -52,6 +52,9 @@ const auth = useAuthStore();
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
                           <NuxtLink to="/my/sales">Wystawione</NuxtLink>
                         </li>
+                        <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
+                          <NuxtLink to="/my/sold">Sprzedane</NuxtLink>
+                        </li>
                       </div>
 
                       <div v-else>
