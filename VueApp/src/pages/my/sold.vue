@@ -23,7 +23,7 @@ watchEffect(() => {
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sprzedane produkty</h1>
     </div>
     <div class="sm:mx-auto sm:w-full sm:max-w-6xl">
-      <single-sold v-for="product in sortedSoldProducts" :order-id="product.orderId" :products="product.products" :address="product.address" :status-id="product.statusId" />
+      <single-sold v-for="product in sortedSoldProducts" :order-id="product.orderId" :products="product.products" :address="product.address" :status-id="product.statusId" :sum-quantity="product.sumQuantity" />
 
     </div>
   </div>

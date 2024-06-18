@@ -1,4 +1,4 @@
-import type {Address, Order, Product, SoldProduct, SortedOrder, SortedSoldProduct} from "~/types";
+import type {Address, Order, Product, SoldProduct, SortedOrder, SortedSoldProduct, SumQuantity} from "~/types";
 
 export const formatDateTime = (dateTimeString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -77,16 +77,19 @@ export function sortAndGroupSoldProducts(soldProducts: SoldProduct[]): SortedSol
     soldProducts.sort((a, b) => a.orderId - b.orderId);
 
     // Group sold products by orderId
-    const groupedSoldProducts: Record<number, { products: Product[], address: Address, statusId: number }> = {};
+    const groupedSoldProducts: Record<number, { products: Product[], address: Address, statusId: number, sumQuantity: SumQuantity }> = {};
 
     soldProducts.forEach(soldProduct => {
         if (!groupedSoldProducts[soldProduct.orderId]) {
             groupedSoldProducts[soldProduct.orderId] = {
                 products: [],
                 address: soldProduct.address,
-                statusId: soldProduct.statusId
+                statusId: soldProduct.statusId,
+                sumQuantity: soldProduct.sumQuantity,
             };
         }
+        soldProduct.product.price = soldProduct.sumQuantity.sumPrice;
+        soldProduct.product.count = soldProduct.sumQuantity.productQuantity;
         groupedSoldProducts[soldProduct.orderId].products.push(soldProduct.product);
     });
 
@@ -95,6 +98,7 @@ export function sortAndGroupSoldProducts(soldProducts: SoldProduct[]): SortedSol
         orderId: parseInt(orderId, 10),
         products: groupedSoldProducts[orderId].products,
         address: groupedSoldProducts[orderId].address,
-        statusId: groupedSoldProducts[orderId].statusId
+        statusId: groupedSoldProducts[orderId].statusId,
+        sumQuantity: groupedSoldProducts[orderId].sumQuantity,
     }));
 }

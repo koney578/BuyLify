@@ -159,6 +159,7 @@ export interface SoldProduct {
     orderId: number;
     address: Address;
     statusId: number;
+    sumQuantity: SumQuantity;
 }
 
 export interface SortedSoldProduct {
@@ -166,9 +167,15 @@ export interface SortedSoldProduct {
     orderId: number;
     address: Address;
     statusId: number;
+    sumQuantity: SumQuantity;
 }
 
 export interface OrderStatus {
     id: number;
     name: string;
+}
+
+export interface SumQuantity {
+    productQuantity: number;
+    sumPrice: number;
 }
