@@ -13,7 +13,7 @@ const order: ComplexOrder = {
     name: orderStore.address?.name || "",
     surname: orderStore.address?.surname || "",
     phoneNumber: orderStore.address?.phoneNumber || "",
-    email: orderStore.address?.phoneNumber || "",
+    email: orderStore.address?.email || "",
     country: orderStore.address?.country || "",
     city: orderStore.address?.city || "",
     street: orderStore.address?.street || "",
