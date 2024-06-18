@@ -326,7 +326,7 @@ const addNotificationType = async () => {
       <form @submit.prevent="addNotificationType" class="space-y-6" action="#" method="POST">
         <div>
           <label for="notification-name" class="block text-sm font-medium leading-6 text-gray-900">
-            Wpisz nazwę sposobu dostawy
+            Wpisz nazwę nowego powiadomienia
           </label>
           <div class="mt-2">
             <div v-if="notificationTypeError" class="font-semibold text-rose-600">

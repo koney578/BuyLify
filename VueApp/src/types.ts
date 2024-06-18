@@ -143,9 +143,32 @@ export interface Auction {
 export interface Order {
     product: Product;
     orderId: number;
+    statusName: string;
+    sellerName: string;
 }
 
 export interface SortedOrder {
     orderId: number;
     products: Product[];
+    statusName: string;
+    sellerName: string;
+}
+
+export interface SoldProduct {
+    product: Product;
+    orderId: number;
+    address: Address;
+    statusId: number;
+}
+
+export interface SortedSoldProduct {
+    products: Product[];
+    orderId: number;
+    address: Address;
+    statusId: number;
+}
+
+export interface OrderStatus {
+    id: number;
+    name: string;
 }

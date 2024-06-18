@@ -1,4 +1,4 @@
-import type {Order, Product, SortedOrder} from "~/types";
+import type {Address, Order, Product, SoldProduct, SortedOrder, SortedSoldProduct} from "~/types";
 
 export const formatDateTime = (dateTimeString: string) => {
     const options: Intl.DateTimeFormatOptions = {
@@ -46,22 +46,55 @@ export const calculateAuctionTimeExpired = (auctionEndsAt: string) => {
 }
 
 export function sortAndGroupOrders(orders: Order[]): SortedOrder[] {
-    // Sort orders by orderId
+    // Sort sold products by orderId
     orders.sort((a, b) => a.orderId - b.orderId);
 
-    // Group orders by orderId
-    const groupedOrders: Record<number, Product[]> = {};
+    // Group sold products by orderId
+    const groupedSoldProducts: Record<number, { products: Product[], statusName: string, sellerName: string }> = {};
 
-    orders.forEach(order => {
-        if (!groupedOrders[order.orderId]) {
-            groupedOrders[order.orderId] = [];
+    orders.forEach(orders => {
+        if (!groupedSoldProducts[orders.orderId]) {
+            groupedSoldProducts[orders.orderId] = {
+                products: [],
+                statusName: orders.statusName,
+                sellerName: orders.sellerName
+            };
         }
-        groupedOrders[order.orderId].push(order.product);
+        groupedSoldProducts[orders.orderId].products.push(orders.product);
     });
 
-    // Convert the grouped orders to an array of SortedOrders
-    return Object.keys(groupedOrders).map(orderId => ({
+    // Convert the grouped sold products to an array of SortedSoldProducts
+    return Object.keys(groupedSoldProducts).map(orderId => ({
         orderId: parseInt(orderId, 10),
-        products: groupedOrders[orderId]
+        products: groupedSoldProducts[orderId].products,
+        statusName: groupedSoldProducts[orderId].statusName,
+        sellerName: groupedSoldProducts[orderId].sellerName
+    }));
+}
+
+export function sortAndGroupSoldProducts(soldProducts: SoldProduct[]): SortedSoldProduct[] {
+    // Sort sold products by orderId
+    soldProducts.sort((a, b) => a.orderId - b.orderId);
+
+    // Group sold products by orderId
+    const groupedSoldProducts: Record<number, { products: Product[], address: Address, statusId: number }> = {};
+
+    soldProducts.forEach(soldProduct => {
+        if (!groupedSoldProducts[soldProduct.orderId]) {
+            groupedSoldProducts[soldProduct.orderId] = {
+                products: [],
+                address: soldProduct.address,
+                statusId: soldProduct.statusId
+            };
+        }
+        groupedSoldProducts[soldProduct.orderId].products.push(soldProduct.product);
+    });
+
+    // Convert the grouped sold products to an array of SortedSoldProducts
+    return Object.keys(groupedSoldProducts).map(orderId => ({
+        orderId: parseInt(orderId, 10),
+        products: groupedSoldProducts[orderId].products,
+        address: groupedSoldProducts[orderId].address,
+        statusId: groupedSoldProducts[orderId].statusId
     }));
 }

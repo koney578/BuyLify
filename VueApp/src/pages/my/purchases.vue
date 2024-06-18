@@ -6,13 +6,12 @@ const auth = useAuthStore()
 const {data: orders} = await useFetchAPI<Order[]>('/api/products/purchased', {
   headers: {Authorization: 'Bearer ' + auth.token}
 });
-console.log(orders.value)
 
 const sortedOrders = ref()
 watchEffect(() => {
   if (orders.value) {
     sortedOrders.value = sortAndGroupOrders(orders.value)
-    console.log(sortedOrders)
+    console.log(sortedOrders.value)
   }
 })
 
@@ -25,7 +24,7 @@ watchEffect(() => {
       <h1 class="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Moje kupione produkty</h1>
     </div>
     <div class="sm:mx-auto sm:w-full sm:max-w-6xl">
-      <single-order v-for="order in sortedOrders" :order-id="order.orderId" :products="order.products" />
+      <single-order v-for="order in sortedOrders" :order-id="order.orderId" :products="order.products" :status-name="order.statusName" :seller-name="order.sellerName" />
 
     </div>
   </div>
