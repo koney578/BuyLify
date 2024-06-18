@@ -43,17 +43,20 @@ const auth = useAuthStore();
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
                           <NuxtLink to="/auctions">Aukcje</NuxtLink>
                         </li>
-                        <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-                          <NuxtLink to="/shopping/followed-products">Zapisane</NuxtLink>
+                        <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
+                          <NuxtLink to="/auctions/user">Zapisane aukcje</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
-                          <NuxtLink to="/my/purchases">Kupione</NuxtLink>
+                          <NuxtLink to="/shopping/followed-products">Zapisane ogłoszenia</NuxtLink>
+                        </li>
+                        <li class="color-black p-4 ml-1rem mr-1rem text-lg hover:text-gray-500">
+                          <NuxtLink to="/my/purchases">Kupione produkty</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
-                          <NuxtLink to="/my/sales">Wystawione</NuxtLink>
+                          <NuxtLink to="/my/sales">Wystawione produkty</NuxtLink>
                         </li>
                         <li class="color-black p-4 ml-1rem mr-1rem text-lg mr-auto hover:text-gray-500">
-                          <NuxtLink to="/my/sold">Sprzedane</NuxtLink>
+                          <NuxtLink to="/my/sold">Sprzedane produkty</NuxtLink>
                         </li>
                       </div>
 
