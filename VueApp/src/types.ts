@@ -179,3 +179,13 @@ export interface SumQuantity {
     productQuantity: number;
     sumPrice: number;
 }
+
+export interface Opinion {
+    createdAt: string;
+    description: string;
+    id: number;
+    product: Product;
+    stars: number;
+    userId: number;
+    username: string;
+}

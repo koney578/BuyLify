@@ -11,7 +11,6 @@ const sortedOrders = ref()
 watchEffect(() => {
   if (orders.value) {
     sortedOrders.value = sortAndGroupOrders(orders.value)
-    console.log(sortedOrders.value)
   }
 })
 
