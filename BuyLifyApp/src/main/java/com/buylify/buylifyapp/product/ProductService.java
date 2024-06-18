@@ -117,7 +117,7 @@ public class ProductService {
     }
 
     public List<ProductOrderDto> getPurchasedProducts(Long userId) {
-        String sql = "SELECT p.*, op.id_order AS orderId, o.id_order_status, p.id_user " +
+        String sql = "SELECT p.*, op.id_order AS orderId, o.id_order_status, p.id_user, op.sum_price " +
                         "FROM products p " +
                         "JOIN orders_products op ON p.id = op.id_product " +
                         "JOIN orders o ON op.id_order = o.id " +
@@ -167,6 +167,9 @@ public class ProductService {
             User seller = userRepository.findById(sellerId).orElseThrow();
             productOrderDto.setSellerName(seller.getUsername());
 
+            float sumPrice = (Float) result[15];
+            productOrderDto.setSumPrice(sumPrice);
+
             productOrders.add(productOrderDto);
         }
 
@@ -176,7 +179,7 @@ public class ProductService {
     }
 
     public List<ProductOrderDto> getSoldProducts(Long userId) {
-        String sql = "SELECT p.*, op.id_order AS orderId, o.id_address, o.id_order_status " +
+        String sql = "SELECT p.*, op.id_order AS orderId, o.id_address, o.id_order_status, op.sum_price " +
                 "FROM products p " +
                 "JOIN orders_products op ON p.id = op.id_product " +
                 "JOIN orders o ON op.id_order = o.id " +
@@ -225,6 +228,9 @@ public class ProductService {
             String orderStatusName = orderStatusRepository.findById(orderStatusId).orElseThrow().getName();
             productOrderDto.setStatusId(orderStatusId);
             productOrderDto.setStatusName(orderStatusName);
+
+            float sumPrice = (Float) result[15];
+            productOrderDto.setSumPrice(sumPrice);
 
             productOrders.add(productOrderDto);
         }
