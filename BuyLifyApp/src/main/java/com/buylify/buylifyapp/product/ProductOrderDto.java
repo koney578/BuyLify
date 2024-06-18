@@ -15,4 +15,5 @@ public class ProductOrderDto {
     private AddressDto address;
     private Long statusId;
     private String statusName;
+    private SumQuantity sumQuantity;
 }
