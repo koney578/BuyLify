@@ -6,6 +6,7 @@ target/
 src/main/resources/db/migration/
 .jpb/
 src/main/resources/application.properties
+src/main/resources/projekt-zespolowy-5362c-firebase-adminsdk-1jnm7-4fecdbc10e.json
 
 ### STS ###
 .apt_generated
